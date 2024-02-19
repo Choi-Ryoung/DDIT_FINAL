@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.mypage.mapper.IMypageMapper">
+
+<!-- 대표 이력서를 전부 n으로 변경 -->
+<update id = "rprsvAllN" parameterType="string">
+	update resume
+	set rprsv_res_yn = 'N'
+	where pr_mbr_id = #{prMbrId}
+</update>
+
+<!-- 선택 이력서를 대표 이력서로 변경 -->
+<update id = "updRprsvRes" parameterType="map">
+	update resume
+	set rprsv_res_yn = 'Y'
+	where pr_mbr_id = #{prMbrId} and res_no = #{resNo}
+</update>
+
+
+<!-- 회원 이력서 개수 가져옴 -->
+<delete id = "delResOne" parameterType="map">
+	delete from resume where pr_mbr_id = #{prMbrId} and res_no = #{resNo}
+</delete>
+
+<!-- 회원 이력서 개수 가져옴 -->
+<select id = "selResCnt" parameterType="string">
+	select count(a.res_no) from RESUME a, PRIVATEMEMBER b where b.PR_MBR_ID = #{prMbrId}
+	ORDER BY a.res_no DESC
+</select>
+
+<!-- 로그인 회원의 이력서 전부 가져옴 -->
+<!-- 이력서와 개인회원 아이디가 같고 개인회원 아이디가 현재로그인한 아이디와 같을 경우 -->
+<select id = "selResList" parameterType="string" resultType="ResumeVO">
+SELECT
+    a.res_no,
+    a.pr_mbr_id,
+    a.res_ttl,
+    a.pr_mbr_nm,
+    a.pr_mbr_telno,
+    a.pr_mbr_email,
+    a.pr_mbr_birthdy,
+    a.pr_mbr_zip,
+    a.pr_mbr_bsc_addr,
+    a.pr_mbr_daddr,
+    a.sexdstn_cd,
+    a.trms_agre_cd,
+    a.rprsv_res_yn,
+    a.prov_photo,
+    (SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'IVCAREER' AND C.CMCD = a.career_cd) AS career_cd,
+    (SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'CAREER' AND C.CMCD = a.career_year_cd) AS career_year_cd,
+    (SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'DUTY' AND C.CMCD = a.duty_cd) AS duty_cd,
+    (SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'WORK' AND C.CMCD = a.work_cd) AS work_cd,
+    (SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'SALARY' AND C.CMCD = a.salary_cd) AS salary_cd,
+    a.res_memo
+FROM
+    resume a
+JOIN
+    PRIVATEMEMBER b ON a.pr_mbr_id = b.pr_mbr_id
+WHERE
+    b.pr_mbr_id = #{prMbrId} 
+ORDER BY a.res_no DESC
+</select>
+
+<select id = "selResOne" parameterType="map" resultType="ResumeVO">
+SELECT
+    a.res_no,
+    a.pr_mbr_id,
+    a.res_ttl,
+    a.pr_mbr_nm,
+    a.pr_mbr_telno,
+    a.pr_mbr_email,
+    a.pr_mbr_birthdy,
+    a.pr_mbr_zip,
+    a.pr_mbr_bsc_addr,
+    a.pr_mbr_daddr,
+    a.sexdstn_cd,
+    a.trms_agre_cd,
+    a.rprsv_res_yn,
+    a.prov_photo,
+    a.career_cd,
+    a.res_memo,
+    career_year_cd,
+    duty_cd,
+    work_cd,
+    salary_cd
+FROM
+    resume a
+JOIN
+    PRIVATEMEMBER b ON a.pr_mbr_id = b.pr_mbr_id
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId} 
+</select>
+
+<!-- 프로젝트 경력 불러오기 -->
+<!-- 이력서 번호가 같고 현재 로그인한 아이디가 이력서의 아이디와 같아야함 -->
+<select id = "selPcOne" parameterType="map" resultType="ProjectCareerVO">
+SELECT
+    a.pj_career_no,
+    a.res_no,
+    a.orderer_nm,
+    a.pj_nm,
+    a.order_bgng_ymd,
+    a.order_end_ymd,
+    a.main_task
+FROM
+    projectcareer a
+JOIN
+    resume b ON a.res_no = b.res_no
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId}    
+</select>
+
+<!-- 경력 불러오기 -->
+<select id = "selCOne" parameterType="map" resultType="CareerVO">
+SELECT
+    a.career_no,
+    a.res_no,
+    a.co_nm,
+    a.job_pos_nm,
+    a.serve_yn,
+    a.work_bgng_ymd,
+    a.work_end_ymd,
+    a.assign_task_cn,
+    a.salary,
+    a.work_dept_nm
+FROM
+    career a
+JOIN
+    resume b ON a.res_no = b.res_no
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId}       
+</select>
+
+
+<!-- 학력 불러오기 -->
+<select id = "selAcbgOne" parameterType="map" resultType="AcademicBackgroundVO">
+SELECT
+    a.acbg_no,
+    a.res_no,
+    a.acbg_dtl,
+    a.mtcltn_ymd,
+    a.grdtn_ymd,
+    a.grdtn_yn
+FROM
+    academicbackground a
+JOIN
+    resume b ON a.res_no = b.res_no
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId}      
+</select>
+
+
+<!-- 자격증 불러오기 -->
+<select id = "selCrtOne" parameterType="map" resultType="CertificateVO">
+SELECT
+    a.crftct_no,
+    a.res_no,
+    a.qlfc_no,
+    a.crtfct_nm,
+    a.crtfct_acqs_ymd,
+    a.issue_inst_nm
+FROM
+    certificate a
+JOIN
+    resume b ON a.res_no = b.res_no
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId}    
+</select>
+
+<!-- 우대사항 불러오기 -->
+<select id = "selPOne" parameterType="map" resultType="PreferenceVO">
+SELECT
+    a.prf_no,
+    a.res_no,
+    a.mil_yn,
+    a.mar_yn,
+    a.dis_yn,
+    a.ntn_mrt_yn,
+    a.ntn_sprt_yn
+FROM
+    preference a
+JOIN
+    resume b ON a.res_no = b.res_no
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId}        
+</select>
+
+
+<!-- 연수 불러오기 -->
+<select id = "selSatOne" parameterType="map" resultType="StudyAndTrainningVO">
+
+SELECT
+    a.sdytrn_no,
+    a.res_no,
+    a.sdytrn_nm,
+    a.sdytrn_bgng_ymd,
+    a.sdytrn_end_ymd,
+    a.inst_nm
+FROM
+    studyandtrainning a
+JOIN
+    resume b ON a.res_no = b.res_no
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId}          
+    
+</select>
+
+<!-- 연수 불러오기 -->
+<select id = "selSIOne" parameterType="map" resultType="SelfIntroductionVO">
+
+SELECT
+    a.si_no,
+    a.res_no,
+    a.si_ttl,
+    a.si_cn
+FROM
+    selfintroduction a
+JOIN
+    resume b ON a.res_no = b.res_no
+WHERE
+    a.res_no = #{resNo} AND b.pr_mbr_id = #{prMbrId}          
+    
+</select>
+
+
+<!-- 아래는 폼 등록 -->
+
+<!-- 이력서 등록 -->
+
+<insert id="insRes" parameterType="ResumeVO">
+INSERT INTO resume (
+    res_no,
+    pr_mbr_id,
+    res_ttl,
+    pr_mbr_nm,
+    pr_mbr_telno,
+    pr_mbr_email,
+    pr_mbr_birthdy,
+    pr_mbr_zip,
+    pr_mbr_bsc_addr,
+    pr_mbr_daddr,
+    sexdstn_cd,
+    trms_agre_cd,
+    rprsv_res_yn,
+    prov_photo,
+    career_cd
+) VALUES (
+    SEQ_RESUME.nextval
+    ,#{prMbrId}       
+    ,#{resTtl}        
+    ,#{prMbrNm}       
+    ,#{prMbrTelno}    
+    ,#{prMbrEmail}    
+    ,#{prMbrBirthdy}  
+    ,#{prMbrZip}      
+    ,#{prMbrBscAddr}  
+    ,#{prMbrDaddr}
+    ,#{sexdstnCd} 
+    ,'Y'
+    ,#{rprsvResYn}
+    ,#{provPhoto}
+    ,#{careerCd}
+)
+</insert>
+
+<!-- 프로젝트 경력 등록 -->
+<insert id="insPc" parameterType="ProjectCareerVO">
+
+	INSERT INTO projectcareer (
+	    pj_career_no,
+	    res_no,
+	    orderer_nm,
+	    pj_nm,
+	    order_bgng_ymd,
+	    order_end_ymd,
+	    main_task
+	) VALUES (
+	    SEQ_PROJECTCAREER.nextval,
+	    SEQ_RESUME.currval,   
+	    #{ordererNm},   
+	    #{pjNm},        
+	    #{orderBgngYmd},
+	    #{orderEndYmd}, 
+	    #{mainTask} 
+	)
+</insert>
+
+<!-- 경력 등록 -->
+<insert id="insC" parameterType="CareerVO">
+
+	INSERT INTO career (
+	    career_no,
+	    res_no,
+	    co_nm,
+	    job_pos_nm,
+	    serve_yn,
+	    work_bgng_ymd,
+	    work_end_ymd,
+	    assign_task_cn,
+	    salary,
+	    work_dept_nm
+	) VALUES (
+		SEQ_CAREER.nextval,    
+		SEQ_RESUME.currval,    
+		#{coNm},        
+		#{jobPosNm},    
+		#{serveYn},     
+		#{workBgngYmd}, 
+		#{workEndYmd},  
+		#{assignTaskCn},
+		#{salary},      
+		#{workDeptNm} 
+	)
+	
+</insert>
+
+<!-- 연수 등록 -->
+<insert id="insSat" parameterType="StudyAndTrainningVO">
+
+	INSERT INTO studyandtrainning (
+    sdytrn_no,
+    res_no,
+    sdytrn_nm,
+    sdytrn_bgng_ymd,
+    sdytrn_end_ymd,
+    inst_nm
+) VALUES (
+	SEQ_STUDYANDTRAINNING.nextval,     
+	SEQ_RESUME.currval,      
+	#{sdytrnNm},     
+	#{sdytrnBgngYmd},
+	#{sdytrnEndYmd}, 
+	#{instNm}       
+)
+</insert>
+
+<!-- 학력 등록 -->
+<insert id="insAcbg" parameterType="AcademicBackgroundVO">
+
+INSERT INTO academicbackground (
+    acbg_no,
+    res_no,
+    acbg_dtl,
+    mtcltn_ymd,
+    grdtn_ymd,
+    grdtn_yn
+) VALUES (
+   SEQ_ACADEMICBACKGROUND.nextval,  
+   SEQ_RESUME.currval,    
+   #{acbgDtl},    
+   #{mtcltnYmd},  
+   #{grdtnYmd},   
+   #{grdtnYn}    
+)
+
+</insert>
+
+
+<insert id="insCrt" parameterType="CertificateVO">
+
+INSERT INTO certificate (
+    crftct_no,
+    res_no,
+    qlfc_no,
+    crtfct_nm,
+    crtfct_acqs_ymd,
+    issue_inst_nm
+) VALUES (
+    SEQ_CERTIFICATE.nextval,
+    SEQ_RESUME.currval,    
+    #{qlfcNo},       
+    #{crtfctNm},     
+    #{crtfctAcqsYmd},
+    #{issueInstNm} 
+)
+</insert>
+
+<insert id="insP" parameterType="PreferenceVO">
+
+INSERT INTO preference (
+    prf_no,
+    res_no,
+    mil_yn,
+    mar_yn,
+    dis_yn,
+    ntn_mrt_yn,
+    ntn_sprt_yn
+) VALUES (
+    SEQ_PREFERENCE.nextval,  
+    SEQ_RESUME.currval,
+    #{milYn},     
+    #{marYn},     
+    #{disYn},     
+    #{ntnMrtYn},  
+    #{ntnSprtYn} 
+)
+</insert>
+
+<insert id="insSI" parameterType="SelfIntroductionVO">
+
+INSERT INTO selfintroduction (
+    si_no,
+    res_no,
+    si_ttl,
+    si_cn
+) VALUES (
+    SEQ_SELFINTRODUCTION.nextval,  
+    SEQ_RESUME.currval,
+  	#{siTtl},
+    #{siCn}
+)
+</insert>
+
+
+<!-- 아래는 폼 수정 .  -->
+
+<update id="updRes" parameterType="ResumeVO">
+UPDATE resume
+SET
+	res_ttl = #{resTtl},
+	prov_photo = #{provPhoto},
+	career_cd = #{careerCd}  
+WHERE
+    res_no = #{resNo} AND pr_mbr_id = #{prMbrId}
+</update>
+
+
+<update id="saveResMemo" parameterType="map">
+UPDATE resume
+SET
+	res_memo = #{resMemo}
+WHERE
+    res_no = #{resNo} AND pr_mbr_id = #{prMbrId}
+</update>
+
+
+<update id="saveWorkCondition" parameterType="map">
+UPDATE resume
+SET
+	career_year_cd = #{careerYearCd},
+	salary_cd = #{salaryCd},
+	work_cd = #{workCd},
+	duty_cd = #{dutyCd}
+WHERE
+    res_no = #{resNo} AND pr_mbr_id = #{prMbrId}
+</update>
+
+<!-- 프로젝트 경력 등록 -->
+<insert id="updPc" parameterType="ProjectCareerVO">
+	INSERT INTO projectcareer (
+	    pj_career_no,
+	    res_no,
+	    orderer_nm,
+	    pj_nm,
+	    order_bgng_ymd,
+	    order_end_ymd,
+	    main_task
+	) VALUES (
+	    SEQ_PROJECTCAREER.nextval,
+	    #{resNo}, 
+	    #{ordererNm},   
+	    #{pjNm},        
+	    #{orderBgngYmd},
+	    #{orderEndYmd}, 
+	    #{mainTask} 
+	)
+</insert>
+
+<!-- 경력 등록 -->
+<insert id="updC" parameterType="CareerVO">
+
+	INSERT INTO career (
+	    career_no,
+	    res_no,
+	    co_nm,
+	    job_pos_nm,
+	    serve_yn,
+	    work_bgng_ymd,
+	    work_end_ymd,
+	    assign_task_cn,
+	    salary,
+	    work_dept_nm
+	) VALUES (
+		SEQ_CAREER.nextval,    
+		#{resNo},  
+		#{coNm},        
+		#{jobPosNm},    
+		#{serveYn},     
+		#{workBgngYmd}, 
+		#{workEndYmd},  
+		#{assignTaskCn},
+		#{salary},      
+		#{workDeptNm} 
+	)
+	
+</insert>
+
+<!-- 연수 등록 -->
+<insert id="updSat" parameterType="StudyAndTrainningVO">
+
+	INSERT INTO studyandtrainning (
+    sdytrn_no,
+    res_no,
+    sdytrn_nm,
+    sdytrn_bgng_ymd,
+    sdytrn_end_ymd,
+    inst_nm
+) VALUES (
+	SEQ_STUDYANDTRAINNING.nextval,     
+	#{resNo},    
+	#{sdytrnNm},     
+	#{sdytrnBgngYmd},
+	#{sdytrnEndYmd}, 
+	#{instNm}       
+)
+</insert>
+
+<!-- 학력 등록 -->
+<insert id="updAcbg" parameterType="AcademicBackgroundVO">
+
+INSERT INTO academicbackground (
+    acbg_no,
+    res_no,
+    acbg_dtl,
+    mtcltn_ymd,
+    grdtn_ymd,
+    grdtn_yn
+) VALUES (
+   SEQ_ACADEMICBACKGROUND.nextval,  
+   #{resNo},  
+   #{acbgDtl},    
+   #{mtcltnYmd},  
+   #{grdtnYmd},   
+   #{grdtnYn}    
+)
+
+</insert>
+
+
+<!-- 자격증 등록 -->
+<insert id="updCrt" parameterType="CertificateVO">
+
+INSERT INTO certificate (
+    crftct_no,
+    res_no,
+    qlfc_no,
+    crtfct_nm,
+    crtfct_acqs_ymd,
+    issue_inst_nm
+) VALUES (
+    SEQ_CERTIFICATE.nextval,
+    #{resNo},  
+    #{qlfcNo},       
+    #{crtfctNm},     
+    #{crtfctAcqsYmd},
+    #{issueInstNm} 
+)
+</insert>
+
+<!-- 자격증 등록 -->
+<insert id="updP" parameterType="PreferenceVO">
+
+INSERT INTO preference (
+    prf_no,
+    res_no,
+    mil_yn,
+    mar_yn,
+    dis_yn,
+    ntn_mrt_yn,
+    ntn_sprt_yn
+) VALUES (
+    SEQ_PREFERENCE.nextval,  
+    #{resNo},  
+    #{milYn},     
+    #{marYn},     
+    #{disYn},     
+    #{ntnMrtYn},  
+    #{ntnSprtYn} 
+)
+
+</insert>
+
+<!-- 자격증 등록 -->
+<insert id="updSI" parameterType="SelfIntroductionVO">
+
+INSERT INTO selfintroduction (
+    si_no,
+    res_no,
+    si_ttl,
+    si_cn
+) VALUES (
+    SEQ_SELFINTRODUCTION.nextval,  
+    #{resNo},  
+  	#{siTtl},
+    #{siCn}
+)
+</insert>
+
+
+<!-- 이력 삭제 -->
+<delete id="delPc" parameterType="map">
+	DELETE FROM projectcareer a
+	WHERE a.res_no = #{resNo}
+	  AND EXISTS (
+	    SELECT 1
+	    FROM resume b
+	    WHERE a.res_no = b.res_no
+	      AND b.pr_mbr_id = #{prMbrId}
+	  )
+</delete>
+
+<delete id="delC" parameterType="map">
+	DELETE FROM career a
+	WHERE a.res_no = #{resNo}
+	  AND EXISTS (
+	    SELECT 1
+	    FROM resume b
+	    WHERE a.res_no = b.res_no
+	      AND b.pr_mbr_id = #{prMbrId}
+	  )
+</delete>
+
+<delete id="delSat" parameterType="map">
+	DELETE FROM studyandtrainning a
+	WHERE a.res_no = #{resNo}
+	  AND EXISTS (
+	    SELECT 1
+	    FROM resume b
+	    WHERE a.res_no = b.res_no
+	      AND b.pr_mbr_id = #{prMbrId}
+	  )
+</delete>
+
+<delete id="delAcbg" parameterType="map">
+	DELETE FROM academicbackground a
+	WHERE a.res_no = #{resNo}
+	  AND EXISTS (
+	    SELECT 1
+	    FROM resume b
+	    WHERE a.res_no = b.res_no
+	      AND b.pr_mbr_id = #{prMbrId}
+	  )
+</delete>
+
+<delete id="delCrt" parameterType="map">
+	DELETE FROM certificate a
+	WHERE a.res_no = #{resNo}
+	  AND EXISTS (
+	    SELECT 1
+	    FROM resume b
+	    WHERE a.res_no = b.res_no
+	      AND b.pr_mbr_id = #{prMbrId}
+	  )
+</delete>
+
+<delete id="delP" parameterType="map">
+	DELETE FROM preference a
+	WHERE a.res_no = #{resNo}
+	  AND EXISTS (
+	    SELECT 1
+	    FROM resume b
+	    WHERE a.res_no = b.res_no
+	      AND b.pr_mbr_id = #{prMbrId}
+	  )
+</delete>
+
+<delete id="delSI" parameterType="map">
+	DELETE FROM selfintroduction a
+	WHERE a.res_no = #{resNo}
+	  AND EXISTS (
+	    SELECT 1
+	    FROM resume b
+	    WHERE a.res_no = b.res_no
+	      AND b.pr_mbr_id = #{prMbrId}
+	  )
+</delete>
+
+
+<select id="myApplyList" parameterType="applyVO" resultType="applyVO">
+SELECT 
+	ROWNUM 
+		AS row_num,
+		e.empmn_pbanc_wrtr_nm,
+		e.empmn_pbanc_ttl,
+        e.empmn_pbanc_no,
+		a.apply_ymd,
+		a.doc_pass_yn,
+        a.coding_pass_yn,
+        a.interview_pass_yn,
+        e.doc_pass_ymd ,
+        e.coding_pass_ymd ,
+        e.interview_pass_ymd
+	FROM 
+		EMPLOYMENTANNOUNCEMENT e
+	JOIN 
+		apply A ON e.EMPMN_PBANC_NO = A.EMPMN_PBANC_NO
+	WHERE 
+		A.pr_mbr_id = #{prMbrId}
+</select>
+
+ 
+<select id="myApplyDetail" parameterType="applyVO" resultType="applyVO">
+SELECT 
+	ROWNUM 
+		AS row_num,
+		e.empmn_pbanc_wrtr_nm,
+		e.empmn_pbanc_ttl,
+        e.empmn_pbanc_no,
+        e.powk_nm,
+		a.apply_ymd,
+		a.doc_pass_yn,
+        a.coding_pass_yn,
+        a.interview_pass_yn,
+        e.doc_pass_ymd ,
+        e.coding_pass_ymd ,
+        e.interview_pass_ymd,
+        a.resume_file,
+        (SELECT ent.logo_img FROM ENTERPRISEMEMBER ENT WHERE e.ent_mbr_id =  ENT.ent_mbr_id) AS logo_img,
+        (SELECT ent.ent_mbr_id FROM ENTERPRISEMEMBER ENT WHERE e.ent_mbr_id =  ENT.ent_mbr_id) AS ent_mbr_id      
+	FROM 
+		EMPLOYMENTANNOUNCEMENT e
+	JOIN 
+		apply A ON e.EMPMN_PBANC_NO = A.EMPMN_PBANC_NO    
+	WHERE 
+		a.pr_mbr_id = #{prMbrId} and e.empmn_pbanc_no = #{empmnPbancNo}
+</select>
+
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.employment.mapper.IBriefingMapper">
+
+	<select id="selectBriefingCount" parameterType="pagingVO" resultType="int">
+		SELECT COUNT
+			(empmn_brf_no) 
+		FROM 
+			employmentbriefing
+	</select>
+	
+	
+	<select id="selectBriefingList" parameterType="pagingVO" resultType="briefingVO">
+		SELECT
+		    EB.empmn_brf_no, 
+		    EB.ent_mbr_id, 
+		    EB.empmn_brf_ttl, 
+		    EB.empmn_brf_bgng_ymd, 
+		    EB.empmn_brf_hr, 
+		    EB.empmn_brf_plc_nm, 
+		    EB.empmn_brf_url,
+		    EB.empmn_brf_type,
+		    EM.ent_nm
+		FROM 
+			employmentbriefing EB
+		JOIN 
+			enterprisemember EM ON EB.ent_mbr_id = EM.ent_mbr_id
+	</select>
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 기업회원 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	<select id="selectEntBriefingCount" parameterType="pagingVO" resultType="int">
+		SELECT COUNT
+			(empmn_brf_no) 
+		FROM 
+			employmentbriefing
+		WHERE
+			ent_mbr_id = #{entMbrId}
+	</select>
+	
+	<select id="selectBriefing" parameterType="int" resultType="briefingVO">
+		SELECT
+		    empmn_brf_ttl,
+		    empmn_brf_bgng_ymd,
+		    empmn_brf_hr,
+		    empmn_brf_plc_nm,
+		    empmn_brf_url,
+		    empmn_brf_type
+		FROM
+		    employmentbriefing
+		WHERE
+		    empmn_brf_no = #{empmnBrfNo}
+	</select>
+
+	<select id="selectEntBriefingList" parameterType="pagingVO" resultType="briefingVO">
+		SELECT
+		    EB.empmn_brf_no, 
+		    EB.ent_mbr_id, 
+		    EB.empmn_brf_ttl, 
+		    EB.empmn_brf_bgng_ymd, 
+		    EB.empmn_brf_hr, 
+		    EB.empmn_brf_plc_nm, 
+		    EB.empmn_brf_url,
+		    EB.empmn_brf_type,
+		    EM.ent_nm
+		FROM 
+		    employmentbriefing EB
+		JOIN 
+		    enterprisemember EM ON EB.ent_mbr_id = EM.ent_mbr_id
+		WHERE
+		    EB.ent_mbr_id = #{entMbrId}
+	</select>
+	
+	<delete id="deleteBriefing" parameterType="int">
+		DELETE
+		FROM
+			employmentbriefing
+		WHERE
+			empmn_brf_no = #{empmnBrfNo}
+	</delete>
+	
+	<update id="updateBriefing" parameterType="briefingVO">
+		UPDATE
+			employmentbriefing
+		SET
+		    empmn_brf_ttl = #{empmnBrfTtl},
+		    empmn_brf_bgng_ymd = #{empmnBrfBgngYmd},
+		    empmn_brf_hr = #{empmnBrfHr},
+		    empmn_brf_plc_nm = #{empmnBrfPlcNm},
+		    empmn_brf_url = #{empmnBrfUrl},
+		    empmn_brf_type = #{empmnBrfType}
+		WHERE
+		    empmn_brf_no = #{empmnBrfNo}
+	</update>
+	
+	
+	
+	<insert id="insertBriefing" parameterType="briefingVO">
+		INSERT INTO employmentbriefing (
+			empmn_brf_no,
+			ent_mbr_id,
+			empmn_brf_ttl,
+			empmn_brf_bgng_ymd,
+			empmn_brf_hr,
+			empmn_brf_plc_nm,
+			empmn_brf_url,
+			empmn_brf_type
+		)
+		VALUES (
+			seq_employmentbriefing.nextval,
+			#{entMbrId},
+			#{empmnBrfTtl},
+			#{empmnBrfBgngYmd},
+			#{empmnBrfHr},
+			#{empmnBrfPlcNm},
+			#{empmnBrfUrl},
+			#{empmnBrfType}
+		)
+	</insert>
+
+
+
+
+</mapper>

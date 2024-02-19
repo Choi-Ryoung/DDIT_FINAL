@@ -1,0 +1,215 @@
+
+/* auth-index */
+.login_input_wrap, .pop_login_layer {
+    --common_a_hover_color: #3769ed;
+}
+.login_frm {width:320px;margin:40px 0 48px;display:flex;flex-flow:row wrap;justify-content: center}
+.login_frm *:focus-visible {outline:2px solid #3157dd;outline-offset:2px;border-radius:4px}
+
+.login_frm.person {margin:0 auto;width:320px;text-align:center}
+.login_message {text-align:left}
+.login_message h3 {margin:0;padding:0;color:#373f57;font-size:24px;font-weight:bold;letter-spacing:-1.5px;line-height:34px}
+.login_message p {margin:0;padding:0;height:24px;color:#777;font-size:14px;letter-spacing:-1px;line-height:24px}
+.login_message p a {color:#586cdc}
+.login_message h3 em {font-weight:bold;color:#2d65f2}
+
+.margin_control {margin:36px auto 50px !important}
+.login_page_wrap {width:100%;display: flex;flex-flow:column wrap;align-content: center}
+.login_page_wrap .login_input_wrap {width:320px}
+.login_input_wrap .login_check_terms {margin-top:23px}
+.login_input_wrap .login_check_terms label {margin-right:4px;letter-spacing:-1px;vertical-align:top}
+.login_input_wrap .tab_member_type {width:100%;display:flex;flex-flow:row wrap;justify-content:center}
+.login_input_wrap .tab_member_type li {width:92px}
+.login_input_wrap .tab_member_type li:first-child {margin-right:20px}
+.login_input_wrap .tab_member_type li .btn_tab {position: relative;color:#8491a7;font-size:24px;line-height:34px;letter-spacing: -1.5px}
+.login_input_wrap .tab_member_type li .btn_tab.active {font-weight:700;color:#373f73}
+.login_input_wrap .tab_member_type li .btn_tab.active:before {position: absolute;top:-4px;width:100%;height:3px;content:"";background-color:#4876ef}
+
+.login_input_wrap .setting {display:flex;flex-flow:row nowrap;align-items:center;margin:40px 0 16px;font-size:13px;line-height:20px;letter-spacing: -0.5px}
+.login_input_wrap .setting .ssl_login_box {margin-left:auto}
+.login_input_wrap .setting .inpChk .setting_inp {position: absolute;top: 0;width: 1px;height: 1px;outline: none;opacity: 0;pointer-events: none;margin-right:8px}
+.login_input_wrap .setting .inpChk label.setting_label {display: inline-block;color: #373f57;font-size: 14px;letter-spacing: -1px;line-height: 20px;vertical-align: top;margin-right:12px}
+.login_input_wrap .setting .inpChk label.setting_label:before {float: left;margin: 0 8px 0 0;width: 20px;height: 20px;content: "";background:url(//www.saraminimage.co.kr/sri/join/input_check_radio2.png) no-repeat}
+.login_input_wrap .setting .inpChk input:checked+.setting_label:before {background-position-x:-81px}
+.login_input_wrap .setting .inpChk input:checked+.setting_label:after {display: table;clear: both;content: "";table-layout: fixed;}
+
+.login_input_wrap .login-form {display:flex;flex-flow:column nowrap}
+.login_input_wrap .login-form .id-input-box,
+.login_input_wrap .login-form .pw-input-box {position: relative}
+.login_input_wrap .login-form .id-input-box {margin-bottom:8px}
+.login_input_wrap .login-form input {width:100%;border:1px solid #8491a7;background:#fff;color:#373f57;border-radius:4px;padding:24px 12px 8px 12px;font-size:16px;font-weight:bold;letter-spacing:-1px;box-sizing:border-box}
+.login_input_wrap .login-form label {position: absolute;left:12px;top:18px;font-size:16px;color:#5c667b;transition:all 300ms ease}
+.login_input_wrap .login-form input:focus ~ label,
+.login_input_wrap .login-form input:valid ~ label,
+.login_input_wrap .login-form input:-webkit-autofill ~ label {font-size:12px;top:8px;color:#373f57}
+.login_input_wrap .login-form input:focus,
+.login_input_wrap .login-form input:valid,
+.login_input_wrap .login-form input:-webkit-autofill {padding:24px 12px 9px 12px}
+.login_input_wrap .login-form .btn-login {margin:12px 0;width:100%;color:#fff;font-size:16px;letter-spacing:-1px;font-weight:bold;background:#2d65f2;border-radius:4px}
+.login_input_wrap .signup-forgotten {margin-bottom:24px;display:flex;flex-flow:row wrap;position:relative;width:100%;font-size:13px;line-height:24px;letter-spacing:-1px}
+.login_input_wrap .signup-forgotten .sign_up,
+.login_input_wrap .signup-forgotten .forgotten,
+.login_input_wrap .signup-forgotten .link_rater {color:#373f57}
+.login_input_wrap .signup-forgotten .forgotten:hover,
+.login_input_wrap .signup-forgotten .link_rater:hover {color:var(--common_a_hover_color)}
+.login_input_wrap .signup-forgotten .sign_up {position: relative;font-weight:bold;margin-right:20px}
+.login_input_wrap .signup-forgotten .sign_up:after {position: absolute;content:"";background-color:#373f57;width:1px;height:14px;top:6px;right:-8px}
+.login_input_wrap .signup-forgotten .link_rater {margin-left:auto;letter-spacing: -0.5px;text-decoration: underline}
+.login_input_wrap .social_login_tit .tit {text-align: center;font-size: 15px;color: #5c667b;line-height: 24px;letter-spacing:-1px}
+.login_input_wrap .social_login_tit .tit:before,
+.login_input_wrap .social_login_tit .tit:after {width: 60px;height: 1px;background-color: #eaedf4;display: inline-block;vertical-align: super;content:''}
+.login_input_wrap .social_login_tit .tit:before {margin-right:8px}
+.login_input_wrap .social_login_tit .tit:after {margin-left:8px}
+.login_input_wrap .social_login {width:100%;display:flex;flex-flow:row wrap;justify-content:space-between;padding-top:24px}
+
+.login_input_wrap .social_login .login_naver,
+.login_input_wrap .social_login .login_kakao,
+.login_input_wrap .social_login .login_google,
+.login_input_wrap .social_login .login_facebook,
+.login_input_wrap .social_login .login_apple {width:50px;height:50px;position: relative}
+
+.login_input_wrap .social_login .login_naver a,
+.login_input_wrap .social_login .login_kakao a,
+.login_input_wrap .social_login .login_google a,
+.login_input_wrap .social_login .login_facebook a,
+.login_input_wrap .social_login .login_apple a {display:flex;flex-flow:column wrap;align-items:center}
+
+.login_input_wrap .social_login li .wrap_icon {display:flex;flex-flow:row wrap;width:50px;height:50px;border-radius:100%;border:1px solid #96a0b5;justify-content: center;align-content:center;box-sizing: border-box}
+.login_input_wrap .social_login .login_naver .wrap_icon {background-color:#03cf5d;border-color:#03cf5d}
+.login_input_wrap .social_login .login_kakao .wrap_icon {background-color:#fee500;border-color:#fee500}
+.login_input_wrap .social_login .login_facebook .wrap_icon {background-color:#1977f3;border-color:#1977f3}
+.login_input_wrap .social_login .login_apple .wrap_icon {background-color:#1d1d1b;border-color:#1d1d1b}
+
+.login_input_wrap .social_login .login_naver .icon {width:20px;height:20px}
+.login_input_wrap .social_login .login_kakao .icon {width:24px;height:22px}
+.login_input_wrap .social_login .login_google .wrap_icon .icon {width:22px;height:22px}
+.login_input_wrap .social_login .login_facebook .wrap_icon .icon {width:14px;height:26px}
+.login_input_wrap .social_login .login_apple .wrap_icon .icon {width:22px;height:25px}
+.login_input_wrap .social_login .social_tooltip {position: absolute;left:50%;top:100%;animation: snslogin_hide 0s ease-in 5s forwards;animation-fill-mode: forwards}
+.login_input_wrap .social_login .social_tooltip .tool_tip {display: block}
+@keyframes snslogin_hide {
+    to {
+        width:0;
+        height:0;
+        overflow: hidden;
+        visibility: hidden;
+    }
+}
+
+
+.login_input_wrap .com_noti_list {display:inline-block;overflow:hidden;zoom:1;width:100%;height:82px;padding-top:20px}
+.login_input_wrap .com_noti_list .cn_tit {display:block;margin-bottom:7px;height:17px;color:#444;font-size:15px;font-weight:bold;letter-spacing:-1px;line-height:17px}
+.login_input_wrap .com_noti_list .cn_list {font-size:12px;letter-spacing:-1px;line-height:18px}
+.login_input_wrap .com_noti_list .cn_list li {overflow:hidden;width:90%;text-overflow:ellipsis;white-space:nowrap}
+.login_input_wrap .com_noti_list .cn_list a {color:#666;text-decoration:none}
+.login_noti_wrap {padding:21px 42px 21px 61px;border:1px solid #e1e5ff;line-height:16px;background:#edeffd url("//www.saraminimage.co.kr/ui/login_page/notice_mark.png") no-repeat 20px center}
+.login_noti_wrap p.tit {padding-bottom:1px;color:#000;font-size:12px;letter-spacing:-1px;word-spacing:-1px}
+.login_noti_wrap p.txt {color:#777;font-size:11px;letter-spacing:-1px;word-spacing:-1px}
+.login_banner_wrap {width:320px;height:100px;box-sizing:border-box;overflow:hidden}
+.login_banner_wrap img {width:100%;height:100px}
+
+
+/* 로그인 레이어 */
+.pop_login_layer *:focus-visible {outline:2px solid #3157dd;outline-offset:2px;border-radius:4px}
+.pop_login_layer {position:fixed;top:50%;left:50%;z-index:9999;margin-left:-204px;box-sizing:border-box;font-family:"맑은 고딕",dotum,sans-serif;font-size:12px;text-align:left;}
+.pop_login_layer .outer {position:relative;padding:52px 44px;width:408px;border:1px solid #666;border-radius:16px;box-sizing:border-box;background:#fff}
+.pop_login_layer .title {margin-bottom:32px;font-size:24px;font-weight:bold;line-height: 34px;letter-spacing:-1.5px}
+.pop_login_layer .title .txt_point {color:#2d65f2}
+.pop_login_layer .setting {display:flex;flex-flow:row nowrap;align-items:center;margin:40px 0 16px;font-size:14px;line-height:21px;letter-spacing: -1px}
+.pop_login_layer .setting .ssl_login_box {margin-left:auto}
+.pop_login_layer .setting .inpChk .setting_inp {position: absolute;top: 0;width: 1px;height: 1px;outline: none;opacity: 0;pointer-events: none;margin-right:8px}
+.pop_login_layer .setting .inpChk label.setting_label {display: inline-block;color: #373f57;font-size: 14px;letter-spacing: -1px;line-height: 20px;vertical-align: top;margin-right:10px}
+.pop_login_layer .setting .inpChk label.setting_label:before {float: left;margin: 0 8px 0 0;width: 20px;height: 20px;content: "";background:url(//www.saraminimage.co.kr/sri/join/input_check_radio2.png) no-repeat}
+.pop_login_layer .setting .inpChk input:checked+.setting_label:before {background-position-x:-81px}
+.pop_login_layer .setting .inpChk input:checked+.setting_label:after {display: table;clear: both;content: "";table-layout: fixed;}
+.pop_login_layer .setting .inpChk input:focus-visible:focus + label {outline:2px solid #3157dd;outline-offset:2px;border-radius:4px}
+
+.pop_login_layer .login-form {display:flex;flex-flow:column nowrap}
+.pop_login_layer .login-form .id-input-box,
+.pop_login_layer .login-form .pw-input-box {position: relative}
+.pop_login_layer .login-form .id-input-box {margin-bottom:8px}
+.pop_login_layer .login-form input {width:100%;border:1px solid #8491a7;background:#fff;color:#373f57;border-radius:4px;padding:24px 12px 8px 12px;font-size:16px;font-weight:bold;letter-spacing:-1px;box-sizing:border-box}
+.pop_login_layer .login-form label {position: absolute;left:12px;top:18px;font-size:16px;color:#5c667b;transition:all 300ms ease}
+.pop_login_layer .login-form input:focus ~ label,
+.pop_login_layer .login-form input:valid ~ label,
+.pop_login_layer .login-form input:-webkit-autofill ~ label {font-size:12px;top:8px;color:#373f57}
+.pop_login_layer .login-form input:focus,
+.pop_login_layer .login-form input:valid,
+.pop_login_layer .login-form input:-webkit-autofill {padding:24px 12px 9px 12px}
+.pop_login_layer .login-form .btn-login {height:56px;margin:12px 0;padding:14px 0;width:100%;color:#fff;font-size:16px;letter-spacing:-1px;font-weight:bold;background:#2d65f2;border-radius:4px}
+.pop_login_layer .signup-forgotten {margin-bottom:24px;display:flex;flex-flow:row wrap;position:relative;width:100%;font-size:13px;line-height:24px;letter-spacing:-1px}
+.pop_login_layer .signup-forgotten .sign_up,
+.pop_login_layer .signup-forgotten .forgotten {color:#373f57}
+.pop_login_layer .signup-forgotten .forgotten:hover,
+.pop_login_layer .signup-forgotten .link_rater:hover {color:var(--common_a_hover_color)}
+.pop_login_layer .signup-forgotten .sign_up {position: relative;font-weight:bold;margin-right:12px}
+.pop_login_layer .signup-forgotten .sign_up:after {position: absolute;content:"";background-color:#373f57;width:1px;height:14px;top:6px;right:-8px}
+
+.pop_login_layer .social_login_tit .tit {text-align: center;font-size: 15px;color: #5c667b;line-height: 24px;letter-spacing:-1px}
+.pop_login_layer .social_login_tit .tit:before,
+.pop_login_layer .social_login_tit .tit:after {width: 60px;height: 1px;background-color: #eaedf4;display: inline-block;vertical-align: super;content: '';}
+.pop_login_layer .social_login_tit .tit:before {margin-right:8px}
+.pop_login_layer .social_login_tit .tit:after {margin-left:8px}
+
+.pop_login_layer .social_login {width:100%;display:flex;flex-flow:row wrap;justify-content:space-evenly;position: relative;padding-top:24px}
+
+.pop_login_layer .social_login .login_naver .icon {width:20px;height:20px}
+.pop_login_layer .social_login .login_kakao .icon {width:24px;height:22px}
+
+.pop_login_layer .social_login .login_naver,
+.pop_login_layer .social_login .login_kakao,
+.pop_login_layer .social_login .login_google,
+.pop_login_layer .social_login .login_facebook,
+.pop_login_layer .social_login .login_apple {width:63px;font-size:13px;letter-spacing: -1px;line-height:18px;position: relative}
+
+.pop_login_layer .social_login .login_naver a,
+.pop_login_layer .social_login .login_kakao a,
+.pop_login_layer .social_login .login_google a,
+.pop_login_layer .social_login .login_facebook a,
+.pop_login_layer .social_login .login_apple a {display:flex;flex-flow:column wrap;align-items:center;color:#5c667b}
+
+.pop_login_layer .social_login li .wrap_icon {margin-bottom:8px;display:flex;flex-flow:row wrap;width:50px;height:50px;border-radius:100%;border:1px solid;justify-content: center;align-content:center}
+.pop_login_layer .social_login .login_naver .wrap_icon {background-color:#03cf5d;border-color:#03cf5d}
+.pop_login_layer .social_login .login_kakao .wrap_icon {background-color:#fee500;border-color:#fee500}
+.pop_login_layer .social_login .login_google .wrap_icon {border-color:#96a0b5}
+.pop_login_layer .social_login .login_facebook .wrap_icon {background-color:#1977f3;border-color:#1977f3}
+.pop_login_layer .social_login .login_apple .wrap_icon {background-color:#1d1d1b;border-color:#1d1d1b}
+
+.pop_login_layer .social_login .login_google .wrap_icon .icon {width:22px;height:22px}
+.pop_login_layer .social_login .login_facebook .wrap_icon .icon {width:14px;height:26px}
+.pop_login_layer .social_login .login_apple .wrap_icon .icon {width:22px;height:24px}
+.pop_login_layer .social_login .social_tooltip {position: absolute;left:50%;top:100%;animation: snslogin_hide 0s ease-in 5s forwards;animation-fill-mode: forwards}
+.pop_login_layer .pop_login_layer_close {overflow:hidden;position:absolute;top:0;right:0;width:43px;height:43px;border:0;color:transparent;font-size:0;line-height:0;text-indent:-100%;text-shadow:none;white-space:nowrap;background:url(//www.saraminimage.co.kr/ui/common/btn_login_close.png) no-repeat 50% 50%;cursor:pointer;*text-indent:0}
+.pop_login_layer .social_login .social_tooltip .tool_tip.top_center {top: calc(100% + 17px);left: 50%;-webkit-transform: translateX(-50%);-ms-transform: translateX(-50%);transform: translateX(-50%);}
+.pop_login_layer .social_login .social_tooltip .tool_tip {z-index: 200;display: block;position: absolute;padding: 24px;border: 1px solid #eaedf4;border-radius: 8px;box-sizing: border-box;background: #fff;box-shadow: 0 2px 20px 0 rgba(0,0,0,0.1);}
+.pop_login_layer .social_login .social_tooltip .tool_tip.top_center .tail {background: url(//www.saraminimage.co.kr/sri/person/spr/spr_tooltip_tail.png) 0 0 no-repeat;top: -18px;left: 50%;margin-left: -16px;}
+.pop_login_layer .social_login .social_tooltip .tool_tip .tool_tip_cont {color: #5c667b;font-size: 14px;letter-spacing: -1px;line-height: 20px;white-space: nowrap;}
+.pop_login_layer .social_login .social_tooltip .tool_tip .tail {position: absolute;z-index: 2;width: 32px;height: 32px;}
+@keyframes snslogin_hide {
+    to {
+        width:0;
+        height:0;
+        overflow: hidden;
+        visibility: hidden;
+    }
+}
+
+    /* 개인 patterns 를 복붙하여 클래스명 바꿈 inpChkSw=>inpChkSwP */
+/* 보안 Swich */
+.inpChkSwP {display:inline-block;position:relative}
+.inpChkSwP input {clip:rect(1px, 1px, 1px, 1px);position:absolute;width:1px;height:1px}
+.inpChkSwP .lbl {position:relative;padding-right:48px;color:#5c667b;font-size:14px}
+.inpChkSwP .lbl:before {position:absolute;top:50%;right:0;margin-top:-8px;width:40px;height:20px;border-radius:10px;background:#96a0b5;content:""}
+.inpChkSwP .lbl:after {position:absolute;top:50%;right:22px;margin-top:-6px;width:16px;height:16px;border-radius:50%;box-sizing:border-box;background:#fff;transition-timing-function:linear;transition-duration:0.15s;transition-property:right, background;content:""}
+.inpChkSwP input:checked+.lbl:before {background:#4876ef}
+.inpChkSwP input:checked+.lbl:after {right:2px}
+.inpChkSwP .lbl.reverse {padding-right:0;padding-left:48px}
+.inpChkSwP .lbl.reverse:before {left:0}
+.inpChkSwP .lbl.reverse:after {right:initial;left:2px;transition-property:left, background}
+.inpChkSwP input:checked+.lbl.reverse:after {left:22px;background:#fff}
+.inpChkSwP .lbl:focus-visible,
+.inpChkSwP .ssl_login_hide:focus + label:before {outline:2px solid #3157dd;outline-offset:2px}
+
+/* WMG-34277 */
+
+.join_page_wrap .join_content .join_box .social_login_box .social_login_tit {padding-top:20px}

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="kr.or.ddit.member.mypage.mapper.IMypageMapper">
+  
+  
+  
+  <!-- 회원정보 조회 -->
+  <select id="getMemberInfo" parameterType="string" resultType="memberVO">
+  	select
+	    pr_mbr_id,
+	    pr_mbr_nm,
+	    pr_mbr_ncnm,
+	    pr_mbr_telno,
+	    pr_mbr_email,
+	    pr_mbr_birthdy,
+	    pr_mbr_zip,
+	    pr_mbr_bsc_addr,
+	    pr_mbr_daddr,
+	    sexdstn_cd
+	from
+	    privatemember
+	where
+	    pr_mbr_id = #{prMbrId}
+  </select>
+  
+  <!-- 회원정보수정 -->
+ <update id="profileUpdate" parameterType="memberVO">
+    UPDATE privatemember
+    SET
+        pr_mbr_nm = #{prMbrNm},
+        pr_mbr_ncnm = #{prMbrNcnm},
+        pr_mbr_pswd = #{prMbrPswd},
+        pr_mbr_telno = #{prMbrTelno},
+        pr_mbr_email = #{prMbrEmail},
+        pr_mbr_zip = #{prMbrZip},
+        pr_mbr_bsc_addr = #{prMbrBscAddr},
+        pr_mbr_daddr = #{prMbrDaddr},
+        sexdstn_cd = #{sexdstnCd}
+    WHERE
+        pr_mbr_id = #{prMbrId}
+</update>
+  
+  
+    <select id="getMentoInfo" parameterType="string" resultType="mentoProfileVO">
+	  select
+	    men_ncnm,
+	    men_pst_cn,
+	    bank_cd,
+	    actno,
+	    apply_task_cd,
+	    apply_career_cd,
+	    men_indt
+	from
+	    mentoringprofile
+	where
+	    men_ncnm = #{menNcnm}
+  </select>
+  
+   <update id="mentoUpdate" parameterType="memberVO">
+	    UPDATE mentoringprofile
+	    SET
+	        men_pst_cn = #{menPstCn},
+	        bank_cd = #{bankCd},
+	        actno = #{actno},
+	        apply_task_cd = #{applyTaskCd},
+	        apply_career_cd = #{applyCareerCd},
+	        men_indt = #{menIndt}
+	    WHERE
+	        men_ncnm = #{menNcnm}
+</update>
+
+	
+	
+	
+		<select id="selectProposalList" parameterType="pagingVO" resultType="prpslVO">
+		select
+			prpsl_no,
+			ent_mbr_id,
+			pr_mbr_id,
+			prpsl_yn,
+			prpsl_ttl
+		from 
+			proposal
+		where
+			pr_mbr_id = #{searchVO.prMbrId}
+		
+	</select>
+     
+  	<select id="countProposal" parameterType="pagingVO" resultType="int">
+  		select count(prpsl_no) from proposal
+  	</select>
+
+<select id="selectPrpsList" parameterType="pagingVO" resultType="kr.or.ddit.enterprise.talentsearch.vo.ProposalVO">
+    select
+        prpsl_no,
+        ent_mbr_id,
+        pr_mbr_id,
+        prpsl_yn,
+        prpsl_ttl,
+        prpsl_cn
+    from
+    	proposal
+    where
+    	prpsl_no = #{prpslNo}
+</select>
+     
+  
+  
+  </mapper>

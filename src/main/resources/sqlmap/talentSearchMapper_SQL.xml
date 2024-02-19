@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.enterprise.talentsearch.mapper.SearchMapper">
+	<!-- 이력서 -->
+	<resultMap type="resVO" id="resumeMap">
+		<id property="resNo" column="res_no" />
+		<result property="prMbrId" column="pr_mbr_id" />
+		<result property="resTtl" column="res_ttl"/>
+		<result property="prMbrNm" column="pr_mbr_nm"/>
+		<result property="prMbrTelno" column="pr_mbr_telno"/>
+		<result property="prMbrEmail" column="pr_mbr_email"/>
+		<result property="prMbrBirthdy" column="pr_mbr_birthdy"/>
+		<result property="prMbrZip" column="pr_mbr_zip"/>
+		<result property="prMbrBscAddr" column="pr_mbr_bsc_addr"/>
+		<result property="prMbrDaddr" column="pr_mbr_daddr"/>
+		<result property="sexdstnCd" column="sexdstn_cd"/>
+		<result property="provPhoto" column="prov_photo"/>
+		<collection property="careerList" resultMap="careerMap"/>
+		<collection property="abgList" resultMap="abgMap"/>
+		<collection property="certificateList" resultMap="certificateMap"/>
+		<collection property="studyList" resultMap="studyMap"/>
+		<collection property="selfList" resultMap="selfMap"/>
+		<collection property="procarList" resultMap="procarMap"/>
+		<collection property="preList" resultMap="preMap"/>
+	</resultMap>
+	<!-- 경력 -->
+	<resultMap type="CareerVO" id="careerMap">
+		<result property="careerNo" column="career_no"/>
+		<result property="coNm" column="co_nm"/>
+		<result property="jobPosNm" column="job_pos_nm"/>
+		<result property="serveYn" column="serve_yn"/>
+		<result property="workBgngYmd" column="work_bgng_ymd"/>
+		<result property="workEndYmd" column="work_end_ymd"/>
+		<result property="assignTaskCn" column="assign_task_cn"/>
+		<result property="salary" column="salary"/>
+		<result property="workDeptNm" column="work_dept_nm"/>
+	</resultMap>
+	<!-- 학력 -->
+	<resultMap type="AcademicBackgroundVO" id="abgMap">
+		<result property="acbgNo" column="acbg_no"/>
+		<result property="acbgDtl" column="acbg_dtl"/>
+		<result property="mtcltnYmd" column="mtcltn_ymd"/>
+		<result property="grdtnYmd" column="grdtn_ymd"/>
+		<result property="grdtnYn" column="grdtn_yn"/>
+	</resultMap>
+	<!-- 자격증 -->
+	<resultMap type="CertificateVO" id="certificateMap">
+		<result property="crftctNo" column="crftct_no" />
+		<result property="qlfcNo" column="qlfc_no" />
+		<result property="crtfctNm" column="crtfct_nm" />
+		<result property="crtfctAcqsYmd" column="crtfct_acqs_ymd" />
+		<result property="issueInstNm" column="issue_inst_nm" />
+	</resultMap>
+	<!-- 연수 -->
+	<resultMap type="StudyAndTrainningVO" id="studyMap">
+		<result property="sdytrnNo" column="sdytrn_no"/>
+		<result property="sdytrnNm" column="sdytrn_nm"/>
+		<result property="sdytrnBgngYmd" column="sdytrn_bgng_ymd"/>
+		<result property="sdytrnEndYmd" column="sdytrn_end_ymd"/>
+		<result property="instNm" column="inst_nm"/>
+	</resultMap>
+	<!-- 자기소개서 -->
+	<resultMap type="SelfIntroductionVO" id="selfMap">
+		<result property="siNo" column="si_no"/>
+		<result property="siTtl" column="si_ttl"/>
+		<result property="siCn" column="si_cn"/>
+	</resultMap>
+	<!-- 프로젝트 경력 -->
+	<resultMap type="ProjectCareerVO" id="procarMap">
+		<result property="pjCareerNo" column="pj_career_no"/>
+		<result property="ordererNm" column="orderer_nm"/>
+		<result property="pjNm" column="pj_nm"/>
+		<result property="orderBgngYmd" column="order_bgng_ymd"/>
+		<result property="orderEndYmd" column="order_end_ymd"/>
+		<result property="mainTask" column="main_task"/>
+	</resultMap>
+	<!-- 취업우대사항 -->
+	<resultMap type="PreferenceVO" id="preMap">
+		<result property="prfNo" column="prf_no"/>
+		<result property="milYn" column="mil_yn"/>
+		<result property="marYn" column="mar_yn"/>
+		<result property="disYn" column="dis_yn"/>
+		<result property="ntnMrtYn" column="ntn_mrt_yn"/>
+		<result property="ntnSprtYn" column="ntn_sprt_yn"/>
+	</resultMap>
+	
+	<!-- <sql id="talentSearch">
+		<if test="itemVO != null">
+			and duty_cd in 
+			<foreach collection="itemVO.dutyCdList" item="cd" open="(" close=")" separator=",">
+				 #{cd}
+			</foreach>
+ 			or career_year_cd in 
+			<foreach collection="itemVO.careerYearCdList" item="cd" open="(" close=")" separator=",">
+				 #{cd}
+			</foreach>
+		</if>
+	</sql> -->
+	
+	<sql id="talentSearch">
+	    <if test="itemVO != null">
+	        <if test="itemVO.dutyCdList != null">
+	            and duty_cd in 
+	            <foreach collection="itemVO.dutyCdList" item="cd" open="(" close=")" separator=",">
+	                #{cd}
+	            </foreach>
+	        </if>
+	        
+	        <if test="itemVO.careerYearCdList != null">
+	            and career_year_cd in 
+	            <foreach collection="itemVO.careerYearCdList" item="cd" open="(" close=")" separator=",">
+	                #{cd}
+	            </foreach>
+	        </if>
+	        
+	       <if test="itemVO.workCdList != null">
+	            and work_cd in 
+	            <foreach collection="itemVO.workCdList" item="cd" open="(" close=")" separator=",">
+	                #{cd}
+	            </foreach>
+	       </if>
+	       
+	       <if test="itemVO.salaryCdList != null">
+	            and salary_cd in 
+	            <foreach collection="itemVO.salaryCdList" item="cd" open="(" close=")" separator=",">
+	                #{cd}
+	            </foreach>
+	       </if>
+	    </if>
+	</sql>
+	
+	<select id="countResume" parameterType="pagingVO" resultType="int">
+		select count(res_no) from resume
+		where 1=1
+		<include refid="talentSearch"/>
+	</select>
+	
+	<select id="selectResumeList" parameterType="pagingVO" resultType="resVO">
+		select
+			res_no,
+			pr_mbr_id,
+			res_ttl,
+			pr_mbr_nm,
+			pr_mbr_telno,
+			pr_mbr_email,
+			pr_mbr_birthdy,
+			pr_mbr_zip,
+			pr_mbr_bsc_addr,
+			pr_mbr_daddr,
+			sexdstn_cd,
+			trms_agre_cd,
+			rprsv_res_yn,
+			prov_photo,
+			career_cd,
+			(SELECT CMCD_NM FROM COMMONCODE WHERE CMCD_GROUP = 'CAREER' AND CMCD = career_year_cd) AS career_year_cd,
+		    (SELECT CMCD_NM FROM COMMONCODE WHERE CMCD_GROUP = 'DUTY' AND CMCD = duty_cd) AS duty_cd,
+		    (SELECT CMCD_NM FROM COMMONCODE WHERE CMCD_GROUP = 'WORK' AND CMCD = work_cd) AS work_cd,
+		    (SELECT CMCD_NM FROM COMMONCODE WHERE CMCD_GROUP = 'SALARY' AND CMCD = salary_cd) AS salary_cd,
+		    res_memo
+		from resume
+		where 1=1
+		<include refid="talentSearch"/>
+		order by res_no desc
+	</select>
+	
+	<select id="selectResume" parameterType="int" resultMap="resumeMap">
+		select
+			*
+		from resume
+		left outer join career on resume.res_no = career.res_no
+		left outer join academicbackground on resume.res_no = academicbackground.res_no
+		left outer join certificate on resume.res_no = certificate.res_no
+		left outer join studyandtrainning on resume.res_no = studyandtrainning.res_no
+		left outer join selfintroduction on resume.res_no = selfintroduction.res_no
+		left outer join projectcareer on resume.res_no = projectcareer.res_no
+		left outer join preference on resume.res_no = preference.res_no
+		where resume.res_no = #{resNo}
+	</select>
+	
+	<insert id="insertPrpsl" parameterType="prpslVO">
+		<selectKey keyProperty="prpslNo" resultType="int" order="BEFORE">
+			select seq_proposal.nextval from dual
+		</selectKey>
+		insert into proposal(
+			prpsl_no,
+			ent_mbr_id,
+			pr_mbr_id,
+			prpsl_cn,
+			prpsl_yn,
+			prpsl_ttl
+		) values (
+			#{prpslNo},
+			#{entMbrId},
+			#{prMbrId},
+			#{prpslCn},
+			#{prpslYn},
+			#{prpslTtl}
+		)
+		
+	</insert>
+	
+</mapper>

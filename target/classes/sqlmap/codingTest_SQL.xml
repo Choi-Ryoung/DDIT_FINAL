@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.codingtest.mapper.ICodingTestMapper">
+	
+	<!-- 검색 -->
+	<sql id="codingTestSearch">
+		<if test="searchType != null and searchType == 'title'">
+			and (prct_ques_ttl like '%'||#{searchWord}||'%')
+		</if>
+	</sql>
+	
+	<select id="selectCodingTestCount" parameterType="paginationInfoVO" resultType="int">
+		select count(prct_ques_no) from practicequestion
+		where 1=1
+		<include refid="codingTestSearch" />
+	</select>
+	
+	<!-- 문제 목록 조회 -->
+	<select id="selectCodingTestList" parameterType="paginationInfoVO" resultType="practiceQuestionVO">
+		select b.*
+			from (
+			    select a.*, row_number() over (order by a.prct_ques_no desc) rnum
+			    from (
+			        select 
+			        	prct_ques_no,prct_ques_ttl,prct_ques_dffly_cd,
+			        	(select solut_yn from practicequestionsolutionyn pqs where pq.prct_ques_no = pqs.prct_ques_no and pqs.pr_mbr_id = #{searchVO.prMbrId}) as solut_yn,
+                        (select solut_ymd from practicequestionsolutionyn pqs where pq.prct_ques_no = pqs.prct_ques_no and pqs.pr_mbr_id = 'a001') as solut_ymd
+					from practicequestion pq
+					where 1=1
+					<include refid="codingTestSearch" />
+					order by 1 desc 
+			    ) a
+			) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="selectCodingTest" parameterType="int" resultType="practiceQuestionVO">
+		select
+			prct_ques_no
+			, prct_ques_ttl
+			, prct_ques_cn
+			, prct_ques_dffly_cd
+			, lmt_mttr
+			, ans
+			, ex
+		from
+			practicequestion
+		where
+			prct_ques_no = #{prctQuesNo}
+	</select>
+	
+	<!-- 
+	내가 푼 문제  
+	<select id="selectSolutionYn" parameterType="practiceVO" resultType="string">
+		select 
+		    pq.prct_ques_no,prct_ques_ttl,prct_ques_dffly_cd,
+		    solut_yn, prct_ques_ans
+		from practicequestion pq left outer join practicequestionsolutionyn pqsyn on(pq.prct_ques_no = pqsyn.prct_ques_no)
+		where pr_mbr_id = #{searchVO.prMbrId}
+	</select>
+	 -->
+	
+	<!-- 내가 푼 문제 목록 -->
+	<select id="selectMyCodingTest" parameterType="paginationInfoVO" resultType="practiceQuestionVO">
+		select b.*
+		from (
+		    select a.*, row_number() over (order by a.prct_ques_no desc) rnum
+		    from (
+		        select 
+				    pq.prct_ques_no,prct_ques_ttl,prct_ques_dffly_cd, solut_yn, solut_ymd
+				from 
+					practicequestion pq left outer join practicequestionsolutionyn pqsyn on(pq.prct_ques_no = pqsyn.prct_ques_no)
+				where
+					pr_mbr_id = #{searchVO.prMbrId} and solut_yn = 'y'
+			    ) a
+			) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	</select>
+	<!-- 내가 푼 문제 목록 -->
+	
+	<!-- 내 풀이 조회 -->
+	<select id="myCodingTestDetail" parameterType="practiceQuestionVO" resultType="practiceQuestionVO">
+		select 
+		    pq.prct_ques_no
+            , prct_ques_ttl
+            , PRCT_QUES_CN
+		    , prct_ques_dffly_cd
+		    , LMT_MTTR
+		    , ans
+		    , ex
+		    , prct_ques_ans
+		from
+			practicequestion pq
+		join
+			practicequestionsolutionyn pqsyn on(pq.prct_ques_no = pqsyn.prct_ques_no)
+		where
+			pq.prct_ques_no = #{prctQuesNo} and pr_mbr_id = #{prMbrId}
+	</select>
+	<!-- 내 풀이 조회 -->
+
+	<select id="problemIsSolve" parameterType="practiceQuestionSolutionYnVO" resultType="practiceQuestionSolutionYnVO">
+		select 
+			pr_mbr_id,prct_ques_no,solut_yn
+		from practicequestionsolutionyn
+		where pr_mbr_id = #{prMbrId}
+		and prct_ques_no = #{prctQuesNo}
+	</select>
+	
+	<update id="updateSolutionYn" parameterType="practiceQuestionSolutionYnVO">
+		update practicequestionsolutionyn set solut_yn = 'y',prct_ques_ans = #{prctQuesAns}, solut_ymd = TO_CHAR(sysdate, 'yyyy-MM-dd') where 1=1 and pr_mbr_id=#{prMbrId} and prct_ques_no=#{prctQuesNo}
+	</update>
+	
+	<insert id="insertSolutionYn" parameterType="practiceQuestionSolutionYnVO">
+		insert into practicequestionsolutionyn(
+			pr_mbr_id, prct_ques_no, solut_yn, prct_ques_ans, solut_ymd
+		)values(
+			#{prMbrId}, #{prctQuesNo}, 'y', #{prctQuesAns}, TO_CHAR(sysdate, 'yyyy-MM-dd')
+		)
+	</insert>
+	
+	
+</mapper>

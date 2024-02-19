@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.enterprise.applicant.mapper.IEntApplyMapper">
+
+	<select id="selectEntApplyCount" parameterType="string" resultType="int">
+		SELECT 
+		COUNT(*) 
+		AS 
+			total_count
+		FROM 
+			apply
+		WHERE
+			ent_mbr_id = #{entMbrId}
+	</select>
+
+<select id="selApplyList" parameterType="map" resultType="map">
+    SELECT 
+        a.ent_mbr_id,
+        a.pr_mbr_id,
+        a.empmn_pbanc_no,
+        a.resume_file,
+        a.doc_chk_yn,
+        a.doc_pass_yn,
+        a.apply_ymd,
+        a.res_no,
+        a.coding_pass_yn,
+        a.interview_pass_yn,
+        a.doc_evalue,
+        a.coding_evalue,
+        a.interview_evalue,
+        a.iv_q1,
+	    a.iv_q2,
+	    a.iv_q3,
+	    a.iv_q4,
+	    a.iv_q5,
+	    a.iv_q6,
+	    a.iv_q7,
+	    a.iv_q8,
+	    a.iv_q9,
+	    a.iv_q10,
+	    a.ct_q1,
+	    a.ct_q2,
+	    a.ct_q3,
+	    a.ct_q4,
+	    a.ct_q5,
+        c.pr_mbr_nm,
+        EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(c.pr_mbr_birthdy, 'YYYY-MM-DD')) AS age,
+        (SELECT e.cmcd_nm FROM commoncode e WHERE e.cmcd_group = 'IVCAREER' AND e.cmcd = d.career_cd) AS career_cd,
+        d.prov_photo,
+        (SELECT e.cmcd_nm FROM commoncode e WHERE e.cmcd_group = 'GENDER' AND e.cmcd = d.sexdstn_cd) AS sexdstn_cd
+    FROM apply a
+    JOIN employmentannouncement b ON a.empmn_pbanc_no = b.empmn_pbanc_no
+    JOIN privateMember c ON a.pr_mbr_id = c.pr_mbr_id
+    JOIN resume d ON a.res_no = d.res_no
+    WHERE b.empmn_pbanc_no = #{empmnPbancNo}
+    order by a.apply_ymd desc
+</select>
+	
+	<select id="selectEntApply" parameterType="string" resultType="applyVO">
+		SELECT
+		    a.ent_mbr_id,
+		    a.pr_mbr_id,
+		    a.empmn_pbanc_no,
+		    a.resume_file,
+		    a.doc_chk_yn,
+		    a.doc_pass_yn,
+		    a.apply_ymd,
+		    pm.pr_mbr_nm
+		FROM
+		    apply a
+		JOIN
+		    PRIVATEMEMBER pm ON a.pr_mbr_id = pm.pr_mbr_id
+		WHERE
+		    a.empmn_pbanc_no = #{empmnPbancNo}
+		AND
+			a.doc_pass_yn IS NULL
+	</select>
+	
+	<update id="setDocPass" parameterType="map">
+	  UPDATE apply
+    SET doc_pass_yn = #{passYn},
+        doc_evalue = #{comment}
+    WHERE pr_mbr_id = #{prMbrId} 
+      AND res_no = #{resNo} 
+      AND empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	<update id="setCtPass" parameterType="map">
+	 update 
+	 	apply a
+     set
+        coding_pass_yn = #{passYn},
+        coding_evalue = #{comment},
+        ct_q1 = #{ctQ1},
+        ct_q2 = #{ctQ2},
+        ct_q3 = #{ctQ3},
+        ct_q4 = #{ctQ4},
+        ct_q5 = #{ctQ5}
+     where 
+    	pr_mbr_id = #{prMbrId} and res_no = #{resNo} 
+    	AND empmn_pbanc_no = #{empmnPbancNo}
+      
+	</update>
+	
+	<update id="setIvPass" parameterType="map">
+	 update 
+	 	apply a
+     set
+        interview_pass_yn = #{passYn},
+        interview_evalue = #{comment},
+        iv_q1 = #{ivQ1},
+        iv_q2 = #{ivQ2},
+        iv_q3 = #{ivQ3},
+        iv_q4 = #{ivQ4},
+        iv_q5 = #{ivQ5},
+        iv_q6 = #{ivQ6},
+        iv_q7 = #{ivQ7},
+        iv_q8 = #{ivQ8},
+        iv_q9 = #{ivQ9},
+        iv_q10 = #{ivQ10}
+     where 
+    	pr_mbr_id = #{prMbrId} and res_no = #{resNo}
+    	AND empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	<update id="setDocChkY" parameterType="map">
+	 update 
+	 	apply 
+     set
+        doc_chk_yn = 'Y'
+     where 
+    	pr_mbr_id = #{prMbrId} and res_no = #{resNo}
+    	AND empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+
+	<select id="getEmpmnPbancTtl" parameterType="map" resultType="employVO">
+		SELECT a.empmn_pbanc_ttl 
+		FROM EMPLOYMENTANNOUNCEMENT a 
+		WHERE empmn_pbanc_no = #{empmnPbancNo}
+	</select>	
+	
+	<select id="getMemberTelNo" parameterType="map" resultType="privateMemberVO">
+		SELECT 
+			pr_mbr_telno
+		FROM 
+			privateMember 
+		WHERE 
+			pr_mbr_id = #{prMbrId}
+	</select>	
+	
+	<select id="getEvalueQuestion" resultType="map">
+		SELECT 
+			q_no,q_nm
+		FROM 
+			EVALUEQUESTION
+	</select>		
+	
+		
+	<select id="getCtResult"  parameterType="map" resultType="map">
+SELECT 
+    a.ent_pq_no,
+    a.ent_pq_ttl,
+    a.ent_mbr_id,
+    a.ent_pq_cn,
+    a.ex,
+    a.ent_lmt_mttr,
+    a.ans,
+    b.pr_mbr_id,
+    b.ent_pq_no,
+    b.ent_pq_solut_ymd,
+    b.empmn_pbanc_no,
+    b.ent_pq_ans
+FROM ENTPRACTICEQUESTION a
+LEFT OUTER JOIN ENTPRACTICEQUESTIONYN b ON a.ENT_PQ_NO = b.ENT_PQ_NO
+WHERE b.empmn_pbanc_no = #{empmnPbancNo} and b.pr_mbr_id = #{prMbrId}
+	</select>		
+	
+	<update id="disQualifyCt" parameterType="map">
+	 update 
+	 	apply 
+     set
+        coding_pass_yn = 'N',
+        coding_evalue = '실격'
+     where 
+    	pr_mbr_id = #{prMbrId} and res_no = #{resNo}
+    	AND empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	
+</mapper>

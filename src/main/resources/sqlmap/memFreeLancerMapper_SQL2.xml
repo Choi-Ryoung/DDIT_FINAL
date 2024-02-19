@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.freelancer.mapper.IMemFreeLancerMapper">
+
+<sql id="search">
+	<if test="searchType != null and searchType == 'title'">
+		and (bo_title like '%'||#{searchWord}||'%')
+	</if>
+	<if test="searchType != null and searchType == 'writer'">
+		and (bo_writer like '%'||#{searchWord}||'%')
+	</if>
+</sql>
+
+<select id="selPjListAll" parameterType="PagingVO" resultType="projectBoardVO">
+		select 
+			b.*
+		from (
+			select 
+				a.*, row_number() over (order by a.PJT_PST_NO desc) rnum
+			from (
+				select 
+					PJT_PST_NO, ENT_MBR_ID, PJT_NM, EST_PRD, EST_SALARY, WORK_WAY, CAREER_CD, PJT_BGNG_EST_YMD, PST_WRT_DT, PST_END_DT, DUTY_CD, PST_CN, PIC_TELNO, PSTG_YN
+				from PROJECTBOARD
+				where 1=1
+				order by PJT_PST_NO desc
+			) a
+		) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+</select>
+
+<select id="selPjCntAll"  resultType="int">
+	select count(*) from PROJECTBOARD
+</select>
+
+</mapper>

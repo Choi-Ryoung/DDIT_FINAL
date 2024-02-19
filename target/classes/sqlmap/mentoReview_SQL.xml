@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.mentoring.mapper.ReviewMapper">
+
+	<select id="selectMento" parameterType="mentiVO" resultType="string">
+		select
+			men_ncnm,
+			pr_mbr_id,
+			pr_mbr_ncnm
+		from menti
+		where men_ncnm = #{menNcnm}
+	</select>
+	
+	<insert id="addReview" parameterType="mentoReviewVO">
+		<selectKey keyProperty="menrvNo" resultType="int" order="BEFORE">
+			select seq_mentoringreview.nextval from dual
+		</selectKey>
+		insert into mentoringreview(
+			menrv_no,
+			men_ncnm,
+			pr_mbr_ncnm,
+			menrv_pst_cn,
+			menrv_wrt_dt
+		) values (
+			#{menrvNo},
+			#{menNcnm},
+			#{prMbrNcnm},
+			#{menrvPstCn},
+			sysdate
+		)
+		
+	</insert>
+	
+	<update id="updateReview" parameterType="mentoReviewVO">
+		update mentoringreview
+		set
+			menrv_pst_cn = #{menrvPstCn}
+		where menrv_no = #{menrvNo}
+	</update>
+	
+	<delete id="deleteReview" parameterType="mentoReviewVO">
+		delete from mentoringreview
+		where menrv_no = #{menrvNo}
+	</delete>
+
+</mapper>

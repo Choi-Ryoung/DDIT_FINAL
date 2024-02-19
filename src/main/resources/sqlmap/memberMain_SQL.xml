@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.main.mapper.IMemberMainMapper">
+
+	<select id="selectEmpList" parameterType="PagingVO" resultType="employVO">
+		<![CDATA[
+		SELECT b.*, em.logo_img
+		FROM (
+		    SELECT a.*, ROWNUM AS rnum
+		    FROM (
+		        SELECT
+		            e.empmn_pbanc_no,
+		            e.empmn_pbanc_ttl,
+		            e.empmn_pbanc_wrtr_nm,
+		            e.empmn_pbanc_ddln_ymd,
+		            (SELECT c.cmcd_nm FROM commoncode c WHERE c.cmcd_group = 'CAREER' AND c.cmcd = e.career_cd) AS career_cd,
+		            (SELECT c.cmcd_nm FROM commoncode c WHERE c.cmcd_group = 'DUTY' AND c.cmcd = e.duty_cd) AS duty_cd,
+		            (SELECT c.cmcd_nm FROM commoncode c WHERE c.cmcd_group = 'GENDER' AND c.cmcd = e.gender_cd) AS gender_cd,
+		            (SELECT DISTINCT d.city_nm FROM ADMSTAREACODE d WHERE d.city_cd = e.rgn) AS rgn,
+		            (SELECT DISTINCT d.county_nm FROM ADMSTAREACODE d WHERE d.county_cd = e.sigungu) AS sigungu,
+		            e.ent_mbr_id
+		        FROM employmentannouncement e
+		        ORDER BY e.empmn_pbanc_ddln_ymd ASC, e.empmn_pbanc_no ASC
+		    ) a
+		    WHERE ROWNUM <= 8
+		) b
+		JOIN enterprisemember em ON em.ent_mbr_id = b.ent_mbr_id
+		ORDER BY b.empmn_pbanc_no DESC
+		]]>
+	</select>
+	
+	<select id="selectTwoNotice" resultType="noticeVO">
+		<![CDATA[
+			select * from (
+			    select nt_pst_no, nt_pst_ttl, nt_pst_cn, nt_wrt_dt from notice order by nt_wrt_dt desc
+			) where rownum <= 2
+		]]>
+	</select>
+	
+	<select id="selectTwoCommunity" resultType="communityVO">
+		<![CDATA[
+			select * from (
+			    select comnt_pst_no, comnt_pst_ttl, comnt_pst_cn, comnt_wrt_dt from community order by comnt_wrt_dt desc
+			) where rownum <= 2
+		]]>
+	</select>
+	
+	<select id="selectTwoFaq" resultType="faqVO">
+		<![CDATA[
+			select * from (
+			    select faq_pst_no, faq_pst_ttl, faq_pst_cn, faq_wrt_dt from faq order by faq_wrt_dt desc
+			) where rownum <= 2
+		]]>
+	</select>
+	
+	<select id="selectTwoQuestion" resultType="questionVO">
+		<![CDATA[
+			select * from (
+			    select qstn_no, qstn_ttl, qstn_cn, qstn_wrt_dt from question order by qstn_wrt_dt desc
+			) where rownum <= 2
+		]]>
+	</select>
+	
+	<select id="resumeChk" parameterType = "map" resultType="int">
+		select count(*) from resume where pr_mbr_id = #{prMbrId}
+	</select>
+	
+	
+	
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.mentoring.mapper.MentoringMapper">
+
+	<resultMap type="mentoProfileVO" id="mentoProfileMap">
+		<id property="menNcnm" column="men_ncnm"/>
+		<result property="menNcnm" column="men_ncnm"/>
+		<result property="menWrtDt" column="men_wrt_dt"/>
+		<result property="menPstCn" column="men_pst_cn"/>
+		<result property="aprvYn" column="aprv_yn"/>
+		<result property="bankCd" column="bank_cd"/>
+		<result property="actno" column="actno"/>
+		<result property="applyTaskCd" column="apply_task_cd"/>
+		<result property="applyCareerCd" column="apply_career_cd"/>
+		<result property="menIndt" column="men_indt"/>
+		<result property="procCd" column="proc_cd"/>
+		<result property="rjctRsn" column="rjct_rsn"/>
+		<collection property="tagList" resultMap="tagMap"/>
+		<collection property="menFileList" resultMap="mentoFileMap"/>
+	</resultMap>
+	
+	<resultMap type="mentoTagVO" id="tagMap">
+		<result property="menTag" column="men_tag"/>
+	</resultMap>
+	
+	<resultMap type="mentoFileVO" id="mentoFileMap">
+		<id property="menFileSn" column="men_file_sn" />
+		<result property="menFileSn" column="men_file_sn"/>
+		<result property="menFileNm" column="men_file_nm"/>
+		<result property="menFileSz" column="men_file_sz"/>
+		<result property="menFileFancysize" column="men_file_fancysize"/>
+		<result property="menFileMime" column="men_file_mime"/>
+		<result property="menFileSavepath" column="men_file_savepath"/>
+	</resultMap>
+
+	<sql id="mentoSearch">
+		<if test="searchType != null and searchType == 'nickname'">
+			and (men_ncnm like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'id'">
+			and (pr_mbr_id like '%'||#{searchWord}||'%')
+		</if>
+	</sql>
+
+	<select id="selMentoCount" resultType="int">
+		select count(pr_mbr_id) from mentoringprofile
+		where 1=1
+		<include refid="mentoSearch" />
+	</select>
+
+	<select id="selMtList" parameterType="pagingVO" resultType="mentoProfileVO">
+		select 
+			b.*
+		from (
+			select 
+				a.*, row_number() over (order by a.men_wrt_dt desc) rnum
+			from (
+				select 
+					men_ncnm, 
+					men_wrt_dt, 
+    				men_pst_cn,
+					aprv_yn,
+					apply_task_cd,
+    				apply_career_cd,
+    				proc_cd
+				from mentoringprofile
+				where 1=1
+				<include refid="mentoSearch"/>
+				order by men_wrt_dt desc
+			) a
+		) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	
+	</select>
+	
+	<select id="selectMento" parameterType="string" resultMap="mentoProfileMap">
+			SELECT *
+			<!-- men_ncnm,
+			men_wrt_dt,
+			men_pst_cn,
+			ent_nm,
+			aprv_yn,
+			apply_task_cd,
+			apply_career_cd,
+			men_indt,
+			men_file_sn,
+			men_file_nm,
+			men_file_sz,
+			men_file_fancysize,
+			men_file_mime,
+			men_file_savepath,
+			men_tag -->
+			    FROM mentoringprofile
+			    LEFT OUTER JOIN mentoringfile ON mentoringprofile.men_ncnm = mentoringfile.men_ncnm
+			    LEFT OUTER JOIN mentoringtag ON mentoringprofile.men_ncnm = mentoringtag.men_ncnm
+			    WHERE mentoringprofile.men_ncnm = #{menNcnm}
+	</select>
+	
+	<update id="updateProcCd" parameterType="mentoProfileVO">
+		update mentoringprofile 
+		set
+			proc_cd = #{procCd},
+			rjct_rsn = #{rjctRsn},
+			aprv_yn = #{aprvYn}
+		where men_ncnm = #{menNcnm}
+	</update>
+	
+	
+</mapper>

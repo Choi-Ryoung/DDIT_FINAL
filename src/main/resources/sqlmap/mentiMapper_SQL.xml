@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.mentoring.mapper.MentiMapper">
+
+	<select id="selectMentiList" parameterType="string" resultType="mentiVO">
+		select
+		a.*
+		from menti a
+		join 
+		    mentoringprofile b on a.men_ncnm = b.men_ncnm 
+		where
+		    a.men_ncnm = #{menNcnm}
+	</select>
+	
+	<select id="selectMenti" parameterType="string" resultType="mentiVO">
+		select a.* from menti a
+		join 
+		mentoringprofile b on a.men_ncnm = b.men_ncnm
+		where a.men_ncnm = #{menNcnm}
+	</select>
+	
+</mapper>

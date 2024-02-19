@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.faq.mapper.IFaqMapper">
+    
+    <select id="list" resultType="FaqVO">
+    SELECT FAQ_PST_NO, FAQ_PST_TTL, FAQ_WRTR_NM, FAQ_PST_CN, FAQ_WRT_DT, FAQ_MBR_SE
+    FROM FAQ
+</select>
+
+<!-- FAQ 상세 조회 -->
+<select id="detail" parameterType="int" resultType="FaqVO">
+    SELECT FAQ_PST_NO, FAQ_PST_TTL, FAQ_WRTR_NM, FAQ_PST_CN, FAQ_WRT_DT, FAQ_MBR_SE
+    FROM FAQ
+    WHERE FAQ_PST_NO = #{faqPstNo}
+</select>
+
+<!-- FAQ 등록 -->
+<insert id="insert" parameterType="FaqVO">
+    INSERT INTO FAQ (FAQ_PST_NO, FAQ_PST_TTL, FAQ_WRTR_NM, FAQ_PST_CN, FAQ_WRT_DT, FAQ_MBR_SE)
+    VALUES (SEQ_FAQ.NEXTVAL, #{faqPstTtl}, 'John Doe', 'This is a sample FAQ content', TO_CHAR(sysdate, 'YYYY-MM-DD'), #{faqMbrSe})
+</insert>
+
+<!-- FAQ 수정 -->
+<update id="update" parameterType="FaqVO">
+    UPDATE FAQ
+    SET FAQ_PST_TTL = #{faqPstTtl},
+        FAQ_WRTR_NM = #{faqWrtrNm},
+        FAQ_PST_CN = #{faqPstCn},
+        FAQ_MBR_SE = #{faqMbrSe}
+    WHERE FAQ_PST_NO = #{faqPstNo}
+</update>
+
+<!-- FAQ 삭제 -->
+<delete id="delete" parameterType="int">
+    DELETE FROM FAQ
+    WHERE FAQ_PST_NO = #{faqPstNo}
+</delete>
+	
+	
+</mapper>

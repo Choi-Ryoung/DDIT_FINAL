@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.main.mapper.IAdminMapper">
+
+<select id="selectTopTenPrMbr" resultType="privateMemberVO">
+		<![CDATA[
+		select pr_mbr_id, pr_mbr_nm, pr_mbr_ncnm, pr_mbr_join_ymd
+		from 
+		(
+		    select pr_mbr_id, pr_mbr_nm, pr_mbr_ncnm, pr_mbr_join_ymd
+		    from privatemember
+		    order by pr_mbr_join_ymd desc
+		)
+		where rownum <= 10
+		]]>
+	</select>
+	
+	<select id="selectTopTenEntMbr" resultType="enterpriseMemberVO">
+		<![CDATA[ 
+		select ent_mbr_id, ent_nm, ent_rprs_telno, ent_join_ymd
+		from 
+		(
+		    select ent_mbr_id, ent_nm, ent_rprs_telno, ent_join_ymd
+		    from enterprisemember
+		    order by ent_join_ymd desc
+		)
+		where rownum <= 10
+		]]>
+	</select>
+	
+	<select id="getCountMembersList" resultType="graphVO">
+		<![CDATA[ 
+			SELECT * FROM (
+			    SELECT 
+			        COUNT(pr_mbr_join_ymd) as COUNT, 
+			        TO_CHAR(TO_DATE(pr_mbr_join_ymd), 'yyyy-MM-dd') as pr_mbr_join_ymd
+			    FROM
+			        privatemember
+			    WHERE 1=1
+			        and pr_mbr_join_ymd >= sysdate - 10 and pr_mbr_join_ymd < sysdate
+			    GROUP BY TO_CHAR(TO_DATE(pr_mbr_join_ymd), 'yyyy-MM-dd')
+			    ORDER BY pr_mbr_join_ymd
+			) WHERE ROWNUM <= 10
+		]]>
+	</select>
+	
+	<select id="getCountEntMemberList" resultType="graphVO">
+		<![CDATA[ 
+			select * from (
+			    select 
+			        count(ent_join_ymd) as count, 
+			        to_char(to_date(ent_join_ymd), 'yyyy-MM-dd') as ent_join_ymd
+			    from
+			        enterprisemember
+			    where 1=1
+			        and ent_join_ymd >= sysdate - 10 and ent_join_ymd < sysdate
+			    group by to_char(to_date(ent_join_ymd), 'yyyy-MM-dd')
+			    order by ent_join_ymd
+			) where rownum <= 10
+		]]>
+	</select>
+
+</mapper>

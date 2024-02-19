@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.employment.mapper.IEmpMapper">
+
+	<sql id="search">
+		<if test="searchType != null and searchType == 'title'">
+			and (empmn_pbanc_ttl like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'writer'">
+			and (empmn_pbanc_wrtr_nm like '%'||#{searchWord}||'%')
+		</if>
+	</sql>
+
+	<select id="selectEmpCount" parameterType="pagingVO" resultType="int">
+		SELECT 
+		COUNT
+			(empmn_pbanc_no) 
+		FROM 
+			employmentannouncement
+		WHERE
+			1=1
+		<include refid="search"/>
+	</select>
+	
+	<select id="selectEmpList" parameterType="PagingVO" resultType="employVO">
+		SELECT b.*, em.logo_img
+		FROM (
+		    SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.empmn_pbanc_ddln_ymd ASC) rnum
+		    FROM (
+		        SELECT
+		            e.empmn_pbanc_no,
+		            e.empmn_pbanc_ttl,
+		            e.empmn_pbanc_wrtr_nm,
+		            e.empmn_pbanc_ddln_ymd,
+		            e.salary,
+		            (select c.cmcd_nm from commoncode c where c.cmcd_group = 'CAREER' AND c.cmcd = e.career_cd) as career_cd,
+		            (select c.cmcd_nm from commoncode c where c.cmcd_group = 'DUTY' AND c.cmcd = e.duty_cd) as duty_cd,
+		            (select c.cmcd_nm from commoncode c where c.cmcd_group = 'ACBG' AND c.cmcd = e.acbg_cd) as acbg_cd,
+		            (select c.cmcd_nm from commoncode c where c.cmcd_group = 'GENDER' AND c.cmcd = e.gender_cd) as gender_cd,
+		            (select distinct d.city_nm from ADMSTAREACODE d where d.city_cd = e.rgn) as rgn,
+       				(select distinct d.county_nm from ADMSTAREACODE d where d.county_cd = e.sigungu) as sigungu,
+		            e.ent_mbr_id
+		        FROM 
+		        	employmentannouncement e
+				WHERE 1=1
+			        <include refid="search"/>
+				ORDER BY e.empmn_pbanc_ddln_ymd ASC, e.empmn_pbanc_no DESC
+			    ) a
+			) b
+		JOIN 
+			enterprisemember em ON em.ent_mbr_id = b.ent_mbr_id
+		ORDER BY 
+			empmn_pbanc_no DESC
+	</select>
+	
+	
+	<update id="incrementHit" parameterType="int">
+		UPDATE 
+			employmentannouncement
+		SET
+			empmn_pbanc_inq_cnt = empmn_pbanc_inq_cnt + 1
+		WHERE 
+			empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	
+	<select id="selectEmployment" parameterType="int" resultType="employVO">
+		SELECT
+			EA.empmn_pbanc_no,
+			EA.empmn_pbanc_ttl,
+			EA.empmn_pbanc_wrtr_nm,
+			EA.empmn_pbanc_cn,
+			EA.empmn_pbanc_wrt_ymd,
+			EA.empmn_pbanc_ddln_ymd,
+			EA.empmn_pbanc_inq_cnt,
+			(select c.cmcd_nm from commoncode c where c.cmcd_group = 'CAREER' AND c.cmcd = EA.career_cd) as career_cd,
+			(select c.cmcd_nm from commoncode c where c.cmcd_group = 'ACBG' AND c.cmcd = EA.acbg_cd) as acbg_cd,
+			EA.powk_nm,
+			EA.salary,
+			(select c.cmcd_nm from commoncode c where c.cmcd_group = 'WORK' AND c.cmcd = EA.work_type) as work_type,
+			EA.work_hr,
+			(select distinct d.city_cd from ADMSTAREACODE d where d.city_cd = EA.rgn) as rgnCd,
+			(select distinct d.city_nm from ADMSTAREACODE d where d.city_cd = EA.rgn) as rgn,
+       		(select distinct d.county_nm from ADMSTAREACODE d where d.county_cd = EA.sigungu) as sigungu,
+			(select c.cmcd_nm from commoncode c where c.cmcd_group = 'DUTY' AND c.cmcd = EA.duty_cd) as duty_cd,
+			(select c.cmcd_nm from commoncode c where c.cmcd_group = 'GENDER' AND c.cmcd = EA.gender_cd) as gender_cd,
+			EM.ent_pic_telno,
+			EM.ent_mbr_id,
+			EA.doc_pass_ymd,
+			EA.coding_pass_ymd,
+			EA.interview_pass_ymd
+		FROM
+			employmentannouncement EA
+		JOIN
+			enterprisemember EM ON EA.ent_mbr_id = EM.ent_mbr_id
+		WHERE
+			EA.empmn_pbanc_no = #{empmnPbancNo}
+	</select>
+	
+
+
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 기업회원 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	
+	<select id="getApplicantCnt" parameterType="map" resultType="int">
+			select count(*) from apply a 
+			join EMPLOYMENTANNOUNCEMENT b on a.empmn_pbanc_no = b.empmn_pbanc_no
+			where b.empmn_pbanc_no = #{empmnPbancNo}
+	</select>
+	
+	<select id="getApplicantAllPassCnt" parameterType="map" resultType="int">
+			select count(*) from apply a 
+			join EMPLOYMENTANNOUNCEMENT b on a.empmn_pbanc_no = b.empmn_pbanc_no
+			where b.empmn_pbanc_no = #{empmnPbancNo} and a.doc_pass_yn = 'Y' and a.coding_pass_yn = 'Y' and a.interview_pass_yn = 'Y'
+	</select>
+	
+	
+	<select id="selectAnnouncementCount" parameterType="pagingVO" resultType="int">
+		SELECT 
+		COUNT
+			(empmn_pbanc_no) 
+		FROM 
+			employmentannouncement
+        WHERE
+			ent_mbr_id = #{entMbrId}
+	</select>
+	
+	
+	
+	
+	<select id="selectAnnouncementList" parameterType="PagingVO" resultType="employVO">
+		SELECT b.*, em.logo_img
+		FROM (
+		    SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.empmn_pbanc_ddln_ymd ASC) rnum
+		    FROM (
+		        SELECT
+		            e.empmn_pbanc_no,
+		            e.empmn_pbanc_ttl,
+		            e.empmn_pbanc_wrtr_nm,
+		            e.empmn_pbanc_ddln_ymd,
+		            e.salary,
+		            (select c.cmcd_nm from commoncode c where c.cmcd_group = 'CAREER' AND c.cmcd = e.career_cd) as career_cd,
+			        (select c.cmcd_nm from commoncode c where c.cmcd_group = 'DUTY' AND c.cmcd = e.duty_cd) as duty_cd,
+		            (select distinct d.city_nm from ADMSTAREACODE d where d.city_cd = e.rgn) as rgn,
+		            (select c.cmcd_nm from commoncode c where c.cmcd_group = 'GENDER' AND c.cmcd = e.gender_cd) as gender_cd,
+       				(select distinct d.county_nm from ADMSTAREACODE d where d.county_cd = e.sigungu) as sigungu,
+		            e.ent_mbr_id
+		        FROM employmentannouncement e
+		        WHERE e.ent_mbr_id = #{entMbrId}
+		        ORDER BY e.empmn_pbanc_ddln_ymd DESC, e.empmn_pbanc_no DESC
+		    ) a
+		) b
+		JOIN enterprisemember em ON em.ent_mbr_id = b.ent_mbr_id
+	</select>
+	
+	<delete id="deleteAnnouncement" parameterType="int">
+		DELETE
+		FROM
+			employmentannouncement
+		WHERE
+			empmn_pbanc_no = #{empmnPbancNo}
+	</delete>
+	
+	
+	<update id="updateAnnouncement" parameterType="employVO">
+		UPDATE
+			employmentannouncement
+		SET
+			empmn_pbanc_ttl = #{empmnPbancTtl},     
+			empmn_pbanc_wrtr_nm = #{empmnPbancWrtrNm},
+			empmn_pbanc_cn = #{empmnPbancCn},
+			empmn_pbanc_wrt_ymd = TO_CHAR(sysdate, 'YYYY-MM-DD'),
+			empmn_pbanc_ddln_ymd = #{empmnPbancDdlnYmd},
+			career_cd = #{careerCd},
+			acbg_cd = #{acbgCd},
+			powk_nm = #{powkNm},           
+			salary = #{salary},
+			work_type = #{workType},    
+			work_hr = #{workHr},
+			rgn = #{rgn},
+			sigungu = #{sigungu},
+			duty_cd = #{dutyCd},      
+			gender_cd = #{genderCd},
+			doc_pass_ymd = #{docPassYmd},
+			coding_pass_ymd = #{codingPassYmd},
+			interview_pass_ymd = #{interviewPassYmd}
+		WHERE 
+			empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	
+	
+	
+	
+	
+	<insert id="insertAnnouncement" parameterType="employVO">
+		INSERT INTO employmentannouncement (
+			empmn_pbanc_no,
+			ent_mbr_id,
+			empmn_pbanc_ttl,
+			empmn_pbanc_wrtr_nm,
+			empmn_pbanc_cn,
+			empmn_pbanc_wrt_ymd,
+			empmn_pbanc_ddln_ymd,
+			career_cd,
+			acbg_cd,
+			powk_nm,
+			salary,
+			work_type,
+			work_hr,
+			rgn,
+			sigungu,
+			duty_cd,
+			gender_cd,
+			doc_pass_ymd,
+			coding_pass_ymd,
+			interview_pass_ymd
+		)
+		VALUES (
+			seq_employmentannouncement.nextval,
+			#{entMbrId},
+			#{empmnPbancTtl},
+			#{empmnPbancWrtrNm},
+			#{empmnPbancCn},
+			TO_CHAR(sysdate, 'YYYY-MM-DD'),
+			#{empmnPbancDdlnYmd},
+			#{careerCd},
+			#{acbgCd},
+			#{powkNm},
+			#{salary},
+			#{workType},
+			#{workHr},
+			#{rgn},
+			#{sigungu},
+			#{dutyCd},
+			#{genderCd},
+			#{docPassYmd},
+			#{codingPassYmd},
+			#{interviewPassYmd}
+		)
+	</insert>
+</mapper>

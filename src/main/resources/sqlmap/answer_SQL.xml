@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+namespace="kr.or.ddit.member.answer.mapper.IAnswerMapper">
+
+
+<!-- 게시글 상세 정보 조회 결과를 매핑하기 위한 resultMap 정의 -->
+	<resultMap type="answerVO" id="answerMap">
+		<id property="ansNo" column="ANS_NO" />
+		<result property="ansTtl" column="ANS_TTL" />
+		<result property="ansWrtr" column="ANS_NM" />
+		<result property="ansCn" column="ANS_CN" />
+		<result property="ansWrtDt" column="ANS_WRT_DT" />
+		<result property="ansInqCnt" column="ANS_INQ_CNT" />
+
+		<collection property="answerFileList"
+			ofType="answerFileVO" resultMap="answerFileMap" />
+	</resultMap>
+
+
+	<resultMap type="answerFileVO" id="answerFileMap">
+		<id property="ansFileSn" column="ANS_FILE_SN" />
+		<result property="ansNo" column="ANS_NO" />
+		<result property="ansFileNm" column="ANS_FILE_NM" />
+		<result property="ansFileSz" column="ANS_FILE_SZ" />
+		<result property="ansFileFancysize" column="ANS_FILE_FANCYSIZE" />
+		<result property="ansFileMime" column="ANS_FILE_MIME" />
+		<result property="ansFileSavepath" column="ANS_FILE_SAVEPATH" />
+	</resultMap>
+
+
+<sql id="answerSearch">
+		<if test="searchType != null and searchType == 'title'">
+			AND (ans_ttl LIKE '%' || #{searchWord} || '%')
+		</if>
+		<if test="searchType != null and searchType == 'writer'">
+			AND (ans_wrtr LIKE '%' || #{searchWord} || '%')
+		</if>
+	</sql>
+
+<select id="selectAnswerCount"
+		parameterType="PaginationInfoVO" resultType="int">
+		SELECT COUNT(ans_no) FROM answer
+		WHERE 1=1
+		<include refid="answerSearch" />
+	</select>
+	
+	
+<select id="selectAnswerList"
+		parameterType="paginationInfoVO" resultType="answerVO">
+		SELECT b.*
+		FROM
+		(
+		SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.ans_no
+		DESC) rnum
+		FROM
+		(
+		SELECT
+		ans_no, ans_ttl, ans_wrtr,
+		ans_cn, ans_wrt_dt,
+		ans_inq_cnt
+		FROM answer
+		WHERE 1=1
+		<include refid="answerSearch" />
+		order by ans_no desc
+		) a
+		) b
+		<![CDATA[
+		WHERE b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	</select>
+	
+	
+	<insert id="insertAnswer" parameterType="answerVO"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="ansNo" resultType="int"
+			order="BEFORE">
+			select seq_answer.nextval from dual
+		</selectKey>
+		insert into answer(
+		ans_no, ans_ttl, ans_cn,
+		ans_wrtr, ans_wrt_dt,
+		ans_inq_cnt
+		) values (
+		#{ansNo},
+		#{ansTtl}, #{ansCn}, #{ansWrtr}, TO_CHAR(sysdate, 'YYYY-MM-DD'), 0
+		)
+	</insert>
+	
+	<insert id="insertAnsFile" parameterType="answerFileVO">
+		INSERT INTO
+		answerfile(
+		ans_file_sn,
+		ans_no,
+		ans_file_nm,
+		ans_file_sz,
+		ans_file_fancysize,
+		ans_file_mime,
+		ans_file_savepath
+		) VALUES (
+		seq_answerfile.nextval,
+		#{ansNo},
+		#{ansFileNm},
+		#{ansFileSz},
+		#{ansFileFancysize},
+		#{ansFileMime},
+		#{ansFileSavepath}
+		)
+	</insert>
+	
+	
+	
+	<update id="incrementHit" parameterType="int">
+		update answer
+		set
+		ans_inq_cnt = ans_inq_cnt + 1
+		where ans_no = #{ansNo}
+	</update>
+
+
+
+<select id="selectAnswer" parameterType="int"
+		resultMap="answerMap">
+		select
+		n.ans_no,
+		n.ans_ttl,
+		n.ans_cn,
+		n.ans_wrtr,
+		n.ans_wrt_dt,
+		n.ans_inq_cnt,
+		nf.ANS_FILE_SN,
+		nf.ANS_FILE_NM,
+		nf.ANS_FILE_SZ,
+		nf.ANS_FILE_FANCYSIZE,
+		nf.ANS_FILE_MIME,
+		nf.ANS_FILE_SAVEPATH
+		from answer n
+		left outer
+		join answerfile nf
+		on n.ans_no = nf.ANS_NO
+		where
+		n.ans_no = #{ans_no}
+	</select>
+
+	
+	<update id="updateAnswer" parameterType="answerVO">
+		update answer
+		set
+		ans_ttl = #{ansTtl},
+		ans_cn = #{ansCn}
+		where
+		ans_no = #{ansNo}
+	</update>
+
+	<delete id="deleteAnswer" parameterType="int">
+		delete from answer
+		where ans_no = #{ansNo}
+	</delete>
+
+	<select id="answerDownload" parameterType="int"
+		resultType="answerFileVO">
+		select ans_file_sn, ans_no, ans_file_nm,
+		ans_file_sz, ans_file_fancysize,
+		ans_file_mime, ans_file_savepath
+		from answerfile
+		where ans_file_sn = #{fileNo}
+
+	</select>
+
+	<update id="incrementAnswerDowncount" parameterType="int">
+		update
+		answerfile
+		set
+		file_downcount = file_downcount + 1
+		where file_no =
+		#{fileNo}
+	</update>
+
+	<select id="selectAnswerFile" parameterType="int"
+		resultType="answerFileVO">
+		select
+			ans_file_sn, ans_no, ans_file_nm, ans_file_sz, ans_file_fancysize,  ans_file_mime, ans_file_savepath
+		from answerfile
+		where ans_file_sn = #{fileNo}
+	</select>
+
+	<delete id="deleteAnswerFile" parameterType="int">
+		delete from
+		answerfile
+		where ans_file_sn = #{fileNo}
+	</delete>
+
+	<delete id="deleteAnswerFileByNo" parameterType="int">
+		delete from
+		answerfile
+		where ans_no = #{ansNo}
+	</delete>
+
+	<insert id="insertAnswerFile" parameterType="answerVO">
+		insert into answerfile(
+			ans_file_sn, ans_no, ans_file_nm, ans_file_sz, ans_file_fancysize,  ans_file_mime, ans_file_savepath
+		)values(
+			seq_answerfile.nextval, #{ansNo}, #{ansFileNm}, #{ansFileSz}, #{ansFileFancysize},#{ansFileMime}, #{ansFileSavepath}
+		)
+	</insert>
+	
+	
+	<select id="selectAnswerCommentList"
+		resultType="answerCommentVO" parameterType="int">
+		SELECT * 
+		FROM answercomment 
+		WHERE ANS_NO = #{ansNo}
+		order by ANS_CMTN_NO
+	</select>
+	
+	
+	
+	<insert id="addComment" parameterType="answerCommentVO">
+		INSERT INTO answercomment (
+		ans_cmtn_no, ans_no, ans_cmtn_wrtr_id, ans_cmtn_cn, ans_cmtn_wrt_dt
+		) VALUES (
+		ans_cmtn_no_seq.nextval, #{ansNo}, #{ansCmtnWrtrId}, #{ansCmtnCn}, TO_CHAR(sysdate, 'YYYY-MM-DD'))
+	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from
+		answercomment
+		where ans_cmtn_no = #{ansCmtnNo}
+
+	</delete>
+	
+	<update id="modifyComment" parameterType="answerCommentVO">
+        UPDATE ANSWERCOMMENT
+        SET ANS_CMTN_CN = #{ansCmtnCn}
+        WHERE ans_CMTN_NO = #{ansCmtnNo}
+    </update>
+    
+   
+
+
+
+
+</mapper>	

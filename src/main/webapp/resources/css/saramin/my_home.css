@@ -1,0 +1,562 @@
+@charset "utf-8";
+
+.layout_home #content {margin-bottom:0}
+.wrap_my_home {position:relative}
+.wrap_my_home .wrap_col {position:relative;width:1248px}
+.wrap_my_home .wrap_col:before {display:block;position:absolute;top:0;bottom:0;left:940px;z-index:1;width:1px;background:#eaedf4;content:""}
+.wrap_my_home .wrap_col:after {display:table;clear:both;content:"";table-layout:fixed}
+.wrap_my_home .col1 {float:left;position:relative;z-index:3;padding-bottom:136px;width:940px}
+.wrap_my_home .col2 {float:right;position:relative;z-index:2;padding-bottom:136px;width:307px}
+
+/* 상단 */
+.wrap_my_home .wrap_title_box .wrap_title {display:inline-block}
+
+/* TOP slide */
+.my_notification {padding:0 0 12px;width:100%;border-bottom:1px solid #eaedf4}
+.my_notification .TabBox {padding:56px 0 22px}
+.my_notification .wrap_cards {position:relative;height:234px}
+.my_notification .sliders {overflow:hidden;position:relative;width:1264px;height:234px}
+.my_notification .sliders:before {position:absolute;top:0;left:0;z-index:2;width:100%;height:100%;background:#fff;content:""}
+.my_notification.complete .sliders:before {display:none}
+.my_notification .sliders .bx-viewport {overflow:visible !important}
+.my_notification .slider:after {display:table;clear:both;content:"";table-layout:fixed}
+.my_notification .slider li {float:left;position:relative;width:300px;height:190px;border-width:1px;border-style:solid;border-radius:16px;box-sizing:border-box;letter-spacing:-1px}
+.my_notification .slider.my li:nth-of-type(4n+1),
+.my_notification .slider.apply li {border-color:#5189fa;background:#5189fa}
+.my_notification .slider.my li:nth-of-type(4n+2),
+.my_notification .slider.request li {border-color:#00cba4;background:#00cba4}
+.my_notification .slider.my li:nth-of-type(4n+3),
+.my_notification .slider.jobs li {border-color:#00beea;background:#00beea}
+.my_notification .slider.my li:nth-of-type(4n+4),
+.my_notification .slider.company li {border-color:#a574ee;background:#a574ee}
+.my_notification .slider li:hover {border-color:#d7dce5 !important;background:#fff !important;box-shadow:2px 6px 16px 0 rgba(17,42,128,0.08)}
+.my_notification .slider li dl {position:absolute;top:81px;right:23px;bottom:23px;left:23px}
+.my_notification .slider.my li dl {position:static}
+.my_notification .slider li:hover dl {-webkit-transition:transform 0.2s ease-in-out;transition:transform 0.2s ease-in-out;-webkit-transform:translateY(-58px);-ms-transform:translateY(-58px);transform:translateY(-58px)}
+.my_notification .slider.my li:hover dl {-webkit-transition:none;transition:none;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}
+.my_notification .slider .link {display:block;position:absolute;top:0;left:0;z-index:2;width:100%;height:100%}
+.my_notification .slider .link:after {display:block;position:absolute;top:0;right:0;bottom:0;left:0;background:#fff;content:"";opacity:0}
+.my_notification .slider .link[href="#"] {cursor:default}
+.my_notification .slider .inner {position:relative;z-index:1;padding:23px;height:100%;box-sizing:border-box}
+.my_notification .slider .link_card {position:absolute;top:0;right:0;bottom:0;left:0;z-index:1}
+.my_notification .slider .link_card:after {display:block;position:absolute;top:0;right:0;bottom:0;left:0;background:#fff;content:"";opacity:0}
+.my_notification .slider .title {overflow:hidden;margin-bottom:12px;width:100%;color:#fff;font-size:18px;font-weight:bold;line-height:24px;text-overflow:ellipsis;white-space:nowrap}
+.my_notification .slider .txt {overflow:hidden;width:100%;color:#f8fafc;font-size:14px;line-height:24px;text-overflow:ellipsis;white-space:nowrap}
+.my_notification .slider .txt a {color:inherit;text-decoration:underline;text-underline-offset:1px}
+.my_notification .slider .txt a:hover {color:#373f57}
+.my_notification .slider .txt span {display:inline-block;width:56px;font-size:13px;line-height:24px;vertical-align:top}
+.my_notification .slider .txt.define,
+.my_notification .slider .txt.list {font-size:0}
+.my_notification .slider .txt.list span {width:auto}
+.my_notification .slider .txt.list span+span {margin-left:10px}
+.my_notification .slider .flag {position:relative;margin-bottom:34px;padding-left:34px;color:#fff;font-size:14px;font-weight:bold;line-height:24px;opacity:1}
+.my_notification .slider .flag svg {position:absolute;top:0;left:0;width:24px;height:24px}
+.my_notification .slider .flag svg use {color:#fff}
+.my_notification .slider .btn_card {display:table;position:absolute;bottom:23px;z-index:2;width:252px;opacity:0}
+.my_notification .slider .btn_card>span {display:table-cell;min-width:122px}
+.my_notification .slider .btn_card>span+span {padding-left:8px}
+.my_notification .slider .btn_card>span .BtnType,
+.my_notification .slider .btn_card .BtnType {width:100%;color:var(--blue90);border-color:var(--blue90);background:var(--white)}
+.my_notification .slider .btn_card>span .BtnType:hover,
+.my_notification .slider .btn_card .BtnType:hover {background:var(--blue20)}
+.my_notification .slider .btn_card .sri_btn_ml {width:100%}
+.my_notification .slider .btn_card .sri_btn_ml>span {width:calc(100% - 2px)}
+.my_notification .slider .title_input {display:block;position:relative;top:-18px;color:#fff;font-size:15px;font-weight:bold;line-height:21px}
+.my_notification .slider .wrap_input {position:absolute;bottom:23px;justify-content:space-between;padding:4px;width:252px;color:var(--white);border-color:var(--white);border-radius:4px;box-sizing:border-box;background:none}
+.my_notification .slider .wrap_input .Typo {width:177px}
+.my_notification .slider .wrap_input .Typo::placeholder {color:var(--white)}
+.my_notification .slider .wrap_input .BtnType {flex-shrink:0;width:54px}
+.my_notification .slider .wrap_input.TypoBox:valid {width:183px}
+.my_notification .slider .wrap_input.TypoBox+span {display:block;position:absolute;top:0;left:0;z-index:1;width:252px;height:40px;border:1px solid #4876ef;border-radius:4px;box-sizing:border-box;animation:repaint 1000s infinite linear;content:""}
+.my_notification .slider .wrap_input.TypoBox .Typo:invalid+.BtnType {display:none}
+.my_notification .slider li:hover .wrap_input.TypoBox {border-color:var(--gray40)}
+.my_notification .slider li:hover .wrap_input.TypoBox .Typo::placeholder {color:var(--gray70)}
+.my_notification .slider li:hover .title {color:#373f57}
+.my_notification .slider li:hover .txt {color:#8491a7}
+.my_notification .slider li:hover .flag {opacity:0}
+.my_notification .slider li:hover .btn_card {opacity:1}
+.my_notification .slider li:hover .title_input {color:#373f57;-webkit-transition:transform 0.2s ease-in-out;transition:transform 0.2s ease-in-out;-webkit-transform:translateY(-40px);-ms-transform:translateY(-40px);transform:translateY(-40px)}
+.my_notification .slider.my li .inner {padding:31px 23px 23px 23px}
+.my_notification .slider.my li .inner .title {margin-bottom:14px;height:72px;white-space:normal}
+.my_notification .slider .spacer {line-height:190px}
+.my_notification .slider .spacer .title {display:inline-block;text-align:center;vertical-align:middle}
+.my_notification .slider .spacer .title a {display:inline-block;margin-top:8px;color:#f8fafc;font-size:14px;font-weight:normal;line-height:24px;text-decoration:underline;vertical-align:top}
+.my_notification .slider li:hover .spacer .title a {color:#8491a7}
+.my_notification .slider li:hover .spacer .title a:hover {color:#373f57}
+.my_notification .btn_slider {position:absolute;right:0;bottom:0;z-index:3;width:32px;height:32px;border:1px solid #eaedf4;border-radius:16px;background:#fff}
+.my_notification .btn_slider.btn_prev {right:40px}
+.my_notification .btn_slider:hover {background:#f4f6fa}
+.my_notification .btn_slider:after {display:block;position:absolute;top:50%;left:50%;width:7px;height:7px;border-style:solid;border-color:#5c667b;-webkit-transform:translate(-50%, -50%) rotate(45deg);-ms-transform:translate(-50%, -50%) rotate(45deg);transform:translate(-50%, -50%) rotate(45deg);content:""}
+.my_notification .btn_slider:disabled {background:#fff;cursor:default}
+.my_notification .btn_slider:disabled:after {border-color:#afbac8}
+.my_notification .btn_slider.btn_prev:after {margin-left:2px;border-width:0 0 2px 2px}
+.my_notification .btn_slider.btn_next:after {margin-left:-2px;border-width:2px 2px 0 0}
+
+/* 행복마켓 추가 */
+.my_notification .slider.gig_product li,.my_notification .slider.gig_product li:hover {border: none;background: none;box-shadow: none;}
+.my_notification .slider.gig_product li:hover .title,
+.my_notification .slider.gig_product li:hover .title a,
+.my_notification .slider.gig_product li:hover .flag {color: var(--white)}
+.my_notification .slider.gig_product li .spacer {display:none;}
+.my_notification .slider.gig_product li .inner {display:block;}
+.my_notification .slider.gig_product li .thumb_img {position: absolute;top: 0;right: 0;bottom: 0;left: 0;display: block;border-radius: 16px;text-align: center;vertical-align: middle;overflow: hidden;}
+.my_notification .slider.gig_product li .thumb_img:after {display: block;position: absolute;top: 0;right: 0;bottom: 0;left: 0;background: rgba(0,0,0,0.5);border-radius: 16px;opacity: 1;content: "";}
+.my_notification .slider.gig_product li .thumb_img img {display: block;width: 100%;height: 100%;object-fit:cover;}
+.my_notification .slider.gig_product li .inner .flag {display: inline-block;padding: 2px 5px;background-color: var(--gray120);border-radius:4px;font-weight:normal;font-size:12px;line-height:20px;opacity:1}
+.my_notification .slider.gig_product li .inner .title {position: relative;color: var(--white);display: -webkit-box;overflow: hidden;word-wrap: break-word;-webkit-box-orient: vertical;-webkit-line-clamp: 2;white-space: normal;}
+.my_notification .slider.gig_product li.no_data {background-color: #556bc6 !important;}
+.my_notification .slider.gig_product li.no_data > a,
+.my_notification .slider.gig_product li.no_data .inner {display: none;}
+.my_notification .slider.gig_product li.no_data .spacer {display: block;}
+.my_notification .sliders .gig_product_btn_more {float: right;margin-top: 12px;padding-right: 8px;font-size: 13px;line-height: 18px;vertical-align: middle;}
+
+/* 타임라인 */
+.my_timeline {margin-bottom:56px;padding:62px 80px 0 0}
+.my_timeline .title {margin-bottom:38px;color:#373f57;font-size:24px;font-weight:bold;letter-spacing:-2px;line-height:32px}
+.my_timeline .graph {position:relative;z-index:2;padding:56px 100px 68px 32px;width:100%;height:262px;border-radius:16px;box-sizing:border-box;background:#f8f9fb}
+.my_timeline .graph .viewport {display:block;position:relative;width:100%;height:100%}
+.my_timeline .graph .item {display:block;position:absolute;bottom:0;-webkit-transition:width 0s cubic-bezier(0.2,0.6,0.2,0.9), opacity 0s linear;transition:width 0s cubic-bezier(0.2,0.6,0.2,0.9), opacity 0s linear;opacity:1}
+.my_timeline .graph .item .bar {display:block;position:absolute;top:0;left:0;z-index:2;width:100%;height:12px;border-radius:6px}
+.my_timeline .graph .item .shadow {display:block;position:absolute;top:12px;right:4px;bottom:-12px;left:4px;z-index:1;background-color:transparent;background-repeat:repeat;-webkit-transition:opacity 0.5s linear;transition:opacity 0.5s linear;opacity:1}
+.my_timeline .graph .item .bar:before {position:absolute;top:0;left:0;width:12px;height:12px;border-radius:6px;-webkit-transition:width 0.4s ease-in-out;transition:width 0.4s ease-in-out;content:""}
+.my_timeline .graph .item:hover .bar:before {width:100%}
+.my_timeline .graph .item.edu .bar {background:#afbac8}
+.my_timeline .graph .item.job .bar {background:#6d9cfa}
+.my_timeline .graph .item.edu .bar:before {background:#6d7789}
+.my_timeline .graph .item.job .bar:before {background:#3769ed}
+.my_timeline .graph .item.edu .shadow {bottom:-42px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3ClinearGradient id='svg_shadow_gradient' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' style='stop-color:rgba(234,237,244,1)'/%3E%3Cstop offset='100%25' style='stop-color:rgba(234,237,244,0);' /%3E%3C/linearGradient%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='url(%23svg_shadow_gradient)' /%3E%3C/svg%3E")}
+.my_timeline .graph .item.edu:hover .shadow {background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3ClinearGradient id='svg_shadow_gradient' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' style='stop-color:rgba(215,220,229,1)'/%3E%3Cstop offset='100%25' style='stop-color:rgba(215,220,229,0);' /%3E%3C/linearGradient%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='url(%23svg_shadow_gradient)' /%3E%3C/svg%3E")}
+.my_timeline .graph .item.job .shadow {background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3ClinearGradient id='svg_shadow_gradient' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' style='stop-color:rgba(222,235,255,1)'/%3E%3Cstop offset='100%25' style='stop-color:rgba(222,235,255,0);' /%3E%3C/linearGradient%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='url(%23svg_shadow_gradient)' /%3E%3C/svg%3E")}
+.my_timeline .graph .item.job:hover .shadow {background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3ClinearGradient id='svg_shadow_gradient' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' style='stop-color:rgba(188,209,252,1)'/%3E%3Cstop offset='100%25' style='stop-color:rgba(188,209,252,0);' /%3E%3C/linearGradient%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='url(%23svg_shadow_gradient)' /%3E%3C/svg%3E")}
+.my_timeline .graph .TipCont {position:absolute;z-index:101;padding:17px 24px 16px}
+.my_timeline .graph .item:hover+.TipCont {display:block}
+.my_timeline .graph .TipCont .TipTxt {position:relative;white-space:normal}
+.my_timeline .graph .TipCont .TipTxt>svg {position:absolute;top:12px;left:12px;z-index:2;width:24px;height:24px}
+.my_timeline .graph .TipCont .TipTxt:after {position:absolute;top:0;left:0;z-index:1;width:48px;height:48px;border-radius:24px;content:""}
+.my_timeline .graph .item.edu+.TipCont .TipTxt:after {background:#f4f6fa}
+.my_timeline .graph .item.job+.TipCont .TipTxt:after {background:#eff5ff}
+.my_timeline .graph .TipCont .TipTxt dl {position:relative;padding-left:64px}
+.my_timeline .graph .TipCont .TipTxt dl+dl {margin-top:12px}
+.my_timeline .graph .TipCont .TipTxt dl dt {position:relative;z-index:2;margin-bottom:7px}
+.my_timeline .graph .TipCont .TipTxt dl dt span {display:block;width:100%;color:#5c667b;font-size:16px;font-weight:bold;letter-spacing:-1px;line-height:21px}
+.my_timeline .graph .TipCont .TipTxt dl dd {display:block;width:100%;color:#8491a7;font-size:0;letter-spacing:-1px;line-height:16px;white-space:nowrap}
+.my_timeline .graph .TipCont .TipTxt dl dd span {display:inline-block;position:relative;padding-left:21px;box-sizing:border-box;line-height:16px;vertical-align:top}
+.my_timeline .graph .TipCont .TipTxt dl dd span.date {font-size:12px}
+.my_timeline .graph .TipCont .TipTxt dl dd span.value {margin-left:8px;padding-right:1px;font-size:12px}
+.my_timeline .graph .TipCont .TipTxt dl dd span svg {position:absolute;top:0;left:0;width:16px;height:16px}
+.my_timeline .graph .item.edu+.TipCont .TipTxt>svg use {color:#afbac8}
+.my_timeline .graph .item.job+.TipCont .TipTxt>svg use {color:#4876ef}
+.my_timeline .graph .item.edu+.TipCont .TipTxt dl dd span.value {padding-left:0}
+.my_timeline .graph .item.job+.TipCont .TipTxt dl dd span.value {padding-left:30px}
+.my_timeline .graph .item.job+.TipCont .TipTxt dl dd span.value:before {display:block;position:absolute;top:2px;left:0;width:1px;height:12px;background:#e9ebee;content:""}
+.my_timeline .graph .item.job+.TipCont .TipTxt dl dd span.value svg {left:9px}
+.my_timeline .graph .item.btn_next {position:absolute;right:-60px;z-index:100;height:41px;animation:floating 2s ease-in-out infinite;-webkit-transition:opacity 0.5s linear;transition:opacity 0.5s linear;opacity:1}
+.my_timeline .graph .item.btn_next a {display:block;overflow:hidden;padding:10px 22px;width:120px;height:100%;border-radius:24px;box-sizing:border-box;font-size:0;text-align:center;white-space:nowrap;background:#fff;box-shadow:2px 6px 12px 0 rgba(17,42,128,0.08);-webkit-transition:width 0.4s ease-in-out;transition:width 0.4s ease-in-out}
+.my_timeline .graph .item.btn_next a span {display:inline-block;width:42px;color:#4876ef;font-size:16px;font-weight:bold;letter-spacing:0;vertical-align:top}
+.my_timeline .graph .item.btn_next a strong {display:none;overflow:hidden;position:relative;margin-left:8px;padding-right:21px;width:calc(100% - 52px);box-sizing:border-box;color:#373f57;font-size:15px;font-weight:bold;letter-spacing:-1px;white-space:nowrap}
+.my_timeline .graph .item.btn_next a strong:after {display:inline-block;margin:10px 0 0 12px;width:5px;height:5px;border-top:2px solid #333d48;border-right:2px solid #333d48;vertical-align:top;-webkit-transform:translate(-50%, -50%) scale(1.1428571429, 1) rotate(45deg);-ms-transform:translate(-50%, -50%) scale(1.1428571429, 1) rotate(45deg);transform:translate(-50%, -50%) scale(1.1428571429, 1) rotate(45deg);content:""}
+.my_timeline .graph .item.btn_next:hover {animation-play-state:paused}
+.my_timeline .graph .item.btn_next:hover a {width:295px;text-align:left}
+.my_timeline .graph .item.btn_next:hover a strong {display:inline-block;vertical-align:top}
+.my_timeline .graph .item.btn_next.resume:hover a {width:267px}
+.my_timeline .graph .viewport.ready .item {width:12px !important;opacity:0}
+.my_timeline .graph .viewport.ready .item .shadow {opacity:0}
+.my_timeline .graph .viewport.ready .item.btn_next {opacity:0}
+.my_folio {position:absolute;top:56px;right:80px;z-index:1;font-size:0}
+.my_folio .link_folio {display:inline-block;margin-left:12px;padding:10px 20px 14px;width:188px;border-radius:24px;box-sizing:border-box;line-height:24px;background:#373f57}
+.my_folio .link_folio:hover {background:#292e41}
+.my_folio .link_folio:after {display:table;clear:both;content:"";table-layout:fixed}
+.my_folio .link_folio .txt {display:block;float:left;margin-top:3px;color:#fff;font-size:15px;font-weight:bold;letter-spacing:-1px;line-height:20px}
+.my_folio .link_folio .count {display:block;float:right;color:#00d3ab;font-size:18px;font-weight:bold;letter-spacing:0;line-height:24px}
+
+/* 하단 공고 */
+.my_topic {position:relative;padding:0 80px 0 0}
+.my_topic .title {position:relative;padding:0 0 0 79px;height:28px;color:#4876ef;font-size:18px;font-weight:bold;letter-spacing:-1px;line-height:24px}
+.my_topic .title>span {position:absolute;top:0;left:0;width:69px;border:1px solid #4876ef;border-radius:14px;font-size:15px;letter-spacing:0;line-height:22px;text-align:center}
+.my_topic .btnText {position:absolute;top:0;right:80px}
+.my_topic .list {margin-top:24px}
+.my_topic .list:after {display:table;clear:both;content:"";table-layout:fixed}
+.my_topic .list li {display:block;overflow:hidden;float:left;position:relative;padding:21px 23px 19px;width:203px;height:223px;border:1px solid transparent;border-radius:12px;box-sizing:border-box;background:#eff5ff}
+.my_topic .list li+li {margin-left:16px}
+.my_topic .list dl {display:block;position:relative;padding:75px 0 0 0;letter-spacing:-1px}
+.my_topic .list dt {display:block;overflow:hidden;width:100%;color:#373f57;font-size:15px;font-weight:bold;line-height:24px}
+.my_topic .list li.company dt {text-overflow:ellipsis;white-space:nowrap}
+.my_topic .list li.job dt {display:-webkit-box;height:48px;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.my_topic .list .copy {position:absolute;top:21px;right:23px;left:23px;color:#4876ef;font-size:14px;font-weight:bold;line-height:16px;opacity:1}
+.my_topic .list .copy svg {display:block;margin-bottom:8px;width:24px;height:24px}
+.my_topic .list .copy svg use {color:#4876ef}
+.my_topic .list dd.meta {margin-top:8px;color:#5c667b;font-size:14px}
+.my_topic .list dd.meta span {display:block;overflow:hidden;width:100%;line-height:24px;text-overflow:ellipsis;white-space:nowrap}
+.my_topic .list dd.company_name {overflow:hidden;margin-top:5px;color:#5c667b;font-size:14px;line-height:18px;text-overflow:ellipsis;white-space:nowrap}
+.my_topic .list dd.date {margin-top:9px;color:#5c667b;font-size:13px;letter-spacing:-0.5px;line-height:17px}
+.my_topic .list .BtnType {display:block;position:absolute;right:23px;bottom:19px;left:23px;opacity:0;color:var(--blue90);border-color:var(--blue90);background:var(--white)}
+.my_topic .list .BtnType:hover {background:var(--blue20)}
+.my_topic .list li:hover {border-color:#eff1f5;background:#fff;box-shadow:2px 6px 16px 0 rgba(17,42,128,0.08)}
+.my_topic .list li:hover dl {-webkit-transition:transform 0.2s ease-in-out;transition:transform 0.2s ease-in-out;-webkit-transform:translateY(-70px);-ms-transform:translateY(-70px);transform:translateY(-70px)}
+.my_topic .list li:hover .copy {opacity:0}
+.my_topic .list li:hover .BtnType {opacity:1}
+
+
+.wrap_my_home .aside {padding:60px 0 40px 40px}
+.wrap_my_home .aside+.aside {border-top:1px solid #faf6fa}
+.wrap_my_home .aside+.my_banner {padding-top:20px}
+.wrap_my_home .aside .title {margin-bottom:24px;color:#373f57;font-size:20px;font-weight:bold;letter-spacing:-1px;line-height:27px}
+.wrap_my_home .aside .list {margin-left:-8px}
+.wrap_my_home .aside .list li+li {margin-top:12px}
+.wrap_my_home .aside .list li a {display:block;position:relative}
+.wrap_my_home .aside .list li a:before {position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;border-radius:4px;background:#f4f6fa;content:"";opacity:0}
+.wrap_my_home .aside .list li a:hover:before {opacity:1}
+.wrap_my_home .aside .list li dl {position:relative;z-index:2}
+.wrap_my_home .aside .list li dl dt {margin-bottom:8px;font-size:0;line-height:21px}
+.wrap_my_home .aside .list li dl dt span {display:inline-block;color:#5c667b;font-size:15px;font-weight:bold;letter-spacing:-1px;line-height:21px;vertical-align:top}
+.wrap_my_home .aside .list li dl dt span+span {margin-left:8px}
+.wrap_my_home .aside .list li dl dt .act {color:#4876ef}
+.wrap_my_home .aside .list li dl dd {color:#8491a7;font-size:14px;letter-spacing:-1px;line-height:19px}
+.wrap_my_home .my_faq .list li a {padding:9px 16px 12px 36px}
+.wrap_my_home .my_faq .list li a svg {position:absolute;top:8px;left:8px;z-index:2;width:24px;height:24px}
+.wrap_my_home .my_faq .list li a svg use {color:#4784e3}
+.wrap_my_home .my_faq .list li dl dt span {display:-webkit-box;overflow:hidden;max-height:42px;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.wrap_my_home .my_faq .list li dl dd {display:-webkit-box;overflow:hidden;max-height:38px;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.wrap_my_home .my_schedule .list li a {padding:8px 16px 13px}
+.wrap_my_home .my_schedule .list li dl dd {overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wrap_my_home .my_banner {padding:60px 0 40px 40px}
+.wrap_my_home .my_banner img {display:block;width:267px;height:314px}
+.wrap_my_home .my_banner .banner_talent_pool_pro {display:block;position:relative;padding:40px 12px 23px;width:267px;height:314px;box-sizing:border-box;background:url(//www.saraminimage.co.kr/sri/event/wmg-31967/bg_banner.png) no-repeat 50% 50%}
+.wrap_my_home .my_banner .banner_talent_pool_pro>strong {display:block;color:#383e4f;font-size:20px;font-weight:bold;letter-spacing:-1.5px;line-height:26px}
+.wrap_my_home .my_banner .banner_talent_pool_pro>span {display:block;margin-top:10px;color:#8491a7;font-size:13px;letter-spacing:-1px;line-height:18px}
+
+@-webkit-keyframes floating {0% {-webkit-transform:translateY(-2px);transform:translateY(-2px)}
+50% {-webkit-transform:translateY(2px);transform:translateY(2px)}
+100% {-webkit-transform:translateY(-2px);transform:translateY(-2px)}}
+
+@keyframes floating {0% {-webkit-transform:translateY(-2px);-ms-transform:translateY(-2px);transform:translateY(-2px)}
+50% {-webkit-transform:translateY(2px);-ms-transform:translateY(2px);transform:translateY(2px)}
+100% {-webkit-transform:translateY(-2px);-ms-transform:translateY(-2px);transform:translateY(-2px)}}
+@keyframes repaint {from {opacity:1}
+to {opacity:0.99999}}
+@supports (position:sticky) or (position:-webkit-sticky) {.wrap_my_home .col1,
+.wrap_my_home .col2 {position:-webkit-sticky;position:sticky;top:0;left:0}}
+
+/* 알림 - 사전인터뷰 레이어 */
+.layer_pop_manage {position:absolute;left:50%;z-index:102;padding:35px 30px 30px;border:1px solid #444;box-sizing:border-box;background:#fff;box-shadow:0 1px 1px 1px rgba(0,0,0,0.12)}
+.layer_pop_manage h4 {margin-bottom:9px;color:#444;font-size:20px;font-weight:bold;letter-spacing:-1px;text-align:left}
+.layer_pop_manage h4 span {font-weight:normal}
+.layer_pop_manage .tit_layer {display:block;margin-bottom:9px;color:#444;font-size:20px;font-weight:bold;letter-spacing:-1px;text-align:left} /* WMG-13739 IT직종 개편 넛지 */
+.layer_pop_manage .bottom_btn_wrap {margin-top:10px;text-align:center}
+.layer_pop_manage .bottom_btn_wrap button,
+.layer_pop_manage .bottom_btn_wrap a {margin-left:1px}
+.layer_pop_manage .bottom_btn_wrap button:first-child,
+.layer_pop_manage .bottom_btn_wrap a:first-child {margin-left:0}
+.layer_pop_manage .btn_layer_close {position:absolute;top:14px;right:14px;width:17px;height:17px;border:0 none;background:url(//www.saraminimage.co.kr/ui/layout/person_mypage_2017/btn_layer_close.png) no-repeat 50% 50%}
+.layer_pop_manage .btn_layer_close span {overflow:hidden;font-size:0;line-height:0;text-indent:-100%;white-space:nowrap}
+.layer_pop_manage.layer_interview {display:none;top:150px;margin:0 0 0 -350px;padding:10px 0 0;width:700px}
+.layer_pop_manage .layer_manage_wrap {position:relative;z-index:100;padding:25px 30px 30px;background:#fff}
+.layer_interview .cont_interview {margin-top:2px;border-top:1px solid #444;border-bottom:1px solid #dbdbdb}
+.layer_interview .cont_interview .ico_q,
+.layer_interview .cont_interview .ico_a {position:absolute;left:1px;font-family:Helvetica, sans-serif;font-size:20px;font-weight:normal}
+.layer_interview .cont_interview .ico_q {top:16px;color:#7289f8}
+.layer_interview .cont_interview .txt_q {display:block;position:relative;padding:18px 23px 17px;border-bottom:1px solid #eaeaea;font-size:14px}
+.layer_interview .cont_interview .wrap_a {position:relative}
+.layer_interview .cont_interview .ico_a {top:9px}
+.layer_interview .cont_interview .txt_a {overflow:hidden;overflow-y:auto;padding:10px 25px 20px;max-height:112px;font-size:13px;line-height:21px;word-break:break-all}
+.btn_basic_type03 {display:inline-block;padding:5px 13px 9px;height:32px;border:1px solid #e4e4e4;box-sizing:border-box;color:#444;font-size:13px;letter-spacing:-1px;line-height:normal;vertical-align:top;background-color:#f8f8f8}
+.btn_basic_type03:hover {color:#444}
+
+/* wmg-20720 이력서 등록 유도 */
+.bnr_induce_resume {padding-top:20px}
+.bnr_induce_resume img {display:block}
+.layer_pop_manage.nudge_induce_resume {top:250px;margin-left:-213px;width:427px;height:282px;text-align:center}
+.layer_pop_manage.nudge_induce_resume .tit {color:#444;font-size:23px;font-weight:normal;line-height:31px}
+.layer_pop_manage.nudge_induce_resume .point_color {color:#4876ef}
+.layer_pop_manage.nudge_induce_resume .txt {padding:10px 0 19px;color:#444;font-size:15px;line-height:27px;text-decoration:underline}
+.layer_pop_manage.nudge_induce_resume .btn_biggest_type01 {width:250px}
+.layer_pop_manage.nudge_induce_resume .btn_biggest_type01:hover {color:#fff}
+.layer_pop_manage.nudge_induce_resume .sri_input2 {position:absolute;bottom:15px;left:15px}
+
+/* WMG-30814 가입당일 이력서 및 희만근무조건 */
+/* 예전에 사용 - 아직 개발 소스에 남아있음 */
+.choose_career {display:inline-block;margin:0 auto}
+.choose_career:after {display:table;clear:both;content:"";table-layout:fixed}
+.choose_career li {display:inline-block;overflow:hidden;float:left;position:relative;margin-right:38px;width:280px;height:200px;border-radius:16px;box-sizing:border-box;box-shadow:0 0 8px rgba(0, 0, 0, 0.1)}
+.choose_career li:last-child {margin-right:0}
+.choose_career li.new {background:#eff5ff url("//www.saraminimage.co.kr/sri/quick_resume/choose_career_graphic1.png") no-repeat 50% 11px}
+.choose_career li.experience {background:#eff5ff url("//www.saraminimage.co.kr/sri/quick_resume/choose_career_graphic2.png") no-repeat 50% 6px}
+.choose_career li .choose_radio {position:absolute;bottom:0;left:0;padding-top:12px;width:100%;height:49px;box-sizing:border-box;text-align:center;background-color:#fff}
+
+/* 내 구직상태는? */
+.wrap_my_home .wrap_title_box .btn_setting {display:inline-block;margin:12px 0 0 10px;padding:6px 30px 6px 16px;border:1px solid;border-radius:56px;color:#fff;font-size:13px;letter-spacing:-1px;line-height:24px;vertical-align:top}
+.wrap_my_home .wrap_title_box .btn_setting {background:right 14px center url("data:image/svg+xml,%3Csvg width='6' height='10' viewBox='0 0 6 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 9L5 5L1 1' stroke='white' stroke-linecap='round'/%3E%3C/svg%3E%0A") no-repeat}
+.wrap_my_home .wrap_title_box .btn_setting.job_state {padding-right:30px;border:1px solid #eff5ff;color:#4876ef;font-weight:bold;background:#eff5ff right 14px center url("data:image/svg+xml,%3Csvg width='6' height='10' viewBox='0 0 6 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 9L5 5L1 1' stroke='%234876EF' stroke-linecap='round'/%3E%3C/svg%3E%0A") no-repeat}
+.wrap_my_home .wrap_title_box .btn_setting.job_state:hover {background:#deebff right 14px center url("data:image/svg+xml,%3Csvg width='6' height='10' viewBox='0 0 6 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 9L5 5L1 1' stroke='%234876EF' stroke-linecap='round'/%3E%3C/svg%3E%0A") no-repeat}
+.wrap_my_home .wrap_title_box .btn_setting.job_search {border-color:#475067;background-color:#475067}
+.wrap_my_home .wrap_title_box .btn_setting.job_search:hover {border-color:#292e41;background-color:#292e41}
+.wrap_my_home .wrap_title_box .btn_setting.job_interest {border-color:#96a0b5;background-color:#96a0b5}
+.wrap_my_home .wrap_title_box .btn_setting.job_interest:hover {border-color:#6b768b;background-color:#6b768b}
+.wrap_my_home .wrap_title_box .btn_setting.job_none {border-color:#8491a7;color:#8491a7;background:right 14px center url("data:image/svg+xml,%3Csvg width='6' height='10' viewBox='0 0 6 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 9L5 5L1 1' stroke='%238491A7' stroke-linecap='round'/%3E%3C/svg%3E%0A") no-repeat}
+.wrap_my_home .wrap_title_box .btn_setting.job_none:hover {background-color:#f4f6fa}
+
+/* 프로그레스바 */
+#progress_bar {position:absolute;top:52px;left:0;z-index:10;width:720px;height:4px;border-radius:4px;background-color:#eff5ff}
+#progress_bar:before {position:absolute;top:50%;left:0;width:100%;height:4px;background-color:#eff5ff;-webkit-transform:translateY(-50%);transform:translateY(-50%);content:""}
+#progress_bar:after {position:absolute;top:50%;left:0;width:100%;height:4px;border-radius:4px;background-color:#bcd1fc;transition:-webkit-transform 0.5s ease;transition:transform 0.5s ease;transition:transform 0.5s ease, -webkit-transform 0.5s ease;-webkit-transform:scaleX(0) translateY(-50%);transform:scaleX(0) translateY(-50%);-webkit-transform-origin:left center;transform-origin:left center;content:""}
+#progress_bar.step1:after {-webkit-transform:scaleX(0.30) translateY(-50%);transform:scaleX(0.30) translateY(-50%)}
+#progress_bar.step2:after {-webkit-transform:scaleX(0.60) translateY(-50%);transform:scaleX(0.60) translateY(-50%)}
+#progress_bar.step3:after {-webkit-transform:scaleX(0.90) translateY(-50%);transform:scaleX(0.90) translateY(-50%)}
+#progress_bar.step4:after {-webkit-transform:scaleX(1) translateY(-50%);transform:scaleX(1) translateY(-50%)}
+#progress_bar.step1.step1_sub {top:52px}
+#progress_bar.step1.step1_sub:after {-webkit-transform:scaleX(0.30) translateY(-50%);transform:scaleX(0.30) translateY(-50%)}
+#progress_bar.step1.step1_sub .step_bar.active .progress_number {left:30%}
+#progress_bar .progress_number {display:none;position:absolute;top:12px;margin-left:-29px;padding:4px 6px;width:58px;border-radius:4px;color:#fff;font-size:10px;letter-spacing:-0.5px;line-height:12px;text-align:center;background-color:#6d9cfa;box-shadow:0 0 8px rgba(0, 0, 0, 0.1)}
+#progress_bar .progress_number:before {display:block;position:absolute;top:-4px;left:24px;width:8px;height:8px;background-color:#6d9cfa;transform:rotate(-45deg);content:""}
+#progress_bar .step4 .progress_number:before {left:auto;right:0;width:0;height:0;border-left:8px solid transparent;border-bottom:8px solid #6d9cfa;transform:rotate(0);background:transparent}
+#progress_bar .step_bar.active .progress_number {display:inline-block}
+#progress_bar .step_bar.active.step1 .progress_number {left:30%}
+#progress_bar .step_bar.active.step2 .progress_number {left:60%}
+#progress_bar .step_bar.active.step3 .progress_number {left:90%}
+#progress_bar .step_bar.active.step4 .progress_number {left:94.5%}
+#progress_bar.step1 {top:65px}
+/* 간단 프로필 레이어 */
+.wrap_quick_resume {position:relative;height:520px}
+.wrap_quick_resume .quick_resume_title,
+.quick_resume_cont .quick_section_title {display:block;color:#373f57;font-size:20px;font-weight:bold;letter-spacing:-0.5px;line-height:28px;text-align:center}
+.quick_resume_layer {width:800px;height:600px;transform:translate(-50%, -50%)}
+.quick_resume_layer .quick_resume_steps.step5 .panel_job_new {margin-top:89px;padding:0}
+.quick_input_wrap {margin-top:74px;padding:8px 80px 0;box-sizing:border-box;height:354px;overflow-y:scroll}
+.quick_input {display:flex;position:relative;margin-bottom:24px;align-items:center;}
+.quick_input .input_tit {min-width:65px;color:#373f57;font-size:14px;font-weight:bold}
+.panel_job_new .quick_input .input_cont,
+.panel_job_new .quick_input .input_cont .inpTypo,
+.panel_job_new .quick_input .keyword_search_wrap,
+.panel_job_new .quick_input.quick_input_address{position:relative;width:100%}
+.quick_input .input_cont .inpRdo {padding:11px 0 0 16px;height:40px;box-sizing:border-box}
+.quick_input .input_cont.search .inner {display:inline-block;position:relative}
+.quick_input .input_cont.search .btn_search {position:absolute;top:11px;right:16px;width:18px;height:18px}
+.quick_input .input_cont.search .btn_search svg {width:100%;height:100%;color:#5b76f5;pointer-events:none}
+.quick_input .input_cont.search .btn_search_del {display:block;position:absolute;top:13px;right:48px;width:17px;height:17px}
+.quick_input .input_cont.search .btn_search_del svg {width:100%;height:100%}
+
+/* WMG-37127 */
+.quick_input.carrer_date {justify-content:space-between}
+.quick_input.carrer_date .input_tit.ml20 {margin-left:20px}
+.quick_input.carrer_date .TypoBox {min-width:199px}
+.quick_input.add_profile {margin-bottom:16px}
+.quick_input.add_profile.certify {margin-bottom:36px}
+.quick_input.add_profile.certify + .quick_select_check {margin:-23px 0 16px}
+.panel_job_new .quick_input.address {margin-bottom:12px}
+.panel_job_new .quick_input.address .input_cont + .input_cont {margin-left:8px}
+.quick_input.add_profile +.quick_select_check {margin:12px 0 16px;text-align:right}
+.quick_input.add_profile .ability_box {flex:1;display:flex;align-items:flex-start;gap:8px}
+.quick_input.add_profile .ability_box .TypoBox, .quick_input.add_profile .ability_box .TypeBtn .Typo  {width:100%}
+.quick_input.add_profile .ability_box .TypoBox .MsgTxt {position:absolute;bottom:-28px;left:0}
+.quick_input.add_profile .ability_box .TypoBox .badge {display:block;margin:0 12px 0 8px;width:48px;border:1px solid var(--gray40);border-radius:4px;box-sizing:border-box;color:var(--gray100);font-size:12px;letter-spacing:-1px;line-height:22px;text-align:center;background:var(--white);flex-shrink:0}
+.quick_input.add_profile .ability_box .TypoBox .badge.complete  {color:var(--blue90)}
+.quick_input.add_profile .btn_gray {border-color:var(--gray40);color:var(--gray100);white-space:nowrap;background:var(--white)}
+.quick_input.add_profile .btn_gray:hover {border-color:var(--gray40);background:var(--gray20)}
+.quick_resume_steps .agree_box {display:flex;justify-content:space-between;padding:25px 0 24px;border-top:1px solid var(--gray40)}
+.quick_resume_steps .agree_box .InpBox {display:flex;flex-direction:column}
+.quick_resume_steps .agree_box .btn_details {position:relative;padding-right:16px;font-size:14px;color:var(--gray80)}
+.quick_resume_steps .agree_box .btn_details::after {position:absolute;right:0;top:3px;content:'';width:7px;height:7px;border-top:1px solid var(--gray80);border-right:1px solid var(--gray80);transform:rotate(135deg)}
+.quick_resume_steps .agree_box .btn_details.open::after{top:7px;transform:rotate(-45deg)}
+.quick_resume_steps .profile_privacy {display:none;padding:0 0 32px 28px}
+.quick_resume_steps .profile_privacy dl {display:flex;flex-wrap:wrap;font-size:14px;line-height:20px;letter-spacing:-1px;color:var(--gray100)}
+.quick_resume_steps .profile_privacy dt {flex-basis:146px;font-weight:700}
+.quick_resume_steps .profile_privacy dd {margin-bottom:8px;flex-basis: calc(100% - 146px)}
+.quick_resume_steps .profile_privacy dd strong{text-decoration:underline}
+.quick_resume_steps .profile_privacy .notice {margin-top:16px;font-size:14px;line-height:20px;letter-spacing:-1px;color:var(--gray80)}
+
+/* step1 첫화면 */
+.quick_resume_steps.step1 {text-align:center;}
+.quick_resume_layer .quick_resume_steps.step1 .quick_txt {color:#5c667b;font-size:16px;font-weight:bold;letter-spacing:-1px;line-height:24px;}
+.quick_resume_layer .quick_resume_steps.step1 .quick_txt:before {display:block;margin:80px auto 24px;width:136px;height:104px;background:url("https://www.saraminimage.co.kr/sri/person/resume/img_profile.png") no-repeat;content:""}
+.quick_resume_layer .quick_tit {margin:8px 0 40px;color:#373b57;font-size:25px;font-weight:bold;letter-spacing:-1.5px;line-height:34px;}
+.quick_resume_layer .quick_tit em {display:block;margin:16px 0 0;font-size:15px;line-height:22px;letter-spacing:-1px}
+.quick_resume_layer .quick_tit span {color:#4876ef}
+.quick_resume_layer .quick_qa {color:#373f57;font-size:20px;font-weight:bold;letter-spacing:-1px;line-height:28px;}
+.quick_resume_layer .quick_qa strong {color:#4876ef}
+.quick_resume_layer .quick_step_btn {display:flex;margin-top:24px;justify-content:center;}
+.quick_resume_layer .quick_step_btn button {width:236px;color:var(--blue90);border-color:var(--blue90);background:var(--white)}
+.quick_resume_layer .quick_step_btn button:hover {background:var(--blue20)}
+.quick_resume_layer .quick_step_btn button+button {margin-left:8px}
+/* 추천키워드 */
+/*.quick_resume_layer .quick_resume_steps.step2 .hide_show_content {margin-left:65px}*/
+/* 담당직무&스킬셋 */
+.quick_resume_layer .quick_resume_steps.step2 .panel_job_new {padding:0;height:auto}
+/*.quick_resume_layer .quick_resume_steps.step2 .panel_job_new.panel_skilset {margin-top:52px}*/
+.quick_resume_layer .quick_resume_steps.step2 .panel_job_new .box_choose_job {margin-bottom:52px}
+.quick_resume_layer .quick_resume_steps.step2 .panel_job_new .input_cont.career_contents {width:100%}
+.quick_resume_layer .quick_resume_steps.step3 .panel_job_new {padding:0;height:auto}
+.quick_resume_layer .quick_resume_steps.step3 .panel_job_new.panel_skilset {margin-top:52px}
+
+/* 최종학력 */
+.quick_resume_layer .quick_input_depth {display:flex;margin-bottom:12px;align-items:center;}
+.quick_resume_layer .quick_input_depth .input_cont {width:auto}
+.quick_resume_layer .quick_input_depth .input_cont.search.company,
+.quick_resume_layer .quick_input_depth .input_cont.search .inpTypo {width:100%}
+.quick_resume_layer .quick_input_depth .input_cont.search .inpTypo {padding-right:70px}
+.quick_resume_layer .quick_input_depth .input_tit {padding:0}
+.quick_resume_layer .quick_input_depth .input_cont+.input_tit {margin-left:24px;padding:0}
+.quick_resume_layer .quick_input_depth .InpBox select {width:120px}
+.quick_resume_layer .quick_input_depth+.quick_select_check {margin:12px 0 24px;text-align:right}
+.quick_resume_layer .panel_job_new .choose_job_result {overflow-x:hidden;overflow-y:auto;padding:17px 24px 0 24px;max-height:118px;border-radius:8px;box-sizing:border-box;background:#f8fafc}
+.quick_resume_layer .panel_job_new .choose_job_result:after {display:table;clear:both;content:"";table-layout:fixed}
+.quick_resume_layer .panel_job_new .choose_job_result .job_result_list {position:relative;box-sizing:border-box}
+.quick_resume_layer .panel_job_new .choose_job_result .skill_result_list {position:relative;box-sizing:border-box}
+.quick_resume_layer .panel_job_new .keyword_refresh {display:flex;position:relative;z-index:100;margin-top:8px;color:#5c667b;font-size:12px;line-height:20px;justify-content:flex-end;}
+.quick_resume_layer .panel_job_new .keyword_refresh button {color:#5c667b;font-size:12px;letter-spacing:-1px;line-height:20px;}
+.quick_resume_layer .panel_job_new .keyword_refresh button:after {display:inline-block;width:16px;height:16px;vertical-align:sub;background:no-repeat url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='path-1-inside-1_15_1431' fill='white'%3E%3Cpath d='M13.5 7.75C13.5 6.355 12.9929 5.00758 12.0731 3.95876C11.1533 2.90995 9.88359 2.23128 8.50053 2.04919C7.11746 1.86711 5.71537 2.19403 4.55547 2.96905C3.39557 3.74407 2.55698 4.91433 2.19593 6.26179C1.83487 7.60925 1.97599 9.04202 2.59298 10.2932C3.20997 11.5443 4.26076 12.5285 5.54957 13.0623C6.83838 13.5961 8.27731 13.6433 9.59828 13.1948C10.9192 12.7464 12.0321 11.8331 12.7296 10.625L11.7337 10.05C11.1757 11.0165 10.2854 11.7472 9.22862 12.1059C8.17185 12.4646 7.0207 12.4269 5.98966 11.9998C4.95861 11.5728 4.11798 10.7854 3.62439 9.78453C3.13079 8.78362 3.0179 7.6374 3.30674 6.55943C3.59558 5.48146 4.26646 4.54525 5.19438 3.92524C6.1223 3.30522 7.24397 3.04369 8.35042 3.18935C9.45687 3.33502 10.4726 3.87796 11.2085 4.71701C11.9443 5.55606 12.35 6.634 12.35 7.75H13.5Z'/%3E%3C/mask%3E%3Cpath d='M13.5 7.75C13.5 6.355 12.9929 5.00758 12.0731 3.95876C11.1533 2.90995 9.88359 2.23128 8.50053 2.04919C7.11746 1.86711 5.71537 2.19403 4.55547 2.96905C3.39557 3.74407 2.55698 4.91433 2.19593 6.26179C1.83487 7.60925 1.97599 9.04202 2.59298 10.2932C3.20997 11.5443 4.26076 12.5285 5.54957 13.0623C6.83838 13.5961 8.27731 13.6433 9.59828 13.1948C10.9192 12.7464 12.0321 11.8331 12.7296 10.625L11.7337 10.05C11.1757 11.0165 10.2854 11.7472 9.22862 12.1059C8.17185 12.4646 7.0207 12.4269 5.98966 11.9998C4.95861 11.5728 4.11798 10.7854 3.62439 9.78453C3.13079 8.78362 3.0179 7.6374 3.30674 6.55943C3.59558 5.48146 4.26646 4.54525 5.19438 3.92524C6.1223 3.30522 7.24397 3.04369 8.35042 3.18935C9.45687 3.33502 10.4726 3.87796 11.2085 4.71701C11.9443 5.55606 12.35 6.634 12.35 7.75H13.5Z' stroke='%23ADBACA' stroke-width='2' stroke-linejoin='round' mask='url(%23path-1-inside-1_15_1431)'/%3E%3Cpath d='M10.2946 6.72029C10.5415 6.86285 12.2494 7.8489 13.0725 8.32411L14.6763 5.54621' stroke='%23ADBACA' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");content:""}
+.quick_resume_layer  .box_choose_job {margin-left:65px}
+/* 프로필 공개 */
+.quick_resume_layer .profile_open_list li {position:relative}
+.quick_resume_layer .profile_open_list li+li {margin-top:12px}
+.quick_resume_layer .profile_open_list li .InpBox {width:100%}
+.quick_resume_layer .profile_open_list li .InpBox .Rdo>.Lbl {font-weight:bold;background-color:var(--blue10) }
+.quick_resume_layer .profile_open_list li .InpBox .Rdo>input:checked+label {border-color:#94b5fc}
+.quick_resume_layer .profile_open_list li .pofile_more {display:inline-block;position:absolute;right:16px;bottom:12px;z-index:500;color:#8491a7;font-size:12px;letter-spacing:-0.5px;line-height:20px;text-decoration:underline;}
+.quick_resume_layer .profile_open_notice {margin-top:14px;padding:24px;border:1px solid #eaedf4;color:#5c667b;font-size:13px;letter-spacing:-0.5px;line-height:20px;}
+.quick_resume_layer .profile_open_notice .tit {font-weight:bold}
+.quick_resume_layer .profile_open_notice .txt {margin:4px 0 8px}
+.quick_resume_layer .profile_open_notice .profile_notice_more {color:#5c667b;font-size:12px;text-decoration:underline}
+/* step5 완료화면 */
+.quick_resume_steps.step5 {padding-top:50px;text-align:center}
+.quick_resume_steps.step5 .quick_txt {display:block;padding-top:40px;color:#5c667b;font-size:16px;font-weight:bold;letter-spacing:-1px;line-height:24px;}
+
+/* 원하는 공고 바로 지원 */
+.quick_resume_layer .profile_applicant {display:flex;justify-content:center}
+.quick_resume_layer .profile_applicant li {padding:32px;width:280px;border:1px solid #eaedf4;border-radius:8px;box-sizing:border-box;background:#eff5ff;}
+.quick_resume_layer .profile_applicant li p {color:#5c667b;font-size:16px;font-weight:bold;letter-spacing:-1px;line-height:24px;}
+.quick_resume_layer .profile_applicant li p strong {color:#4876ef}
+.quick_resume_layer .profile_applicant li p.load_career:after {display:block;margin:8px auto 24px;width:216px;height:80px;background:url('https://www.saraminimage.co.kr/sri/person/resume/img_profile_04.png') no-repeat;content:''}
+.quick_resume_layer .profile_applicant li p:after {display:block;margin:24px auto 16px;width:216px;height:104px;background:url("https://www.saraminimage.co.kr/sri/person/resume/img_profile_03.png") no-repeat;content:""}
+.quick_resume_layer .profile_applicant li p span {display:block;margin-top:4px;font-size:12px;font-weight:normal;line-height:18px;}
+.quick_resume_layer .profile_applicant li:last-child p:after {background-image:url("https://www.saraminimage.co.kr/sri/person/resume/img_profile_02.png")}
+.quick_resume_layer .profile_applicant li.event_banner p:after {background-image:url("https://www.saraminimage.co.kr/sri/person/event/img_profile_event.png")}
+.quick_resume_layer .profile_applicant li+li {margin-left:16px}
+.quick_resume_layer .profile_applicant li button,
+.quick_resume_layer .profile_applicant li a{width:100%}
+
+/* 경력일 경우 */
+.quick_resume_layer.career_position .profile_applicant li p span {display:block;margin-top:4px;font-size:12px;font-weight:normal;line-height:18px;}
+.quick_resume_layer.career_position .profile_applicant li p:after {display:block;margin:8px auto 24px;width:216px;height:80px;background:url('https://www.saraminimage.co.kr/sri/person/resume/img_profile_04.png') no-repeat;content:''}
+.quick_resume_layer.career_position .profile_applicant li:last-child p:after {margin:24px auto;height:104px;background-image:url('https://www.saraminimage.co.kr/sri/person/resume/img_profile_05.png')}
+.quick_resume_layer.career_position .profile_applicant li.event_banner p:after {background-image:url("https://www.saraminimage.co.kr/sri/person/event/img_profile_event.png")}
+
+/* 하단 버튼 */
+.quick_resume_layer .quick_resume_footer {position:absolute;bottom:0;left:0;width:100%}
+.quick_resume_layer .quick_resume_footer .show_hide {display:inline-block}
+.quick_resume_layer .quick_resume_footer .btn_progress_prev {color:var(--gray100);border-color:var(--gray80);background:var(--white)}
+.quick_resume_layer .quick_resume_footer .btn_progress_prev:hover {background:var(--gray20)}
+.quick_resume_layer .quick_resume_footer .btn_quick_close {display:none}
+/* 자동 완성 */
+.quick_resume_layer .area_auto_search {display:none;overflow:hidden;position:absolute;top:49px;right:0;z-index:10;width:100%;border:1px solid #d7dce5;border-radius:4px;box-sizing:border-box;background-color:#fff;box-shadow:2px 6px 16px rgba(17, 42, 128, 0.08)}
+.quick_resume_layer .area_auto_search .area_scroll {overflow-y:auto;box-sizing:border-box}
+.quick_resume_layer .area_auto_search .area_scroll::-webkit-scrollbar {width:6px;height:8px}
+.quick_resume_layer .area_auto_search .area_scroll::-webkit-scrollbar-track {background:#fcfcfc}
+.quick_resume_layer .area_auto_search .area_scroll::-webkit-scrollbar-thumb {background:#f2f2f3}
+.quick_resume_layer .area_auto_search .auto_search {overflow-x:hidden;overflow-y:auto;max-height:362px}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search {border-bottom:1px solid #d7dce5}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search:after {display:table;clear:both;content:"";table-layout:fixed}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .area_link {display:block;padding:16px;width:100%;box-sizing:border-box;color:#373f57;font-size:13px;letter-spacing:-1px}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .area_link:after {display:table;clear:both;content:"";table-layout:fixed}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .area_link:hover,
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .area_link:focus {background-color:#f8fafc}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .area_link.check_on {border:none;color:#fff;background-color:#f8fafc}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search li:first-child .area_link {border-top:0;content:""}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_school_name,
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_job_name {margin-right:16px;width:416px;line-height:45px;text-overflow:ellipsis;white-space:nowrap}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_school_name .txt_matching,
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_job_name .txt_matching {color:#4876ef}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_company_name {overflow:hidden;font-size:13px;line-height:20px;text-overflow:ellipsis;white-space:nowrap}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_company_name .txt_matching {color:#4876ef}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_company_info {margin-top:4px;color:#8491a7;font-size:13px;line-height:20px}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_company_info .address {display:block;overflow:hidden;text-overflow:ellipsis;vertical-align:top;white-space:nowrap}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_company_info .classified {display:block;overflow:hidden;color:#888;text-overflow:ellipsis;vertical-align:top;white-space:nowrap}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_license_name {overflow:hidden;float:left;margin-right:14px;width:184px;line-height:45px;text-overflow:ellipsis;white-space:nowrap}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_license_name .txt_matching {color:#4876ef}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_publish_name {overflow:hidden;float:left;width:120px;color:#888;font-size:13px;letter-spacing:-1px;line-height:45px;text-align:right;text-overflow:ellipsis;white-space:nowrap}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_hope_name {margin-right:16px;width:100%;line-height:35px;text-overflow:ellipsis;white-space:nowrap}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_skill_name {padding:8px 15px;font-size:14px;line-height:18px}
+.quick_resume_layer .area_auto_search .auto_search .list_auto_search .auto_skill_name .txt_matching {color:#4876ef;font-weight:bold}
+.quick_resume_layer .area_auto_search .directly_search {float:left;padding:32px 20px;width:100%;box-sizing:border-box;text-align:left}
+.quick_resume_layer .area_auto_search .directly_search .txt_directly {color:#8491a7;font-size:14px;line-height:20px;text-align:center}
+.quick_resume_layer .area_auto_search .directly_search .link_directly {display:block;margin-top:8px;color:#8491a7;font-size:14px;line-height:20px;text-align:center;text-decoration:underline}
+.quick_resume_layer .area_auto_search .directly_search .link_directly strong {display:block;overflow:hidden;width:100%;color:#4876ef;text-overflow:ellipsis;white-space:nowrap}
+.quick_resume_layer .area_auto_search .directly_search input {padding:0 6px;width:141px;height:19px;border:1px solid #ccc;border-right:0;box-sizing:border-box;vertical-align:top}
+.quick_resume_layer .area_auto_search .directly_search .btn_directly {width:60px;height:19px;border:1px solid #296ace;box-sizing:border-box;color:#fff;font-size:11px;letter-spacing:-1px;vertical-align:top;background-color:#4d76c8}
+.quick_resume_layer .area_auto_search .auto_search .match_detail {padding:10px;height:auto;color:#5c667b;font-size:14px;letter-spacing:-0.5px;line-height:24px;text-align:center;background-color:#f7fafe}
+.quick_resume_layer .area_auto_search .auto_search .match_detail .txt_point {display:inline-block;overflow:hidden;max-width:72px;color:#4876ef;font-weight:bold;text-overflow:ellipsis;vertical-align:top;white-space:nowrap;word-break:break-all}
+.quick_resume_layer .area_auto_search.company_search .list_auto_search .area_link {padding:14px 16px}
+.quick_resume_layer .area_auto_search.company_search .list_auto_search+.directly_search {padding:14px 20px}
+.quick_resume_layer .area_auto_search.hope_search {width:auto}
+.quick_resume_layer .area_auto_search.hope_search:after {display:table;clear:both;content:"";table-layout:fixed}
+.quick_resume_layer .area_auto_search.hope_search .auto_search {float:left;width:218px;max-height:215px}
+.quick_resume_layer .area_auto_search.hope_search .auto_search .list_auto_search .area_link {border-top:0}
+.quick_resume_layer .area_auto_search.hope_search .directly_search {text-align:right}
+.quick_resume_layer .input_cont.search.company .area_auto_search.company_search {right:0;left:auto;/* width:286px */ width:100%} /* WMG-37127 */
+
+/* 배너 */
+.wrap_my_home .wrap_myhome_banner {margin:40px 0;}
+.wrap_my_home .wrap_myhome_banner a {display:block;}
+
+/* WMG-31648 나의 알림 */
+.ModalBox.job_state_modify {width:400px;height:460px}
+.ModalBox.job_state_modify .title {margin-bottom:8px}
+.ModalBox.job_state_modify .txt {color:#8491a7;font-size:14px;line-height:20px}
+.ModalBox.job_state_modify .no_view {position:absolute;right:0;bottom:-35px}
+.ModalBox.job_state_modify .no_view .Rdo .Lbl {color:#fff}
+.ModalBox.job_state_modify .no_view .Rdo .Lbl:before {background:#fff}
+.ModalBox.job_state_modify .no_view .no_view_btn {display:inline-block;margin-left:8px;width:62px;border-radius:4px;color:#fff;font-size:12px;letter-spacing:-0.5px;line-height:24px;background:#373f57}
+.ModalBox.job_state_modify .BtmArea .btn_close {color:var(--gray100);border-color:var(--gray80);background:var(--white)}
+.ModalBox.job_state_modify .BtmArea .btn_close:hover {background:var(--gray20)}
+
+/* 내 구직상태 - 내 구직 의향 */
+.ModalBox.job_state_modify .quick_select_check {margin-top:24px}
+.ModalBox.job_state_modify .quick_select_check+.quick_select_check {margin-top:32px}
+.ModalBox.job_state_modify .quick_select_check strong {display:block;margin-bottom:16px;color:#373f57}
+.ModalBox.job_state_modify .quick_select_check+.quick_select_check strong {margin-bottom:18px}
+.ModalBox.job_state_modify .quick_select_check .quick_select_list {padding:0;width:100%}
+.ModalBox.job_state_modify .quick_select_check .quick_select_list li+li {margin-top:16px}
+
+/* 내 구직상태는? - 구직상태를 알려주세요 */
+.ModalBox.job_state_modal {position:absolute;top:0;right:0;left:50%;z-index:100;padding:24px;width:271px;border:1px solid #edeef0;border-radius:8px;box-shadow:2px 6px 16px 0 rgba(17,42,128,0.08);transform:translate(-50%, 67px)}
+.ModalBox.job_state_modal .Tit {margin-bottom:8px;color:#373f57;font-size:15px}
+.ModalBox.job_state_modal .Txt {color:#5c667b;font-size:14px;line-height:20px}
+.ModalBox.job_state_modal .btn_area {margin-top:12px;text-align:right}
+.ModalBox.job_state_modal .Tail {position:absolute;top:-18px;left:50%;z-index:2;margin-left:-16px;width:32px;height:32px;background:url(//www.saraminimage.co.kr/sri/person/spr/spr_tooltip_tail.png) 0 0 no-repeat}
+
+.onboarding_section {padding:12px 0 32px}
+.onboarding_section .career_inflow {display:grid;grid-template-columns:repeat(4, 1fr);grid-gap:0 16px}
+.onboarding_section .career_inflow_card {display:flex;background:var(--white)}
+.onboarding_section .career_inflow_card .link_inflow {display:flex;padding:16px;width:100%;height:100%;border:1px solid var(--gray40);border-radius:16px;box-sizing:border-box;align-items:center}
+.onboarding_section .career_inflow_card .link_inflow:hover {border-color:var(--blue80);box-shadow:0 10px 15px 0 rgba(34, 34, 34, 0.06)}
+.onboarding_section .career_inflow_card .box_icon {display:flex;margin-right:12px;width:64px;height:64px;border-radius:8px;flex-shrink:0;align-items:center;justify-content:center}
+.onboarding_section .career_inflow_card .box_info {flex-grow:1}
+.onboarding_section .career_inflow_card .tit {color:var(--gray120);font-size:15px;letter-spacing:-1px;line-height:22px}
+.onboarding_section .career_inflow_card .desc {margin-top:2px;color:var(--gray100);font-size:14px;letter-spacing:-1px;line-height:20px}
+.onboarding_section .career_inflow_card .box_icon.type_class {background:var(--blue20)}
+.onboarding_section .career_inflow_card .box_icon.type_career_chat {background:var(--green30)}
+.onboarding_section .career_inflow_card .box_icon.type_mentoring {background:#def9fe}
+.onboarding_section .career_inflow_card .box_icon.type_open_chat {background:#f0e3fe}
+
+/* WMG-36720 공개 이력서 업데이트 유도 */
+.img_layout_common {display:none}
+.resume_open_update {width:560px;text-align:center}
+.resume_open_update .resume_open_tit {color:var(--gray120);font-size:20px;font-weight:bold;letter-spacing:-1px;line-height:28px;}
+.resume_open_update .resume_open_tit strong {color:var(--blue90)}
+.resume_open_update .resume_open_txt {color:var(--gray100);font-size:14px;letter-spacing:-1px;line-height:20px;}
+.resume_open_update .resume_update {display:inline-flex;margin-bottom:16px;padding:6px 24px;border-radius:44px;color:var(--blue90);font-size:13px;font-weight:bold;letter-spacing:-0.5px;line-height:20px;background:var(--blue20)}
+.resume_open_update .resume_recent {display:inline-flex;margin:24px auto;padding:6px 24px;border-radius:44px;color:var(--gray90);font-size:13px;font-weight:bold;letter-spacing:-0.5px;line-height:20px;background:var(--gray20)}
+.resume_open_update .resume_recent em {display:inline-block;margin-left:4px;color:var(--blue80);font-weight:bold}
+.resume_open_update .resume_card {margin:0 auto 32px;padding:12px 16px;width:240px;border:1px solid #eaedf4;border-radius:24px;box-sizing:border-box;line-height:26px;text-align:center;background:#fff;box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.08);}
+.resume_open_update .resume_card .profile_pic {display:inline-block;overflow:hidden;position:relative;width:48px;height:48px;border:1px solid #b7c0cf;border-radius:50%;box-sizing:border-box;background:#f4f6fa;flex-shrink:0;}
+.resume_open_update .resume_card .profile_pic svg {width:100%;height:100%}
+.resume_open_update .resume_card .profile_pic img {position:absolute;top:50%;left:50%;width:100%;transform:translate(-50%,-50%);}
+.resume_open_update .resume_card h3 {color:#292e41;font-size:18px;font-weight:bold;letter-spacing:-1px}
+.resume_open_update .resume_card p {color:#475067;font-size:14px;letter-spacing:-1px;line-height:20px;}
+.resume_open_update .resume_card span {display:block;color:#67738e;font-size:12px;letter-spacing:-0.5px;line-height:20px;}
+.resume_open_update.open .resume_open_txt:before {display:block;margin:24px auto;width:154px;height:124px;background:url("https://www.saraminimage.co.kr/sri/main/resume_open.gif") center / 100% no-repeat;content:""}
+.resume_open_update.close .resume_open_tit:after {display:block;margin:24px auto;width:264px;height:214px;background:url("https://www.saraminimage.co.kr/sri/main/resume_close.gif") center / 100% no-repeat;content:""}
+.resume_open_update.complete .resume_open_txt:before {display:block;margin:24px auto;width:322px;height:280px;background:url("https://www.saraminimage.co.kr/sri/main/resume_list.gif") center / 100% no-repeat;content:""}
+.resume_open_update .btn_update {width:225px}
+.resume_open_update.year .resume_open_tit:after {display:block;margin:24px auto;width:200px;height:166px;background:url("https://www.saraminimage.co.kr/sri/main/resume_open.gif") center / 100% no-repeat;content:""}
+.resume_open_update.year .resume_open_txt {margin-bottom:16px;padding-top:16px;border-top:1px solid var(--gray30);color:var(--gray110);font-size:16px;font-weight:normal;line-height:24px;}
+.resume_open_update.year .resume_open_txt strong {color:var(--blue80);font-weight:normal}

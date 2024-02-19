@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   
+   <!-- 
+      [마이바티스] 스프링에서 "_"를 사용한 컬럼명 사용 시(BOOK테이블의 BOOK_ID와 같은 컬럼)
+      카멜케이스로 읽어주는 역할(bookId와 같이)
+      
+      ex) 테이블 컬럼명이 member_id인 경우 jsp화면단에서 이 값을 사용시 memberId로 사용할 수 있다.
+    -->
+   <settings>
+      <setting name="mapUnderscoreToCamelCase" value="true"/>
+      <setting name="jdbcTypeForNull" value="VARCHAR"></setting>
+   </settings>
+   
+   <typeAliases>
+   
+      <!-- 페이징 처리 -->
+      <typeAlias type="kr.or.ddit.vo.PaginationInfoVO" alias="paginationInfoVO"/>
+      <!-- 페이징 처리 -->
+      
+      <!-- 공통 -->
+      <typeAlias type="kr.or.ddit.vo.PaginationInfoVO" alias="PagingVO"/>
+      <typeAlias type="kr.or.ddit.vo.CommonCodeVO" alias="CommonCodeVO"/>
+      <typeAlias type="kr.or.ddit.vo.CommonCodeGroupVO" alias="CommonCodeGroupVO"/>
+
+   
+      <!-- 기업리뷰/면접후기 -->
+      <typeAlias type="kr.or.ddit.member.enterpriseinfo.vo.InterviewReviewVO" alias="InterviewReviewVO"/>
+      <typeAlias type="kr.or.ddit.member.enterpriseinfo.vo.EnterpriseReviewVO" alias="EnterpriseReviewVO"/>
+      <typeAlias type="kr.or.ddit.member.enterpriseinfo.vo.EnterpriseReviewQuestionVO" alias="EnterpriseReviewQuestionVO"/>
+      
+      <typeAlias type="kr.or.ddit.vo.AdmstAreaCodeVO" alias="AdmstAreaCodeVO"/>
+
+      <!-- 마이페이지 -->
+      <typeAlias type="kr.or.ddit.member.mypage.vo.AcademicBackgroundVO" alias="AcademicBackgroundVO"/>
+      <typeAlias type="kr.or.ddit.member.mypage.vo.CareerVO" alias="CareerVO"/>
+      <typeAlias type="kr.or.ddit.member.mypage.vo.CertificateVO" alias="CertificateVO"/>
+      <typeAlias type="kr.or.ddit.member.mypage.vo.PreferenceVO" alias="PreferenceVO"/>
+      <typeAlias type="kr.or.ddit.member.mypage.vo.ProjectCareerVO" alias="ProjectCareerVO"/>
+      <typeAlias type="kr.or.ddit.member.mypage.vo.ResumeVO" alias="ResumeVO"/>
+      <typeAlias type="kr.or.ddit.member.mypage.vo.SelfIntroductionVO" alias="SelfIntroductionVO"/>
+      <typeAlias type="kr.or.ddit.member.mypage.vo.StudyAndTrainningVO" alias="StudyAndTrainningVO"/>      
+
+      <!-- 프리랜서프로젝트 -->
+      <typeAlias type="kr.or.ddit.member.freelancer.vo.ProjectBoardVO" alias="projectVO"/>
+      <!-- 프리랜서프로젝트 -->
+      
+      <!-- 채용공고 -->
+      <typeAlias type="kr.or.ddit.member.employment.vo.EmploymentAnnouncementVO" alias="employVO"/>
+      <!-- 채용공고 -->
+      
+      <!-- 지원하기 -->
+        <typeAlias type="kr.or.ddit.member.apply.vo.ApplyVO" alias="applyVO"/>
+        <!-- 지원하기 -->
+
+	  <!-- 이직제안 -->
+	  <typeAlias type="kr.or.ddit.enterprise.talentsearch.vo.ProposalVO" alias="prpslVO"/>
+	  <!-- 이직제안 끝 -->
+      
+      <!-- 일반/기업 프리랜서 -->
+      <typeAlias type="kr.or.ddit.enterprise.freelancer.vo.FreelancerProfileVO" alias="freeLancerProfileVO"/>
+      <typeAlias type="kr.or.ddit.member.freelancer.vo.ProjectBoardVO" alias="projectBoardVO"/>
+      <typeAlias type="kr.or.ddit.member.freelancer.vo.ProjectBoardVO" alias="projectVO"/>
+      
+      <!-- 일반/기업 프리랜서 -->
+      
+      <!-- 시큐리티 관련 VO  -->
+       <typeAlias type="kr.or.ddit.vo.AdminVO" alias="adminVO"/> 
+       <typeAlias type="kr.or.ddit.vo.PrivateMemberVO" alias="privateMemberVO"/> 
+       <typeAlias type="kr.or.ddit.vo.AuthVO" alias="authVO"/> 
+      <!-- 시큐리티 관련 VO  -->
+   
+      <!-- 채용설명회 -->
+      <typeAlias type="kr.or.ddit.member.employment.vo.EmploymentBriefingVO" alias="briefingVO"/>
+      <!-- 채용설명회 -->
+
+      <!-- 회원가입 -->
+      <typeAlias type="kr.or.ddit.vo.PrivateMemberVO" alias="memberVO"/>
+      <typeAlias type="kr.or.ddit.vo.EnterpriseMemberVO" alias="entmemberVO"/>
+      <!-- 회원가입 -->  
+             
+      <!-- 로그인 -->
+      <typeAlias type="kr.or.ddit.vo.EnterpriseMemberVO" alias="enterpriseMemberVO"/>      
+      <!-- 로그인 -->
+      
+      <!-- 협업기업 -->
+      <typeAlias type="kr.or.ddit.enterprise.collabo.vo.CollaboVO" alias="collaboVO"/>
+      <!-- 협업기업 -->
+
+      <!-- 코딩테스트 연습 VO 시작 -->
+      <typeAlias type="kr.or.ddit.member.codingtest.vo.PracticeQuestionSolutionYnVO" alias="practiceQuestionSolutionYnVO"/>
+      <typeAlias type="kr.or.ddit.member.codingtest.vo.PracticeQuestionVO" alias="practiceQuestionVO"/>
+      <typeAlias type="kr.or.ddit.enterprise.codingTest.vo.EntPracticeQuestionVO" alias="entPracticeQuestionVO"/>
+      <typeAlias type="kr.or.ddit.enterprise.codingTest.vo.EntPracticeQuestionYnVO" alias="entPracticeQuestionYnVO"/>
+      <typeAlias type="kr.or.ddit.vo.SearchVO" alias="searchVO"/>
+      <!-- 코딩테스트 연습 VO 끝 -->
+   
+      <!-- 멘토링매치 -->
+      <typeAlias type="kr.or.ddit.member.mentoring.vo.MentoringProfileVO" alias="mentoProfileVO"/>
+      <typeAlias type="kr.or.ddit.member.mentoring.vo.MentoringTagVO" alias="mentoTagVO"/>
+      <typeAlias type="kr.or.ddit.member.mentoring.vo.MentoringReviewVO" alias="mentoReviewVO"/>
+      <typeAlias type="kr.or.ddit.member.mentoring.vo.MentoringFileVO" alias="mentoFileVO"/>
+      <typeAlias type="kr.or.ddit.member.mentoring.vo.MentiVO" alias="mentiVO"/>
+      <!-- 멘토링매치 -->
+      
+      <!-- 인재 찾기 -->
+      <typeAlias type="kr.or.ddit.enterprise.talentsearch.vo.ResumeVO" alias="resVO"/>
+      <!-- 인재 찾기 -->
+      
+      <!-- 채팅 -->
+      <typeAlias type="kr.or.ddit.member.chat.vo.ChatRoomVO" alias="chatroomVO"/>
+      <typeAlias type="kr.or.ddit.member.chat.vo.ChatVO" alias="chatVO"/>
+      <!-- 채팅 -->
+      
+      <!-- 결제 -->
+      <typeAlias type="kr.or.ddit.member.mentoring.vo.SettlementDescriptionVO" alias="settleVO"/>
+      <!-- 결제 -->
+      
+      <!-- 자유게시판 -->
+		<typeAlias type="kr.or.ddit.member.community.vo.CommunityVO" alias="communityVO"/>
+		<typeAlias type="kr.or.ddit.member.community.vo.CommunityFileVO" alias="communityFileVO"/>
+		<typeAlias type="kr.or.ddit.member.community.vo.CommunityCommentVO" alias="communityCommentVO"/>
+		<typeAlias type="kr.or.ddit.member.community.vo.CommunityTagVO" alias="communityTagVO"/>
+      
+      <!-- 관리자 메인 그래프 -->
+      <typeAlias type="kr.or.ddit.admin.main.vo.AdminMainGraphVO" alias="graphVO"/>
+      <!-- 관리자 메인 그래프 -->
+      
+      <!-- 게시판 -->
+      <typeAlias type="kr.or.ddit.member.answer.vo.AnswerVO" alias="answerVO"/>
+      <typeAlias type="kr.or.ddit.member.answer.vo.AnswerFileVO" alias="answerFileVO"/>
+      <typeAlias type="kr.or.ddit.member.answer.vo.AnswerCommentVO" alias="answerCommentVO"/>
+      <typeAlias type="kr.or.ddit.member.notice.vo.NoticeVO" alias="noticeVO"/>
+      <typeAlias type="kr.or.ddit.member.notice.vo.NoticeFileVO" alias="noticeFileVO"/>
+      <typeAlias type="kr.or.ddit.vo.QuestionVO" alias="questionVO"/>
+      <typeAlias type="kr.or.ddit.vo.FaqVO" alias="faqVO"/>
+
+      <!-- 게시판 -->
+      
+     <!-- 지원자 조회 -->
+      <typeAlias type="kr.or.ddit.enterprise.applicant.vo.EvalueQuestionVO" alias="evalueQuestionVO"/>      
+
+
+   </typeAliases>
+   
+   
+</configuration>
+
+
+
+
+
+
+
+
+
+
+

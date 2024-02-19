@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.enterprise.announcement.mapper.IAdmstAreaCodeMapper">
+	
+	
+	<select id="selCodeListAll" parameterType="string" resultType="AdmstAreaCodeVO">
+		SELECT
+			city_cd, city_nm, county_cd, county_nm
+		FROM
+			admstareacode
+	</select>
+	
+	<select id="selCodeList" resultType="AdmstAreaCodeVO">
+		SELECT 
+			city_cd, city_nm
+		FROM 
+			admstareacode
+		GROUP BY 
+			city_cd, city_nm
+		ORDER BY 
+			city_cd
+	</select>
+	
+	<select id="selCountyList" parameterType="AdmstAreaCodeVO" resultType="AdmstAreaCodeVO">
+		SELECT 
+			county_cd, county_nm
+		FROM 
+			admstareacode
+		WHERE
+			city_cd = #{cityCd}
+		ORDER BY
+			county_cd
+	</select>	
+
+</mapper>

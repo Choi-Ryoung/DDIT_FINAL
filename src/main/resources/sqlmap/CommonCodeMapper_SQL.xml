@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.enterpriseinfo.mapper.ICommonCodeMapper">
+
+<select id="selCommonCodeGroupList" resultType="CommonCodeGroupVO">
+	select 
+		CMCD_GROUP, CMCD, CMCD_NM, CMCD_EXPLN, CMCD_USE_YN
+	from 
+		COMMONCODEGROUP
+</select>
+
+<select id="selCommonCodeGroupOne" parameterType ="string" resultType="CommonCodeGroupVO">
+	select 
+		CMCD_GROUP, CMCD_GROUP_NM, CMCD_GROUP_EXPLN, CMCD_USE_YN
+	from 
+		COMMONCODEGROUP 
+	where 
+		CMCD_GROUP = #{cmcdGroup}
+</select>
+
+<select id="selCodeListAll" parameterType ="string" resultType="CommonCodeVO">
+	select 
+		CMCD_GROUP, CMCD, CMCD_NM, CMCD_EXPLN, CMCD_USE_YN
+	from 
+		COMMONCODE
+</select>
+
+
+<select id="selCodeList" parameterType ="string" resultType="CommonCodeVO">
+	select 
+		CMCD_GROUP, CMCD, CMCD_NM, CMCD_EXPLN, CMCD_USE_YN
+	from 
+		COMMONCODE
+	where 
+		CMCD_GROUP = #{cmcdGroup} 
+</select>
+
+</mapper>

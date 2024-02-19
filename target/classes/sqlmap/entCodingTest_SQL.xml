@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.enterprise.codingTest.mapper.IEntCodingTestMapper">
+	
+	<sql id="entCodingTestSearch">
+		<if test="searchType != null and searchType == 'title'">
+			and (ent_pq_ttl like '%'||#{searchWord}||'%')
+		</if>
+	</sql>
+	
+	<select id="selectEntCodingTestCount" parameterType="paginationInfoVO" resultType="int">
+		select count(ent_pq_no) from entpracticequestion
+		where 1=1
+		<include refid="entCodingTestSearch" />
+	</select>
+	
+	<!-- 문제 목록 조회 -->
+	<select id="selectEntCodingTestList" parameterType="paginationInfoVO" resultType="entPracticeQuestionVO">
+		select b.*
+			from (
+			    select a.*, row_number() over (order by a.ENT_PQ_NO desc) rnum
+			    from (
+			        select 
+			        	ent_pq_no, ent_pq_ttl, ent_pq_cn, ent_lmt_mttr, ex, ans
+					from entpracticequestion epq
+					where 1=1 and ent_mbr_id = #{searchVO.entMbrId}
+					<include refid="entCodingTestSearch" />
+					order by ent_pq_no desc 
+			    ) a
+			) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<insert id="registerEntCodingTest" parameterType="entPracticeQuestionVO">
+		insert into entpracticequestion (
+			ent_pq_no
+			, ent_pq_ttl
+			, ent_pq_cn
+			, ent_lmt_mttr
+			, ex
+			, ans
+			, ent_mbr_id
+		) values (
+			seq_entpracticequestion.nextval
+			, #{entPqTtl}
+			, #{entPqCn}
+			, #{entLmtMttr}
+			, #{ex}
+			, #{ans}
+			, #{entMbrId}
+		)
+	</insert>
+	
+	<select id="selectEntCodingTestDetail" parameterType="entPracticeQuestionVO" resultType="entPracticeQuestionVO">
+		select
+			ent_pq_no
+			, ent_pq_ttl
+			, ent_pq_cn
+			, ent_lmt_mttr
+			, ex
+			, ans
+		from
+			entpracticequestion
+		where
+			ent_pq_no = #{entPqNo}
+	</select>
+	
+	<update id="updateEntCodingTest" parameterType="entPracticeQuestionVO">
+		update
+			entpracticequestion
+		set
+			ent_pq_ttl = #{entPqTtl}
+			, ent_pq_cn = #{entPqCn}
+			, ent_lmt_mttr = #{entLmtMttr}
+			, ex = #{ex}
+			, ans = #{ans}
+		where
+			ent_pq_no = #{entPqNo}
+	</update>
+	
+	<delete id="deleteEntCodingTest" parameterType="entPracticeQuestionVO">
+		delete from entpracticequestion where ent_pq_no = #{entPqNo}
+	</delete>
+	
+</mapper>

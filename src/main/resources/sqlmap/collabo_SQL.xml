@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.enterprise.collabo.mapper.ICollaboMapper">
+	
+	<select id="selectCollaboCount" parameterType="pagingVO" resultType="int">
+		SELECT
+		COUNT
+			(co_pst_no) 
+		FROM 
+			collabo
+	</select>
+	
+	
+	<select id="selectCollaboList" parameterType="pagingVO" resultType="collaboVO">
+		SELECT 
+			co_pst_no,
+			co_pst_ttl, 
+			co_pst_wrtr, 
+			co_pst_cn, 
+			co_wrt_dt,
+			co_telno
+		FROM 
+			collabo
+		ORDER BY 
+			co_pst_no 
+		DESC
+	</select>
+	
+<!-- 	
+	<select id="selectMyCollabo" parameterType="pagingVO" resultType="collaboVO">
+		SELECT
+			co_pst_no,
+			co_pst_ttl, 
+			co_pst_wrtr, 
+			co_pst_cn, 
+			co_wrt_dt,
+			co_telno
+		FROM 
+			collabo
+		WHERE
+			ent_
+	</select>
+	 -->
+	
+	<insert id="insertCollabo" parameterType="collaboVO">
+		INSERT INTO collabo (
+			co_pst_no,
+			co_pst_ttl,
+			co_pst_wrtr,
+			co_pst_cn,
+			co_wrt_dt,
+			co_telno
+		)
+		VALUES (
+			seq_collabo.nextval,
+			#{coPstTtl},
+			#{coPstWrtr},
+			#{coPstCn},
+			TO_CHAR(sysdate, 'YYYY-MM-DD'),
+			#{coTelno}
+		)
+	</insert>
+
+</mapper>

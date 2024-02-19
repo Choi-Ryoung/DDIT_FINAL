@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+/* =========================== SNB */
+#sh_snb {display:inline-block;position:relative;z-index:10;padding:0 40px;text-align:center;box-shadow:0px 2px 12px rgba(0,0,0,.1);background-color:#fff}
+#sh_snb li {display:inline-block;position:relative;height:55px;padding:0 35px;font-size:17px;line-height:55px}
+#sh_snb li:first-child:before {display:none}
+#sh_snb li a {position:relative;font-weight:500}
+#sh_snb li a.on{color:#6e62c3}
+
+/* =========================== PAGE */
+#greeting{font-size:15px;font-weight:400;line-height:1.8;letter-spacing:-.2px;color:#777;font-family:'Noto Sans KR'}
+#greeting .tit_area{padding:15px 20px;font-size:38px;font-weight:100;line-height:1.35;letter-spacing:-.5px;color:#222}
+#greeting .tit_area p{font-weight:600}
+#greeting .img{height:420px;background:url(../img/sub/greeting_img.jpg) center no-repeat;background-size:cover}
+#greeting .cont{padding:40px 0 0 25%}
+#greeting .cont .pl{white-space:pre-line}
+#greeting .cont .sign{margin-top:30px;font-weight:500;color:#222}
+#greeting .cont .sign span{margin-left:20px;font-size:17px}
+@media(max-width:1024px){
+#greeting{padding:20px;font-size:14px;line-height:1.6}
+#greeting .tit_area{padding:0;font-size:28px;line-height:1.4;color:#222;word-break:keep-all}
+#greeting .img{height:200px;margin:15px 0}
+#greeting .cont{padding:0}
+#greeting .cont .sign{margin-top:20px}
+#greeting .cont .sign span{margin-left:0;font-size:15px}
+}
+@media(max-width:768px){
+#greeting .cont .pl{white-space:normal}	
+}
+@media(max-width:480px){
+#greeting{padding:15px 12px}	
+#greeting .tit_area{font-size:22px}
+}

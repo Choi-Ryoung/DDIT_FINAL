@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.manage.mapper.IAdminEntMemberManageMapper">
+
+	<sql id="entMemberSearch">
+		<if test="searchType != null and searchType == 'name'">
+			and (ent_nm like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'id'">
+			and (ent_mbr_id like '%'||#{searchWord}||'%')
+		</if>
+	</sql>
+
+
+	<select id="selectEntMemberCount" resultType="int">
+		select count(ent_mbr_id) from enterprisemember
+		where 1=1
+		<include refid="entMemberSearch" />
+	</select>
+	
+	<select id="selectEntMemberList" resultType="enterpriseMemberVO" parameterType="paginationInfoVO">
+		select b.*
+			from (
+			    select a.*, row_number() over (order by a.ent_mbr_id desc) rnum
+			    from (
+			        select 
+			        	ent_mbr_id
+			        	, brno
+			        	, ent_nm
+			        	, ent_se
+			        	, ent_mbr_email
+			        	, ent_rprs_telno
+			        	, ent_pic_telno
+			        	, ent_aprv_yn
+			        	, ent_zip
+			        	, ent_bsc_addr
+			        	, ent_daddr
+			        	, emp_cnt
+			        	, rprsv_nm
+			        	, ent_mbr_whdwl_ymd
+			        	, use_stop_cnt
+			        	, use_stop_end_ymd
+			        	, logo_img
+			        	, trms_agre_cd
+			        	, hmpg_addr
+			        	, ent_join_ymd
+					from enterprisemember
+					where 1=1
+					<include refid="entMemberSearch" />
+					order by ent_join_ymd desc 
+			    ) a
+			) b
+        <![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectEntMemberDetail" resultType="enterpriseMemberVO" parameterType="string">
+		select 
+        	ent_mbr_id         
+        	, brno             
+        	, ent_nm           
+        	, ent_se           
+        	, ent_mbr_email    
+        	, ent_rprs_telno   
+        	, ent_pic_telno    
+        	, ent_aprv_yn      
+        	, ent_zip          
+        	, ent_bsc_addr     
+        	, ent_daddr        
+        	, emp_cnt          
+        	, rprsv_nm         
+        	, ent_mbr_whdwl_ymd
+        	, use_stop_cnt     
+        	, use_stop_end_ymd 
+        	, logo_img         
+        	, trms_agre_cd     
+        	, hmpg_addr        
+        	, ent_join_ymd
+        	, biz_cn
+		from enterprisemember
+		where
+			ent_mbr_id = #{entMbrId}
+	</select>
+	
+	<update id="updateEntMemberInfo" parameterType="enterpriseMemberVO">
+		update
+			enterprisemember
+		set
+			brno = #{brno}
+			, ent_nm = #{entNm}
+			, ent_se = #{entSe}
+			, ent_mbr_email = #{entMbrEmail}
+			, ent_rprs_telno = #{entRprsTelno}
+			, ent_pic_telno = #{entPicTelno}
+			, emp_cnt = #{empCnt}
+			, rprsv_nm = #{rprsvNm}
+			, hmpg_addr = #{hmpgAddr}
+			, biz_cn = #{bizCn}
+			, use_stop_cnt = #{useStopCnt}
+			, use_stop_end_ymd = TO_CHAR(sysdate + #{useStopCnt}, 'yyyy-MM-dd')
+		where
+			ent_mbr_id = #{entMbrId}
+	</update>
+	
+	<update id="updateUseStopEndYmd" parameterType="enterpriseMemberVO">
+		update enterprisemember
+		set
+			use_stop_end_ymd = null
+		where
+			ent_mbr_id = #{entMbrId}
+	</update>
+	
+</mapper>

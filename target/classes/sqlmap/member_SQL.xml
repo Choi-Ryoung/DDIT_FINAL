@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.or.ddit.member.login.mapper.ILoginMapper">
+  
+<!--   <resultMap type="PrivateMemberVO" id="signupMap">
+  	<result property="prMbrId" column="pr_mbr_id"/>
+  	<result property="prMbrPswd" column="pr_mbr_pswd"/>
+  	<result property="prMbrNm" column="pr_mbr_nm"/>
+  	<result property="prMbrNcnm" column="pr_mbr_ncnm"/>
+  	<result property="prMbrTelno" column="pr_mbr_telno"/>
+  	<result property="prMbrEmail" column="pr_mbr_email"/>
+  	<result property="sexdstnCd" column="sexdstn_cd"/>
+  	<result property="prMbrBirthdy" column="pr_mbr_birthdy"/>
+  	<result property="prMbrZip" column="pr_mbr_zip"/>
+  	<result property="prMbrBscAddr" column="pr_mbr_bsc_addr"/>
+  	<result property="prMbrDaddr" column="pr_mbr_daddr"/>
+  </resultMap> -->
+<select id="selectOverlappedID" parameterType="String" resultType="Integer">
+   <![CDATA[
+      SELECT COUNT(*) FROM privatemember WHERE pr_mbr_id = #{prMbrId}
+   ]]>
+</select>
+
+<select id="selectOverlappedNick" parameterType="String" resultType="Integer">
+   <![CDATA[
+      SELECT COUNT(*) FROM privatemember WHERE pr_mbr_ncnm = #{prMbrNcnm}
+   ]]>
+</select>
+
+<select id="selectOverlappedEntID" parameterType="String" resultType="Integer">
+   <![CDATA[
+      SELECT COUNT(*) FROM enterprisemember WHERE ent_mbr_id = #{entMbrId}
+   ]]>
+</select>
+  <!-- 회원가입시 아이디 중복조회 -->
+  
+  
+  <!-- 회원가입-->
+  <insert id="insertMember" parameterType="memberVO">
+  	insert into privatemember
+  	(pr_mbr_id, pr_mbr_pswd, pr_mbr_nm, pr_mbr_ncnm, pr_mbr_telno, pr_mbr_email, sexdstn_cd, pr_mbr_birthdy
+  		,pr_mbr_zip, pr_mbr_bsc_addr, pr_mbr_daddr, trms_agre_cd, pr_mbr_join_ymd
+  	)values( 
+  	#{prMbrId}, #{prMbrPswd}, #{prMbrNm}, #{prMbrNcnm}, #{prMbrTelno}, #{prMbrEmail}, #{sexdstnCd}, #{prMbrBirthdy},
+  	 #{prMbrZip}, #{prMbrBscAddr}, #{prMbrDaddr}, #{trmsAgreCd}, TO_CHAR(sysdate, 'yyyy-MM-dd') 
+  	)
+  </insert>
+  
+    <insert id="entinsertMember" parameterType="entmemberVO">
+  insert into enterprisemember
+	(ent_mbr_id,brno,ent_mbr_pswd,ent_nm,ent_se,
+	ent_mbr_email,ent_rprs_telno,ent_pic_telno,ent_zip,ent_bsc_addr,
+	ent_daddr,emp_cnt,hmpg_addr,biz_cn,
+	ent_join_ymd,rprsv_nm, trms_agre_cd,
+	scd_pswd_use_yn,logo_img
+  	)values( 
+  	#{entMbrId},#{brno},#{entMbrPswd},#{entNm},#{entSe},
+  	#{entMbrEmail},#{entRprsTelno},#{entPicTelno},#{entZip},#{entBscAddr},
+  	#{entDaddr},#{empCnt},#{hmpgAddr},#{bizCn}, 
+  	TO_CHAR(sysdate, 'yyyy-MM-dd'),#{rprsvNm}, #{trmsAgreCd},#{scdPswdUseYn},#{logoImg}
+  	)
+  </insert> 
+  <!-- 회원가입-->
+  
+  <select id="selectNormalMember" parameterType="hashMap" resultType="memberVO">
+	select
+	    pr_mbr_id, pr_mbr_pswd, pr_mbr_nm, pr_mbr_ncnm, pr_mbr_telno, pr_mbr_email, sexdstn_cd, pr_mbr_birthdy
+  		,pr_mbr_zip, pr_mbr_bsc_addr, pr_mbr_daddr, trms_agre_cd, pr_mbr_join_ymd, use_stop_cnt, use_stop_end_ymd
+	from
+	    privatemember
+	where   pr_mbr_id = #{prMbrId} 
+	    	and pr_mbr_pswd = #{prMbrPswd}
+  </select>
+ 
+ 
+ <select id="selectentMember" parameterType="hashMap" resultType="enterpriseMemberVO">
+   	SELECT
+   		ENT_MBR_ID,BRNO,ENT_MBR_PSWD,ENT_NM,ENT_SE,ENT_MBR_EMAIL,ENT_RPRS_TELNO,ENT_PIC_TELNO,ENT_APRV_YN,
+		ENT_ZIP,ENT_BSC_ADDR,ENT_DADDR,EMP_CNT,RPRSV_NM,SCD_PSWD_USE_YN,SCD_PSWD,ENT_MBR_WHDWL_YMD,USE_STOP_CNT,
+		USE_STOP_END_YMD,LOGO_IMG,TRMS_AGRE_CD,HMPG_ADDR,BIZ_CN
+	FROM
+    	enterprisemember 
+	where   ent_mbr_id = #{entMbrId} 
+	    	and ent_mbr_pswd = #{entMbrPswd}
+  </select>
+  
+	<update id="updateStopStatus" parameterType="string">
+		update
+			privatemember
+		set
+			use_stop_cnt = 0
+			, use_stop_end_ymd = null
+		where
+			pr_mbr_id = #{prMbrId} 
+	</update>
+	
+	<update id="updateEntStopStatus" parameterType="string">
+		update
+			enterprisemember
+		set
+			use_stop_cnt = 0
+			, use_stop_end_ymd = null
+		where
+			ent_mbr_id = #{entMbrId}
+	</update>
+	
+	
+	<!-- 일반회원 아이디찾기 -->
+	<select id="findMemberId" parameterType="map" resultType="memberVO">
+		select
+			pr_mbr_id
+		from
+			privatemember
+		where 
+			pr_mbr_nm = #{prMbrNm} AND
+			pr_mbr_email = #{prMbrEmail}
+	</select>
+	<!-- 일반회원 비밀번호 찾기 -->
+	<update id="updateMemberPw" parameterType="map" >
+		update
+			privatemember
+		set
+			pr_mbr_pswd = #{prMbrPswd}
+		where
+			pr_mbr_id = #{prMbrId} AND
+			pr_mbr_email = #{prMbrEmail}
+	</update>
+   	<!-- 기업회원 아이디 찾기 -->
+	<select id="findEntId" parameterType="map" resultType="entmemberVO">
+		select
+			ent_mbr_id
+		from
+			enterprisemember
+		where 
+			brno = #{brno} AND
+			ent_mbr_email = #{entMbrEmail}
+	</select>
+	
+	<!-- 기업 비밀번호 찾기 -->
+	<update id="updateEntPw" parameterType="map" >
+		update
+			enterprisemember
+		set
+			ent_mbr_pswd = #{prMbrPswd}
+		where
+			ent_mbr_id = #{entMbrId} AND
+			ent_mbr_email = #{entMbrEmail}
+	</update>
+	<select id="selectEntId" parameterType="map" resultType="string">
+	select 
+		ent_mbr_id
+	from 
+		enterprisemember 
+	where 
+		ent_mbr_id = #{entMbrId} AND
+		ent_mbr_email = #{entMbrEmail}
+	</select>
+	
+		<!-- 소셜로그인 -->
+	   <select id="selectSSId" parameterType="String" resultType="int">
+   
+	SELECT
+	   count(*)
+	FROM
+	    PRIVATEMEMBER
+	    WHERE 
+	    PR_MBR_ID = #{prMbrId} 
+	    
+		
+	</select>
+	
+  <!-- 소셜회원가입-->
+<insert id="insertSSMember" parameterType="map">
+    insert into privatemember (
+        pr_mbr_id,
+        pr_mbr_pswd,
+        pr_mbr_nm,
+        pr_mbr_ncnm, 
+        pr_mbr_telno, 
+        pr_mbr_email, 
+        pr_mbr_birthdy, 
+        pr_mbr_join_ymd
+    )
+    values ( 
+        #{prMbrId}, 
+        #{prMbrPswd},
+        #{prMbrNm},
+        #{prMbrNcnm},
+        #{prMbrTelno},
+        #{prMbrEmail},
+        #{prMbrBirthdy},
+        TO_CHAR(SYSDATE, 'YYYY-MM-DD') 
+    )
+</insert>
+  	
+	
+   
+  </mapper>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.enterpriseinfo.mapper.IEnterpriseReviewMapper">
+
+<sql id="search">
+	<if test="searchType != null and searchType == 'title'">
+		and (bo_title like '%'||#{searchWord}||'%')
+	</if>
+	<if test="searchType != null and searchType == 'writer'">
+		and (bo_writer like '%'||#{searchWord}||'%')
+	</if>
+</sql>
+
+<sql id="colSearch">
+		<if test="colType != null and colType == 'sexRatio'">
+			ent_mbr_id = #{entMbrId} and sex_ratio = #{sexRatio}
+		</if>
+		<if test="colType != null and colType == 'writer'">
+			and (bo_writer like '%'||#{searchWord}||'%')
+		</if>
+</sql>
+
+<!-- 최초 보여지는 리스트 -->
+<select id="selEmList" resultType="EnterpriseMemberVO">
+	SELECT 
+		ENT_MBR_ID, BRNO, ENT_MBR_PSWD, ENT_NM, ENT_SE, ENT_MBR_EMAIL, ENT_RPRS_TELNO, ENT_PIC_TELNO, ENT_APRV_YN, ENT_ZIP, ENT_BSC_ADDR, ENT_DADDR, EMP_CNT, RPRSV_NM, SCD_PSWD_USE_YN, SCD_PSWD, ENT_MBR_WHDWL_YMD, USE_STOP_CNT, USE_STOP_END_YMD, LOGO_IMG, TRMS_AGRE_CD, HMPG_ADDR, BIZ_CN,  ENABLED, ENT_JOIN_YMD 
+	FROM 
+		enterprisemember
+	WHERE 
+		ent_mbr_id IN (SELECT ent_mbr_id FROM enterpriseReview)
+	order by ENT_MBR_ID DESC
+</select>
+
+<!-- 상세 페이지 / % 출력 화면-->
+<select id="selErDetail" parameterType = "string" resultType="EnterpriseReviewVO">
+	SELECT 
+		ENTRV_PST_NO, PR_MBR_ID, ENT_MBR_ID, ENTRV_PST_CN, PSTG_YN, SEX_RATIO, CLOTHES_TYPE, ATTENDANCE_TYPE, AVG_AGE, ANNUAL_TYPE, OVERTIME_CNT, SAL_INC_PER, ANNUAL_USE_D, ENTRV_WRT_DT,SERVE_YN
+	FROM 
+		enterprisereview
+	WHERE 
+		ent_mbr_id = #{entMbrId}
+	order by ENTRV_PST_NO DESC
+</select>
+
+
+
+<select id="selErDetailCnt" parameterType = "string"  resultType="int">
+	select 
+		count(*) 
+	from 
+		ENTERPRISEREVIEW
+	WHERE 
+		ent_mbr_id = #{entMbrId}
+	order by ENTRV_PST_NO DESC
+</select>
+<!-- End -->
+
+<select id="selCnt"  resultType="int">
+	select count(*) from ENTERPRISEREVIEW
+	order by ENTRV_PST_NO DESC
+</select>
+
+<select id="selDataTest" parameterType="map" resultType="java.util.Map">
+SELECT
+    ${col} as col,
+    COUNT(*) * 100.0 / (SELECT COUNT(*) FROM enterprisereview where ent_mbr_id = #{entMbrId}) AS percentage,
+    count(${col}) as count
+FROM enterprisereview where ent_mbr_id = #{entMbrId} and ${col} = #{option}
+GROUP BY ${col}  
+order by ENTRV_PST_NO DESC 
+</select>
+
+<select id="selColOptionCnt" parameterType="map" resultType="int">
+	select count(*)
+    from ENTERPRISEREVIEW
+    where 
+    	ent_mbr_id = #{entMbrId}
+    <if test="col != null and col != ''">
+        and ${col} = #{option}
+    </if>
+    order by ENTRV_PST_NO DESC
+</select>
+
+<select id="listCnt" parameterType="PagingVO" resultType="int">
+	select count(*) from ENTERPRISEREVIEW
+	where 1=1
+		order by ENTRV_PST_NO DESC
+</select>
+
+<!-- 기업명으로 기업 아이디 가져오기 -->
+<select id="selEmConEntMbrId" parameterType="string" resultType="string">
+	select 
+		ENT_MBR_ID
+	from 
+		ENTERPRISEMEMBER 
+	where 
+		ent_nm = #{entNm}
+		
+</select>
+
+<select id="selQuesCd" resultType="EnterpriseReviewQuestionVO">
+	select distinct(ques_cn) from ENTERPRISEREVIEWQUESTION
+</select>
+
+
+<select id="selQuesList" resultType="EnterpriseReviewQuestionVO">
+	select QUES_CD, QUES_CN, OPTION_CD, OPTION_CN
+	from ENTERPRISEREVIEWQUESTION
+</select>
+
+
+<select id="list" parameterType="PagingVO" resultType="EnterpriseReviewVO">
+		select 
+			b.*
+		from (
+			select 
+				a.*, row_number() over (order by a.ENTRV_PST_NO desc) rnum
+			from (
+				select 
+					ENTRV_PST_NO, PR_MBR_ID, ENT_MBR_ID, ENTRV_PST_CN, PSTG_YN, SEX_RATIO, CLOTHES_TYPE, ATTENDANCE_TYPE, AVG_AGE, ANNUAL_TYPE, OVERTIME_CNT, SAL_INC_PER, ANNUAL_USE_D,SERVE_YN
+				from ENTERPRISEREVIEW
+				where 1=1
+				order by ENTRV_PST_NO desc
+				
+			) a
+		) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+</select>
+
+
+<insert id="insert" parameterType="EnterpriseReviewVO">
+    INSERT INTO ENTERPRISEREVIEW (
+        ENTRV_PST_NO, 
+        PR_MBR_ID, 
+        ENT_MBR_ID, 
+        ENTRV_PST_CN, 
+        PSTG_YN, 
+        SEX_RATIO, 
+        CLOTHES_TYPE, 
+        ATTENDANCE_TYPE, 
+        AVG_AGE, 
+        ANNUAL_TYPE, 
+        OVERTIME_CNT, 
+        SAL_INC_PER, 
+        ANNUAL_USE_D,
+        SERVE_YN,
+        ENTRV_WRT_DT
+    )
+    VALUES (
+        SEQ_ENTERPRISEREVIEW.nextval,
+        #{prMbrId},
+        #{entMbrId},
+        #{entrvPstCn},
+        #{pstgYn},
+        #{sexRatio},
+        #{clothesType},
+        #{attendanceType},
+        #{avgAge},
+        #{annualType},
+        #{overtimeCnt},
+        #{salIncPer},
+        #{annualUseD},
+        #{serveYn},
+        sysdate
+    )
+</insert>
+
+<!-- 기업리뷰 태그 용 데이터 -->
+<select id ="selRankResult" parameterType="map" resultType="map">
+WITH ranked_data AS (
+  SELECT 
+    ent_mbr_id, SEX_RATIO, CLOTHES_TYPE, ATTENDANCE_TYPE, AVG_AGE, ANNUAL_TYPE, OVERTIME_CNT, SAL_INC_PER, ANNUAL_USE_D,
+    ROW_NUMBER() OVER (ORDER BY COUNT(SEX_RATIO) DESC) as rn_sex_ratio,
+    ROW_NUMBER() OVER (ORDER BY COUNT(CLOTHES_TYPE) DESC) as rn_clothes_type,
+    ROW_NUMBER() OVER (ORDER BY COUNT(ATTENDANCE_TYPE) DESC) as rn_attendance_type,
+    ROW_NUMBER() OVER (ORDER BY COUNT(AVG_AGE) DESC) as rn_avg_age,
+    ROW_NUMBER() OVER (ORDER BY COUNT(ANNUAL_TYPE) DESC) as rn_annual_type,
+    ROW_NUMBER() OVER (ORDER BY COUNT(OVERTIME_CNT) DESC) as rn_overtime_cnt,
+    ROW_NUMBER() OVER (ORDER BY COUNT(SAL_INC_PER) DESC) as rn_sal_inc_per,
+    ROW_NUMBER() OVER (ORDER BY COUNT(ANNUAL_USE_D) DESC) as rn_annual_use_d
+  FROM 
+    enterpriseReview
+  WHERE 
+    ent_mbr_id = #{entMbrId}
+  GROUP BY 
+    ENT_MBR_ID, SEX_RATIO, CLOTHES_TYPE, ATTENDANCE_TYPE, AVG_AGE, ANNUAL_TYPE, OVERTIME_CNT, SAL_INC_PER, ANNUAL_USE_D
+)
+SELECT 
+  ENT_MBR_ID, SEX_RATIO, CLOTHES_TYPE, ATTENDANCE_TYPE, AVG_AGE, ANNUAL_TYPE, OVERTIME_CNT, SAL_INC_PER, ANNUAL_USE_D
+FROM ranked_data
+WHERE 
+  rn_sex_ratio = 1 
+</select>
+
+<!-- 기업리뷰 채용 건수 가져오기 -->
+
+<select id ="getCntAnnounceMent" parameterType="map" resultType="map">
+	select ent_mbr_id, count(*) as cnt from employmentannouncement where ent_mbr_id = #{entMbrId} 
+	group by ent_mbr_id
+</select>
+
+<!-- 기업명 검색 -->
+<select id ="getEntNm" parameterType="map" resultType="map">
+	select rownum,ent_nm from enterprisemember where ent_nm LIKE  '%'|| #{value} || '%'
+</select>
+
+
+</mapper>

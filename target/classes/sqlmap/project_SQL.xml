@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.freelancer.mapper.IProjectMapper">
+
+	<select id="selectProjectCount" parameterType="pagingVO" resultType="int">
+		SELECT COUNT(pjt_pst_no) FROM projectboard
+	</select>
+	
+	
+	<select id="selectProjectList" parameterType="pagingVO" resultType="projectVO">
+		SELECT
+		    pb.pjt_pst_no,
+		    em.ent_mbr_id,
+		    em.ent_nm,
+		    em.ent_pic_telno,
+		    em.ent_mbr_email,
+		    pb.pjt_pst_ttl,
+		    pb.pjt_pst_cn,
+		    pb.pjt_wrt_dt,
+		    pb.pjt_rgn_nm,
+		    pb.pjt_task_nm,
+		    pb.pst_end_ymd
+		FROM projectboard pb
+		INNER JOIN enterprisemember em ON pb.ent_mbr_id = em.ent_mbr_id
+		ORDER BY pb.pst_end_ymd DESC
+	</select>
+	
+
+</mapper>

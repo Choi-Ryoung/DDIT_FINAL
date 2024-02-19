@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.manage.mapper.IAdminMemberManageMapper">
+
+	<sql id="memberSearch">
+		<if test="searchType != null and searchType == 'name'">
+			and (pr_mbr_nm like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'id'">
+			and (pr_mbr_id like '%'||#{searchWord}||'%')
+		</if>
+	</sql>
+
+
+	<select id="selectMemberCount" resultType="int">
+		select count(pr_mbr_id) from privatemember
+		where 1=1
+		<include refid="memberSearch" />
+	</select>
+	
+	<select id="selectMemberList" resultType="privateMemberVO" parameterType="paginationInfoVO">
+		select b.*
+			from (
+			    select a.*, row_number() over (order by a.pr_mbr_id desc) rnum
+			    from (
+			        select 
+			        	pr_mbr_id
+			        	, pr_mbr_nm
+			        	, PR_MBR_NCNM
+			        	, PR_MBR_TELNO
+			        	, PR_MBR_EMAIL
+			        	, SEXDSTN_CD
+			        	, PR_MBR_BIRTHDY
+			        	, pr_mbr_zip
+			        	, pr_mbr_bsc_addr
+			        	, pr_mbr_daddr
+			        	, PR_MBR_JOIN_YMD
+			        	, social_login_mbr_yn
+			        	, mento_reg_yn
+			        	, freelancer_reg_yn
+			        	, use_stop_cnt
+			        	, use_stop_end_ymd
+			        	, pr_mbr_whdwl_ymd
+			        	, trms_agre_cd
+			        	, pr_mbr_actno
+			        	, bank_cd
+			        	enabled
+					from privatemember
+					where 1=1
+					<include refid="memberSearch" />
+					order by pr_mbr_id desc 
+			    ) a
+			) b
+        <![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectMemberDetail" resultType="privateMemberVO" parameterType="string">
+		select 
+        	pr_mbr_id
+        	, pr_mbr_nm
+        	, pr_mbr_ncnm
+        	, pr_mbr_telno
+        	, pr_mbr_email
+        	, sexdstn_cd
+        	, pr_mbr_birthdy
+        	, pr_mbr_zip
+        	, pr_mbr_bsc_addr
+        	, pr_mbr_daddr
+        	, pr_mbr_join_ymd
+        	, social_login_mbr_yn
+        	, mento_reg_yn
+        	, freelancer_reg_yn
+        	, use_stop_cnt
+        	, use_stop_end_ymd
+        	, pr_mbr_whdwl_ymd
+        	, trms_agre_cd
+        	, pr_mbr_actno
+        	, bank_cd
+        	enabled
+		from privatemember
+		where
+			pr_mbr_id = #{prMbrId}
+	</select>
+	
+	<update id="updateMemberInfo" parameterType="privateMemberVO">
+		update
+			privatemember
+		set
+			pr_mbr_nm = #{prMbrNm}
+			, pr_mbr_ncnm = #{prMbrNcnm}
+			, pr_mbr_telno = #{prMbrTelno}
+			, pr_mbr_email = #{prMbrEmail}
+			, pr_mbr_birthdy = #{prMbrBirthdy}
+			, use_stop_cnt = #{useStopCnt}
+			, use_stop_end_ymd = TO_CHAR(sysdate + #{useStopCnt}, 'yyyy-MM-dd')
+		where
+			pr_mbr_id = #{prMbrId}
+	</update>
+	
+	<update id="updateUseStopEndYmd" parameterType="privateMemberVO">
+		update privatemember
+		set
+			use_stop_end_ymd = null
+		where
+			pr_mbr_id = #{prMbrId}
+	</update>
+	
+</mapper>

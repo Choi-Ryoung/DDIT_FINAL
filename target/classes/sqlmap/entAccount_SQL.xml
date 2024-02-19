@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.enterprise.entpage.mapper.IEntpageMapper">
+
+	 <select id="getEntAccount" parameterType="String" resultType="entmemberVO">
+		select
+			ent_mbr_id,
+			brno,
+			ent_nm,
+			ent_mbr_email,
+			ent_rprs_telno,
+			ent_pic_telno,
+			ent_zip,
+			ent_bsc_addr,
+			ent_daddr
+		from
+			enterprisemember
+		where
+			ent_mbr_id = #{entMbrId}
+	 </select>
+	 
+	 <select id="getEntAccountAll" parameterType="String" resultType="entmemberVO">
+		select
+		 	ent_mbr_id,
+		    brno,
+		    ent_mbr_pswd,
+		    ent_nm,
+		    ent_se,
+		    ent_mbr_email,
+		    ent_rprs_telno,
+		    ent_pic_telno,
+		    ent_aprv_yn,
+		    ent_zip,
+		    ent_bsc_addr,
+		    ent_daddr,
+		    emp_cnt,
+		    rprsv_nm,
+		    scd_pswd_use_yn,
+		    scd_pswd,
+		    ent_mbr_whdwl_ymd,
+		    use_stop_cnt,
+		    use_stop_end_ymd,
+		    logo_img,
+		    trms_agre_cd,
+		    hmpg_addr,
+		    biz_cn,
+		    enabled,
+		    ent_join_ymd
+		from
+			enterprisemember
+		where
+			ent_mbr_id = #{entMbrId}
+	 </select>
+	 
+	 
+ 	 <select id="getEntManage" parameterType="String" resultType="entmemberVO"> 
+		select
+			ent_mbr_id,
+			emp_cnt,
+			rprsv_nm,
+			logo_img,
+			hmpg_addr,
+			biz_cn
+		from
+			enterprisemember
+		where
+			ent_mbr_id = #{entMbrId}
+	 </select>
+
+	 <update id="entManageUpdate" parameterType="entmemberVo">
+	 	update enterprisemember
+		 	set 
+		 		emp_cnt = #{empCnt},
+				rprsv_nm = #{rprsvNm},
+				logo_img = #{logoImg},
+				hmpg_addr = #{hmpgAddr},
+				biz_cn = #{bizCn}
+			where
+				ent_mbr_id = #{entMbrId}
+	 
+	 
+	 </update>
+	
+	
+		 <update id="entAccountUpdate" parameterType="entmemberVo">
+	 	update enterprisemember
+		 	set 
+		 		ent_mbr_id = #{entMbrId},
+				ent_mbr_pswd = #{entMbrPswd},
+				ent_nm = #{entNm},
+				ent_rprs_telno = #{entRprsTelno},
+				ent_pic_telno = #{entPicTelno},
+				ent_mbr_email = #{entMbrEmail},
+				brno = #{brno},
+				ent_zip = #{entZip},
+				ent_bsc_addr = #{entBscAddr},
+				ent_daddr = #{entDaddr}
+			where
+				ent_mbr_id = #{entMbrId}
+	 
+	 
+	 </update>
+
+
+</mapper>

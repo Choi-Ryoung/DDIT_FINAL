@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.apply.mapper.IApplyMapper">
+
+	<select id="selectApplyCount" parameterType="pagingVO" resultType="int">
+		SELECT 
+		COUNT(*) 
+		AS 
+			total_count
+		FROM 
+			apply
+	</select>
+	
+
+	<select id="selectApply" parameterType="int" resultType="applyVO">
+		SELECT
+		    a.ent_mbr_id,
+		    a.pr_mbr_id,
+		    a.empmn_pbanc_no,
+		    a.resume_file,
+		    a.doc_chk_yn,
+		    a.doc_pass_yn,
+		    a.apply_ymd,
+		    pm.pr_mbr_nm
+		FROM
+		    apply a
+		JOIN
+		    PRIVATEMEMBER pm ON a.pr_mbr_id = pm.pr_mbr_id
+		WHERE
+		    a.empmn_pbanc_no = #{empmnPbancNo}
+		AND
+			a.doc_pass_yn IS NULL
+	</select>
+
+
+	<select id="selectApplyList" parameterType="pagingVO" resultType="applyVO">
+		SELECT 
+		    apply.ent_mbr_id,
+		    apply.pr_mbr_id,
+		    apply.empmn_pbanc_no,
+		    apply.resume_file,
+		    apply.doc_chk_yn,
+		    apply.doc_pass_yn,
+		    apply.apply_ymd,
+		    privatemember.pr_mbr_nm,
+		    employmentannouncement.empmn_pbanc_wrt_ymd
+		FROM 
+		    apply
+		JOIN 
+		    employmentannouncement ON apply.empmn_pbanc_no = employmentannouncement.empmn_pbanc_no
+		JOIN 
+		    privatemember ON apply.pr_mbr_id = privatemember.pr_mbr_id
+		WHERE
+		    apply.ent_mbr_id = #{entMbrId}
+	</select>
+
+	
+	<select id="selectAllList" parameterType="pagingVO" resultType="applyVO">
+		SELECT 
+		ROWNUM,
+		    a.*,
+		    pm.pr_mbr_nm
+		FROM
+		    apply a
+		JOIN
+		    PRIVATEMEMBER pm ON a.pr_mbr_id = pm.pr_mbr_id
+		WHERE
+		    a.ent_mbr_id = #{entMbrId}
+	</select>
+	
+
+	<insert id="insertApply" parameterType="applyVO">
+		INSERT
+		INTO
+			apply (
+				ent_mbr_id,
+			    pr_mbr_id,
+			    empmn_pbanc_no,
+			    resume_file,
+			    doc_chk_yn,
+			    doc_pass_yn,
+			    apply_ymd,
+			    res_no
+			)
+		VALUES (
+			#{entMbrId},
+			#{prMbrId},
+			#{empmnPbancNo},
+			#{resumeFile},
+			#{docChkYn},
+			#{docPassYn},
+			TO_CHAR(sysdate, 'YYYY-MM-DD'),
+			#{resNo}
+			)
+	</insert>
+	
+	
+	<select id="resumeOpen" parameterType="ResumeVO" resultType="ResumeVO">
+		SELECT 
+			pm.pr_mbr_id, r.res_img_file
+		FROM
+			privatemember pm
+		JOIN 
+			resume r ON pm.pr_mbr_id = r.pr_mbr_id
+		WHERE
+			pm.pr_mbr_id = #{prMbrId}
+	</select>
+	
+	
+	<update id="updateDocChkYn" parameterType="applyVO">
+		UPDATE
+		    apply
+		SET
+		    doc_chk_yn = 'Y'
+		WHERE
+		    pr_mbr_id = #{prMbrId}
+		AND
+		    empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	
+	<update id="updateResumeOKCheck" parameterType="applyVO">
+		UPDATE
+		    apply
+		SET
+		    doc_pass_yn = 'N'
+		    ,coding_pass_yn = 'N'
+		    ,interview_pass_yn = 'N'
+		WHERE
+		    pr_mbr_id = #{prMbrId}
+		AND
+		    empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	
+	<update id="updateResumeNOCheck" parameterType="applyVO">
+		UPDATE
+		    apply
+		SET
+		    doc_pass_yn = 'N'
+		WHERE
+		    pr_mbr_id = #{prMbrId}
+		AND
+		    empmn_pbanc_no = #{empmnPbancNo}
+	</update>
+	
+	
+	
+	<select id="selectNewApplyCnt" parameterType="entmemberVO" resultType="applyVO">
+		SELECT
+			*
+		FROM
+			apply apply
+		JOIN 
+			employmentannouncement ON apply.empmn_pbanc_no = employmentannouncement.empmn_pbanc_no
+		WHERE
+			apply.ent_mbr_id = #{entMbrId}
+		AND
+			apply.doc_chk_yn = 'N'
+	</select>
+	
+	
+	<select id="selectResNo" parameterType="string" resultType="resumeVO">
+		SELECT
+			* 
+		FROM 
+			resume 
+		WHERE 
+			pr_mbr_id = #{prMbrId}
+		AND
+			rprsv_res_yn = 'Y'
+	</select>
+	
+	
+	<select id="getResNo" parameterType="string" resultType="int">
+		SELECT
+			res_no 
+		FROM
+			resume 
+		WHERE
+			pr_mbr_id = #{prMbrId}
+		AND 
+			rprsv_res_yn = 'Y'
+	</select>
+
+	<select id="getCodingTestList" parameterType="string" resultType="entPracticeQuestionVO">
+		<![CDATA[
+			select * from
+				(select ENT_PQ_NO, ENT_PQ_TTL, ENT_PQ_CN, ENT_LMT_MTTR, EX, ans from entpracticequestion where ent_mbr_id = #{entMbrId} order by dbms_random.value)
+			where rownum <= 5
+		]]>
+	</select>
+	
+	<select id="getCodingTest" parameterType="entPracticeQuestionVO" resultType="entPracticeQuestionVO">
+		select *
+		from entpracticequestion
+		where
+			ent_mbr_id = #{entMbrId} and ENT_PQ_NO = #{entPqNo}
+	</select>
+	
+	<insert id="submitCodingTest" parameterType="entPracticeQuestionYnVO">
+		insert into entpracticequestionyn (
+			pr_mbr_id
+			, ent_pq_no
+			, ent_pq_ans
+			, empmn_pbanc_no
+			, ent_pq_solut_ymd
+		)values(
+			#{prMbrId}
+			, #{entPqNo}
+			, #{entPqAns}
+			, #{empmnPbancNo}
+			, TO_CHAR(sysdate, 'YYYY-MM-DD')
+		)
+	</insert>
+
+</mapper>

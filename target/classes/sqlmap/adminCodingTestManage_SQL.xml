@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.manage.mapper.IAdminCodingTestManageMapper">
+
+	<!-- 검색 -->
+	<sql id="codingTestSearch">
+		<if test="searchType != null and searchType == 'title'">
+			and (prct_ques_ttl like '%'||#{searchWord}||'%')
+		</if>
+	</sql>
+
+	<select id="selectCodingTestCount" resultType="int">
+		select count(prct_ques_no) from practicequestion
+		where 1=1
+		<include refid="codingTestSearch" />
+	</select>
+	
+	<select id="selectCodingTestList" resultType="practiceQuestionVO" parameterType="paginationInfoVO">
+		select b.*
+			from (
+			    select a.*, row_number() over (order by a.prct_ques_no desc) rnum
+			    from (
+			        select 
+			        	prct_ques_no,prct_ques_ttl,prct_ques_dffly_cd
+					from practicequestion
+					where 1=1
+					<include refid="codingTestSearch" />
+					order by prct_ques_no desc 
+			    ) a
+			) b
+        <![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectCodingTestDetail" resultType="practiceQuestionVO" parameterType="int">
+		select
+			prct_ques_no,prct_ques_ttl, prct_ques_cn, prct_ques_dffly_cd, lmt_mttr, ans, ex
+		from
+			practicequestion
+		where
+			prct_ques_no = #{prctQuesNo}
+	</select>
+	
+	<update id="updateCodingTest" parameterType="practiceQuestionVO">
+		update 
+			practicequestion
+		set
+			prct_ques_ttl = #{prctQuesTtl},
+			prct_ques_cn = #{prctQuesCn},
+			prct_ques_dffly_cd = #{prctQuesDfflyCd}, 
+			lmt_mttr = #{lmtMttr}, 
+			ans = #{ans},
+			ex = #{ex}
+		where
+			prct_ques_no = #{prctQuesNo}
+	</update>
+	
+	<delete id="deleteCodingTestSolutYn" parameterType="int">
+		delete practicequestionsolutionyn where prct_ques_no = #{prctQuesNo}
+	</delete>
+	
+	<delete id="deleteCodingTest" parameterType="int">
+		delete practicequestion where prct_ques_no = #{prctQuesNo}
+	</delete>
+	
+	<insert id="insertCodingTest" parameterType="practiceQuestionVO">
+		insert into practicequestion(
+			prct_ques_no, prct_ques_ttl, prct_ques_cn, prct_ques_dffly_cd, lmt_mttr, ans, ex
+		)values(
+			seq_practicequestion.nextval, #{prctQuesTtl}, #{prctQuesCn}, #{prctQuesDfflyCd}, #{lmtMttr}, #{ans}, #{ex}
+		)
+	</insert>
+
+</mapper>

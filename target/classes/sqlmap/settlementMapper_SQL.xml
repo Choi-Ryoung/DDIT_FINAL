@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.mentoring.mapper.PaymentMapper">
+
+	<insert id="getPayment" parameterType="settleVO">
+		<selectKey keyProperty="settlementNo" resultType="int" order="BEFORE">
+			select seq_settlementdescription.nextval from dual
+		</selectKey>
+		insert into settlementdescription(
+			settlement_no,
+			pr_mbr_id,
+			settlement_dt,
+			settlement_tp_cd,
+			settlement_item,
+			settlement_co,
+			settlement_nm,
+			settlement_hp,
+			settlement_mail,
+			settlement_yn,
+			men_ncnm,
+			pr_mbr_ncnm
+		) values(
+			#{settlementNo},
+			#{prMbrId},
+			sysdate,
+			#{settlementTpCd},
+			#{settlementItem},
+			#{settlementCo},
+			#{settlementNm},
+			#{settlementHp},
+			#{settlementMail},
+			#{settlementYn},
+			#{menNcnm},
+			#{prMbrNcnm}
+		)
+	</insert>
+	
+	<insert id="insertMenti" parameterType="mentiVO">
+		insert into menti(
+			men_ncnm,
+			pr_mbr_id,
+			pr_mbr_ncnm,
+			menti_yn
+		) values (
+			#{menNcnm},
+			#{prMbrId},
+			#{prMbrNcnm},
+			#{mentiYn}
+		)
+	</insert>
+	
+	<insert id="insertChatRoom" parameterType="chatroomVO">
+		<selectKey keyProperty="roomNo" resultType="int" order="BEFORE">
+			select seq_chatroom.nextval from dual
+		</selectKey>
+		insert into chatroom(
+			room_no,
+			crt_ymd,
+			men_ncnm,
+			pr_mbr_ncnm
+		) values (
+			#{roomNo},
+			sysdate,
+			#{menNcnm},
+			#{prMbrNcnm}
+		)
+	</insert>
+	
+ 	<select id="getPaymentList" resultType="settleVO">
+		select *
+		from settlementdescription
+		order by settlement_no desc
+	</select>
+	
+	<select id="getPaymentDetail" parameterType="int" resultType="settleVO">
+		select
+			settlement_no,
+			pr_mbr_id,
+			settlement_dt,
+			settlement_item,
+			settlement_co,
+			settlement_nm,
+			settlement_hp,
+			settlement_mail
+		from settlementdescription
+		where pr_mbr_id = #{prMbrId}
+	</select>
+
+</mapper>

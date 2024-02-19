@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.chat.mapper.ChatMapper">
+
+	<select id="selectChatList" resultType="chatroomVO">
+		select
+			room_no,
+			men_ncnm,
+			pr_mbr_ncnm,
+			crt_ymd
+		from chatroom
+		order by room_no desc
+	</select>
+	<!-- SELECT 
+	        a.room_no,
+	        a.crt_ymd,
+	        a.men_ncnm,
+	        a.pr_mbr_ncnm
+	    FROM 
+	        chatroom a
+	    JOIN 
+	        mentoringprofile b ON a.men_ncnm = b.men_ncnm
+	    JOIN 
+	        menti c ON a.men_ncnm = c.men_ncnm
+	    WHERE 
+	        a.men_ncnm = #{menNcnm} -->
+	<select id="selectChatRoom" parameterType="map" resultType="chatroomVO">
+		SELECT 
+	        a.*
+	    FROM 
+	        chatroom a
+	    FULL OUTER JOIN 
+	        mentoringprofile b ON a.men_ncnm = b.men_ncnm
+        FULL OUTER JOIN 
+	        menti c ON a.men_ncnm = c.men_ncnm
+        where a.men_ncnm = #{menNcnm}
+	    <!-- select room_no from chatroom where men_ncnm = #{menNcnm} and  pr_mbr_ncnm = #{prMbrNcnm} -->
+	</select>
+	
+	<select id="getChatRoom" parameterType="map" resultType="chatroomVO">
+		select * from chatroom where men_ncnm = #{menNcnm} and pr_mbr_ncnm = #{prMbrNcnm}
+	</select>
+	
+	<insert id="chat" parameterType="chatVO">
+		<selectKey keyProperty="chatNo" resultType="int" order="BEFORE">
+			select seq_chat.nextval from dual
+		</selectKey>
+		insert into chat(
+			chat_no,
+			room_no,
+			<if test="msg != null and msg != ''">
+				msg,
+			</if>
+			crt_ymd,
+			pr_mbr_ncnm,
+			pr_mbr_id
+		) values (
+			seq_chat.nextval,
+			#{roomNo},
+			#{msg},
+			sysdate,
+			#{prMbrNcnm},
+			#{prMbrId}
+		)
+	</insert>
+	
+	<select id="chatLog" resultType="chatVO">
+		select
+			chat_no,
+			room_no,
+			pr_mbr_id,
+			msg,
+			crt_ymd,
+			pr_mbr_ncnm
+		from chat
+		where room_no = #{roomNo}
+		order by chat_no asc
+	</select>
+
+</mapper>

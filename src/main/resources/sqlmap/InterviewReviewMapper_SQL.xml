@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.enterpriseinfo.mapper.IInterviewReviewMapper">
+
+<sql id="search">
+	<if test="searchType != null and searchType == 'title'">
+		and (bo_title like '%'||#{searchWord}||'%')
+	</if>
+	<if test="searchType != null and searchType == 'writer'">
+		and (bo_writer like '%'||#{searchWord}||'%')
+	</if>
+</sql>
+
+<select id="listCnt" parameterType="PagingVO" resultType="int">
+	select count(IV_PST_NO) from INTERVIEWREVIEW
+	where 1=1
+</select>
+
+<select id="list" parameterType="PagingVO" resultType="InterviewReviewVO">
+		select 
+			b.*
+		from (
+			select 
+				a.*, row_number() over (order by a.IV_PST_NO desc) rnum
+			from (
+				select 
+					IV_PST_NO, 
+					PR_MBR_ID, 
+					ENT_NM, 
+					APPLY_TASK_CD, 
+					APPLY_CAREER_CD, 
+					IV_WRT_DT, 
+					IV_DFFLY_CD, 
+					IV_WRTR_NM, 
+					IV_TYPE_CD, 
+					IV_QUES, 
+					IV_PST_SFT, 
+					SEXDSTN_CD,
+					PASS_YN, 
+					SERVE_YN, 
+					PSTG_YN
+				from INTERVIEWREVIEW
+				where 1=1
+				order by IV_PST_NO desc
+			) a
+		) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+</select>
+
+<!-- 
+<select id="list" resultType="InterviewReviewVO">
+		select 
+			b.*
+		from (
+			select 
+				a.*, row_number() over (order by a.IV_PST_NO desc) rnum
+			from (
+				select 
+					IV_PST_NO, 
+					PR_MBR_ID, 
+					ENT_NM, 
+					APPLY_TASK_CD, 
+					APPLY_CAREER_CD, 
+					IV_WRT_DT, 
+					IV_DFFLY_CD, 
+					IV_WRTR_NM, 
+					IV_TYPE_CD, 
+					IV_QUES, 
+					IV_PST_SFT, 
+					SEXDSTN_CD,
+					PASS_YN, 
+					SERVE_YN, 
+					PSTG_YN
+				from INTERVIEWREVIEW
+				where 1=1
+				order by IV_PST_NO desc
+			) a
+		) b
+		<![CDATA[
+			where b.rnum >= #{startRow} and b.rnum <= #{endRow}
+		]]>
+</select> -->
+
+
+<select id="selIrList" resultType="InterviewReviewVO">
+				select 
+					IV_PST_NO, 
+					PR_MBR_ID, 
+					ENT_NM, 
+					(SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'DUTY' AND C.CMCD = IV.APPLY_TASK_CD) AS APPLY_TASK_CD,
+					(SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'CAREER' AND C.CMCD = IV.APPLY_CAREER_CD) AS APPLY_CAREER_CD,
+					IV.IV_WRT_DT, 
+					(SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'IVLEVEL' AND C.CMCD = IV.IV_DFFLY_CD) AS IV_DFFLY_CD,
+					IV.IV_WRTR_NM,
+					 <!-- 'IV_TYPE_CD' 값을 COMMONCODE 테이블에서 가져와서 ','로 구분하여 결합한 열 -->
+					(SELECT LISTAGG(C.CMCD_NM, ',') WITHIN GROUP (ORDER BY C.CMCD) 
+					 FROM COMMONCODE C 
+					 <!-- COMMONCODE에서 'IVTYPE' 그룹에 속하고 'IV_TYPE_CD' 값에 대응하는 항목만 선택합니다. -->
+					 WHERE C.CMCD_GROUP = 'IVTYPE' 
+					   AND C.CMCD IN (
+					       <!-- IV_TYPE_CD 값에서 ','로 구분된 각각의 값에 대해 분리합니다. -->
+					       SELECT regexp_substr(IV.IV_TYPE_CD, '[^,]+', 1, level) 
+					       FROM dual
+					       CONNECT BY regexp_substr(IV.IV_TYPE_CD, '[^,]+', 1, level) IS NOT NULL
+					   )
+					) AS iv_type_cd,					
+					IV.IV_QUES, 
+					IV.IV_PST_SFT, 
+					(SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'GENDER' AND C.CMCD = IV.SEXDSTN_CD) AS SEXDSTN_CD,
+					PASS_YN, 
+					SERVE_YN, 
+					PSTG_YN,
+					(SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'IVCAREER' AND C.CMCD = IV.IV_CAREER_CD) AS IV_CAREER_CD,
+					(SELECT C.CMCD_NM FROM COMMONCODE C WHERE C.CMCD_GROUP = 'IVEVALUE' AND C.CMCD = IV.IV_EVALUE_CD) AS IV_EVALUE_CD,
+					<!-- 'IV_PCNT_CD' 값을 COMMONCODE 테이블에서 가져와서 ','로 구분하여 결합한 열 -->
+					(SELECT LISTAGG(C.CMCD_NM, ',') WITHIN GROUP (ORDER BY C.CMCD) 
+					 FROM COMMONCODE C 
+					 <!-- COMMONCODE에서 'IVPCNT' 그룹에 속하고 'IV_PCNT_CD' 값에 대응하는 항목만 선택합니다. -->
+					 WHERE C.CMCD_GROUP = 'IVPCNT' 
+					   AND C.CMCD IN (
+					       <!-- IV_PCNT_CD 값에서 ','로 구분된 각각의 값에 대해 분리합니다. -->
+					       SELECT regexp_substr(IV.IV_PCNT_CD, '[^,]+', 1, level) 
+					       FROM dual
+					       CONNECT BY regexp_substr(IV.IV_PCNT_CD, '[^,]+', 1, level) IS NOT NULL
+					   )
+					) AS iv_pcnt_cd,	
+					IV_TYPE_CN
+				from INTERVIEWREVIEW IV
+				where 1=1
+				order by IV_PST_NO desc
+</select>
+
+
+
+<!-- 회원 아이디로 회원 이름 가져오기 -->
+<select id="selPmConPrMbrId" parameterType="string" resultType="PrivateMemberVO">
+	select 
+		PR_MBR_ID, PR_MBR_PSWD, PR_MBR_NM, PR_MBR_NCNM, PR_MBR_TELNO, PR_MBR_EMAIL, SEXDSTN_CD, PR_MBR_BIRTHDY, PR_MBR_ZIP, PR_MBR_BSC_ADDR, PR_MBR_DADDR, PR_MBR_JOIN_YMD, SOCIAL_LOGIN_MBR_YN, MENTO_REG_YN, FREELANCER_REG_YN, USE_STOP_CNT, USE_STOP_END_YMD, PR_MBR_WHDWL_YMD, TRMS_AGRE_CD, PR_MBR_ACTNO, BANK_CD, ENABLED
+	from 
+		PRIVATEMEMBER 
+	where 
+		PR_MBR_ID = #{prMbrId}
+</select>
+
+
+
+<insert id="insert" parameterType="InterviewReviewVO">
+
+INSERT INTO INTERVIEWREVIEW (
+    IV_PST_NO,
+    PR_MBR_ID,
+    ENT_NM,
+    APPLY_TASK_CD,
+    APPLY_CAREER_CD,
+    IV_WRT_DT,
+    IV_DFFLY_CD,
+    IV_WRTR_NM,
+    IV_TYPE_CD,
+    IV_QUES,
+    IV_PST_SFT,
+    SEXDSTN_CD,
+    PASS_YN,
+    SERVE_YN,
+    PSTG_YN,
+    IV_CAREER_CD,
+	IV_EVALUE_CD,
+	IV_PCNT_CD,
+	IV_TYPE_CN
+)
+VALUES (
+    SEQ_INTERVIEWREVIEW.nextval,
+    #{prMbrId},
+    #{entNm},
+    #{applyTaskCd},
+    #{applyCareerCd},
+   	sysdate,
+    #{ivDfflyCd},
+    #{ivWrtrNm},
+    #{ivTypeCd},
+    #{ivQues},
+    #{ivPstSft},
+    #{sexdstnCd},
+    #{passYn},
+    #{serveYn},
+    #{pstgYn},
+    #{ivCareerCd},
+    #{ivEvalueCd},
+    #{ivPcntCd},
+    #{ivTypeCn}
+)
+
+
+
+</insert>
+
+</mapper>
